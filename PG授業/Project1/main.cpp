@@ -2,6 +2,7 @@
 #include "_debug/_DebugConOut.h"
 #include "_debug/_DebugDispOut.h"
 #include "class/Shape.h"
+#include "class/Square.h"
 
 bool SysInit(void)
 {
@@ -20,7 +21,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 
 	if (!SysInit())return -1;
 
-	Shape shape;
+	Shape shape();
+
+	Potision2 pos = { 50,50 };
+	Size size = { 40,40 };
+
+	Square square(pos, size);
 	//shape.x_ = 300;
 	//shape.y_ = 200;
 	//shape.sizeX_ = 100;
@@ -32,7 +38,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 	{
 		DxLib::ClsDrawScreen();
 
-		shape.Draw();
+		square.Draw();
 		_dbgDraw();
 		DxLib::ScreenFlip();
 	}

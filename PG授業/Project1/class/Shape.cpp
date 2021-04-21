@@ -1,12 +1,11 @@
 #include <DxLib.h>
 #include "Shape.h"
 
-Shape::Shape()
+Shape::Shape(Potision2 pos, Size size)
 {
-	x_ = 100;
-	y_ = 100;
-	sizeX_ = 50;
-	sizeY_ = 50;
+	pos_ = pos;
+	size_ = size;
+	col_ = 0xff;
 }
 
 Shape::~Shape()
@@ -15,5 +14,5 @@ Shape::~Shape()
 
 void Shape::Draw()
 {
-	DxLib::DrawBox(x_, y_, x_ + sizeX_, y_ + sizeY_, 0xfff, true);
+	DxLib::DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, col_, true);
 }

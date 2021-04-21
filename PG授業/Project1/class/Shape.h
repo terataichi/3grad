@@ -1,21 +1,22 @@
 #pragma once
+#include "../common/Vector2.h"
 
 // ê}å`ÉNÉâÉX
 class Shape
 {
 public:
-	Shape();
+	Shape(Potision2 pos, Size size);
 	~Shape();
-
-	int x_;
-	int y_;
-	int sizeX_;
-	int sizeY_;
 
 	/// <summary>
 	/// ï`âÊ
 	/// </summary>
-	void Draw();
+	virtual void Draw();
+protected:
+	Potision2 pos_;
+	Size size_;
+	int col_;
+
 private:
 };
 
