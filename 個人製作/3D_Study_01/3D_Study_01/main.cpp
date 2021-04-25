@@ -1,7 +1,7 @@
 #include <Dxlib.h>
 #include "_debug/_DebugConOut.h"
 #include "_debug/_DebugDispOut.h"
-
+#include "Common/Vector2.h"
 
 bool SysInit(void)
 {
@@ -19,14 +19,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 {
 
 	if (!SysInit())return -1;
-	//shape.x_ = 300;
-	//shape.y_ = 200;
-	//shape.sizeX_ = 100;
-	//shape.sizeY_ = 100;
 
 	_dbgStartDraw();
 
-	int model = MV1LoadModel("bugatti.mtl");
+	Vector2 vec(0, 0);
+
+	vec += Vector2(10, 0);
+
+	//int model = MV1LoadModel("bugatti.mtl");
 
 	while (!ProcessMessage() && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
