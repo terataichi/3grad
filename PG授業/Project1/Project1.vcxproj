@@ -153,7 +153,6 @@
   <ItemGroup>
     <ClCompile Include="class\Shape.cpp" />
     <ClCompile Include="class\Square.cpp" />
-    <ClCompile Include="common\Vector2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="_debug\_DebugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
@@ -161,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="class\Shape.h" />
     <ClInclude Include="class\Square.h" />
+    <ClInclude Include="common\details\Vector2.h" />
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="_debug\_DebugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />

@@ -11,6 +11,8 @@ bool SysInit(void)
 	DxLib::SetWindowText("1916025_Ž›è‘å’q");
 	if (DxLib::DxLib_Init() == -1) return false;
 
+	_dbgSetup(640, 480, 32);
+
 	return true;
 }
 
@@ -21,24 +23,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 
 	if (!SysInit())return -1;
 
-	Shape shape();
+	//Shape shape();
 
-	Potision2 pos = { 50,50 };
-	Size size = { 40,40 };
+	Potision2 pos{ 200,200 };
+	Size size{ 50,50 };
 
-	Square square(pos, size);
-	//shape.x_ = 300;
-	//shape.y_ = 200;
-	//shape.sizeX_ = 100;
-	//shape.sizeY_ = 100;
 
-	_dbgStartDraw();
+	Square shape1{ pos, size };
+	//Shape* shape2 = new Shape{ pos * 2, size };
+	//Shape* shape3 = new Square{ pos * 3 , size };
+
+
 
 	while (!ProcessMessage() && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
+		_dbgStartDraw();
 		DxLib::ClsDrawScreen();
 
-		square.Draw();
+		shape1.Draw(Vector2{20,20 }, 2);
+		//shape2->Draw();
+		//shape3->Shape::Draw();
+
 		_dbgDraw();
 		DxLib::ScreenFlip();
 	}

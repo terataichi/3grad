@@ -15,8 +15,6 @@ public:
 protected:
 	Potision2 pos_;
 	Size size_;
-	int col_;
-
 private:
 };
 
