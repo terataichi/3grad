@@ -7,6 +7,10 @@ Shape::Shape(Potision2 pos, Size size)
 	size_ = size;
 }
 
+Shape::Shape(Potision2 pos, float radius)
+{
+}
+
 Shape::Shape(Potision2 pos)
 {
 	pos_ = pos;

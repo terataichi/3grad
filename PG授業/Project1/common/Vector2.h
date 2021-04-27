@@ -80,6 +80,7 @@ using Vector2 = Vector2Template<int>;
 using Vector2d = Vector2Template<double>;
 using Vector2f = Vector2Template<float>;
 using Potision2 = Vector2;
+using Potision2f = Vector2f;
 using Size = Vector2;
 
 #include "./details/Vector2.h"

@@ -29,11 +29,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 	Potision2 pos{ 200,200 };
 	Size size{ 50,50 };
 
+	//Potision2f poss = dynamic_cast<Potision2f&>(pos);
 
 	Square shape1{ pos, size };
 	//Shape* shape2 = new Shape{ pos * 2, size };
-	Shape* shape3 = new Square{ pos * 3 , size };
-	Circle c{ {100,100},1 };
+	//Shape* shape3 = new Square{ pos * 3 , size };
+	//Shape* circle = new Circle{ pos,1.0f };
 
 	while (!ProcessMessage() && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
@@ -42,7 +43,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 
 		shape1.Draw(Vector2{25,25 }, 2);
 		//shape2->Draw();
-		shape3->Draw();
+		//shape3->Draw();
 
 		_dbgDraw();
 		DxLib::ScreenFlip();

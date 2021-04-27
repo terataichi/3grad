@@ -21,12 +21,8 @@ void Square::Draw(float rate)
 
 void Square::Draw(Vector2 offset, float rate)
 {
-
-
-	Vector2 pos{ (int)(pos_ + offset - (size_ * static_cast<int>(rate)) * (offset.x / (float)size_.x)),
-				 (pos_.y + offset.y - size_.y * rate * (offset.y / (float)size_.y)) };
-
-
+	
+	Vector2 pos{ pos_ + offset - size_ * static_cast<int>(rate) * (offset / size_) };
 
 	DxLib::DrawBox(
 		pos.x,
@@ -35,5 +31,5 @@ void Square::Draw(Vector2 offset, float rate)
 		pos.y + (size_.x * rate),
 		0xff, true);
 
-	//Draw();
+	Draw();
 }

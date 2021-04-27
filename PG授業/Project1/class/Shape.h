@@ -6,6 +6,7 @@ class Shape
 {
 public:
 	Shape(Potision2 pos, Size size);
+	Shape(Potision2 pos, float radius);
 	Shape(Potision2 pos);
 	~Shape();
 

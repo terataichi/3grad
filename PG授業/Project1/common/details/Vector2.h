@@ -64,7 +64,7 @@ bool Vector2Template<T>::operator<(const Vector2Template<T> & vec) const
 template<class T>
 bool Vector2Template<T>::operator<=(const Vector2Template<T> & vec) const
 {
-	return ((x >= vec.x) && (y >= vec.y));
+	return ((x <= vec.x) && (y <= vec.y));
 }
 
 // “Y‚¦Žš‰‰ŽZ
@@ -129,6 +129,10 @@ Vector2Template<T> Vector2Template<T>::operator-() const
 {
 	return Vector2Template<T>(-this->x, -this->y);
 }
+
+
+
+
 
 // ---ÍÞ¸ÄÙ‚Ì‰‰ŽZ
 
