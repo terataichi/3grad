@@ -6,12 +6,15 @@ class Shape
 {
 public:
 	Shape(Potision2 pos, Size size);
+	Shape(Potision2 pos);
 	~Shape();
 
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
-	virtual void Draw();
+	virtual void Draw() = 0;
+	virtual void Draw(float rate) = 0;
+	virtual void Draw(Vector2 offset, float rate = 1) = 0;
 protected:
 	Potision2 pos_;
 	Size size_;

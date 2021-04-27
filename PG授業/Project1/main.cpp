@@ -3,6 +3,7 @@
 #include "_debug/_DebugDispOut.h"
 #include "class/Shape.h"
 #include "class/Square.h"
+#include "class/Circle.h"
 
 bool SysInit(void)
 {
@@ -31,18 +32,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 
 	Square shape1{ pos, size };
 	//Shape* shape2 = new Shape{ pos * 2, size };
-	//Shape* shape3 = new Square{ pos * 3 , size };
-
-
+	Shape* shape3 = new Square{ pos * 3 , size };
+	Circle c{ {100,100},1 };
 
 	while (!ProcessMessage() && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
 		_dbgStartDraw();
 		DxLib::ClsDrawScreen();
 
-		shape1.Draw(Vector2{20,20 }, 2);
+		shape1.Draw(Vector2{25,25 }, 2);
 		//shape2->Draw();
-		//shape3->Shape::Draw();
+		shape3->Draw();
 
 		_dbgDraw();
 		DxLib::ScreenFlip();
