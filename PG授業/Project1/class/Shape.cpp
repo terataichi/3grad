@@ -22,5 +22,5 @@ Shape::~Shape()
 
 void Shape::Draw()
 {
-	DxLib::DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0xffff, true);
+	DxLib::DrawBox(pos_.x_, pos_.y_, pos_.x_ + size_.x_, pos_.y_ + size_.y_, 0xffff, true);
 }

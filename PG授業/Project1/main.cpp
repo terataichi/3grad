@@ -29,12 +29,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 	Potision2 pos{ 200,200 };
 	Size size{ 50,50 };
 
-	//Potision2f poss = dynamic_cast<Potision2f&>(pos);
-
 	Square shape1{ pos, size };
 	//Shape* shape2 = new Shape{ pos * 2, size };
 	//Shape* shape3 = new Square{ pos * 3 , size };
 	//Shape* circle = new Circle{ pos,1.0f };
+
+	Vector2f a{ 5.0f,6.0f };
+	Vector2f b{ 5.0f,7.0f };
+
+	a %= b;
 
 	while (!ProcessMessage() && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{

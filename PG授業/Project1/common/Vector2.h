@@ -7,12 +7,11 @@ public:
 	Vector2Template();
 	Vector2Template(T x, T y);
 	~Vector2Template();
-	T x;
-	T y;
+	T x_;
+	T y_;
 
 	// ‘ã“ü‰‰Zq
 	Vector2Template& operator = (const Vector2Template& vec);
-
 	// ”äŠr‰‰Zq
 	bool operator == (const Vector2Template& vec)const;
 	bool operator != (const Vector2Template& vec)const;
@@ -27,6 +26,10 @@ public:
 	// ’P€‰‰Zq
 	Vector2Template& operator += (const Vector2Template& vec);
 	Vector2Template& operator -= (const Vector2Template& vec);
+	Vector2Template& operator *= (const Vector2Template& vec);
+	Vector2Template& operator /= (const Vector2Template& vec);
+	Vector2Template& operator %= (const Vector2Template& vec);
+
 	Vector2Template& operator *= (T k);
 	Vector2Template& operator /= (T k);
 

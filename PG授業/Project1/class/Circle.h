@@ -8,9 +8,9 @@ public:
     Circle(Potision2 pos ,float radius);
 
     void Draw(void)override;
-    void Draw(float radius)override;
+    void Draw(float rate)override;
     void Draw(Vector2 offset, float rate = 1)override;
 private:
-    int radius_;
+    float radius_;
 };
 

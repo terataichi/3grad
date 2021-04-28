@@ -11,12 +11,12 @@ Square::~Square()
 
 void Square::Draw()
 {
-	DxLib::DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0xffff, true);
+	DxLib::DrawBox(pos_.x_, pos_.y_, pos_.x_ + size_.x_, pos_.y_ + size_.y_, 0xffff, true);
 }
 
 void Square::Draw(float rate)
 {
-	DxLib::DrawBox(pos_.x, pos_.y, pos_.x + size_.x * rate, pos_.y + size_.y * rate, 0xffff, true);
+	DxLib::DrawBox(pos_.x_, pos_.y_, pos_.x_ + size_.x_ * static_cast<int>(rate), pos_.y_ + size_.y_ * static_cast<int>(rate), 0xffff, true);
 }
 
 void Square::Draw(Vector2 offset, float rate)
@@ -25,10 +25,10 @@ void Square::Draw(Vector2 offset, float rate)
 	Vector2 pos{ pos_ + offset - size_ * static_cast<int>(rate) * (offset / size_) };
 
 	DxLib::DrawBox(
-		pos.x,
-		pos.y,
-		pos.x + (size_.x * rate),
-		pos.y + (size_.x * rate),
+		pos.x_,
+		pos.y_,
+		pos.x_ + size_.x_ * static_cast<int>(rate),
+		pos.y_ + size_.y_ * static_cast<int>(rate),
 		0xff, true);
 
 	Draw();

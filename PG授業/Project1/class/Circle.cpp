@@ -9,10 +9,10 @@ Circle::Circle(Potision2 pos, float radius):Shape(pos)
 
 void Circle::Draw(void)
 {
-	DrawCircle(pos_.x, pos_.y, radius_, 0xfffff, true);
+	DrawCircle(pos_.x_, pos_.y_, static_cast<int>(radius_), 0xfffff, true);	
 }
 
-void Circle::Draw(float radius)
+void Circle::Draw(float rate)
 {
 	
 }
