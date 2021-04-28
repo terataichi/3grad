@@ -10,6 +10,21 @@ public:
 	T x_;
 	T y_;
 
+	//void operator Vector2Tmplate<int>()
+	//{
+	//	return Vector2Tmplate<int>{ static_cast<int>(x_),static_cast<int>(y_) };
+	//};
+
+	operator Vector2Template<int>()
+	{
+		return Vector2Template<int>{ static_cast<int>(x_),static_cast<int>(y_) };
+	};
+	operator Vector2Template<float>()
+	{
+		return Vector2Template<float>{ static_cast<float>(x_),static_cast<float>(y_) };
+	};
+
+
 	// ‘ã“ü‰‰Zq
 	Vector2Template& operator = (const Vector2Template& vec);
 	// ”äŠr‰‰Zq
@@ -39,35 +54,27 @@ public:
 
 // ÍŞ¸ÄÙ‚Ì‰‰Z
 
-// Vector2 + int
+// ’P€‰‰Zq@Vector2 E int
 template<class T>
 Vector2Template<T> operator +(const Vector2Template<T>& u, const T& k);
-// Vector2 - int
 template<class T>
 Vector2Template<T> operator -(const Vector2Template<T>& u, const T& k);
-// Vector2 * int
 template<class T>
 Vector2Template<T> operator *(const Vector2Template<T>& u, const T& k);
-// Vector2 / int
 template<class T>
 Vector2Template<T> operator /(const Vector2Template<T>& u, const T& k);
-// Vector2 % int
 template<class T>
 Vector2Template<T> operator %(const Vector2Template<T>& u, const T& k);
 
-// Vector2 + Vector2
+// ’P€‰‰Zq@Vector2 E Vector2
 template<class T>
 Vector2Template<T> operator +(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 - Vector2
 template<class T>
 Vector2Template<T> operator -(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 * Vector2
 template<class T>
 Vector2Template<T> operator *(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 / Vector2
 template<class T>
 Vector2Template<T> operator /(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 % Vector2
 template<class T>
 Vector2Template<T> operator %(const Vector2Template<T>& u, const Vector2Template<T>& v);
 
@@ -82,8 +89,11 @@ Vector2Template<T> abs(const Vector2Template<T>& u);
 using Vector2 = Vector2Template<int>;
 using Vector2d = Vector2Template<double>;
 using Vector2f = Vector2Template<float>;
+
 using Potision2 = Vector2;
 using Potision2f = Vector2f;
+
 using Size = Vector2;
+using Sizef = Vector2f;
 
 #include "./details/Vector2.h"

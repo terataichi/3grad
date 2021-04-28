@@ -32,19 +32,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 	Square shape1{ pos, size };
 	//Shape* shape2 = new Shape{ pos * 2, size };
 	//Shape* shape3 = new Square{ pos * 3 , size };
-	//Shape* circle = new Circle{ pos,1.0f };
-
-	Vector2f a{ 5.0f,6.0f };
-	Vector2f b{ 5.0f,7.0f };
-
-	a %= b;
+	Shape* circle = new Circle{ pos,20.0f };
 
 	while (!ProcessMessage() && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
 		_dbgStartDraw();
 		DxLib::ClsDrawScreen();
 
-		shape1.Draw(Vector2{25,25 }, 2);
+		shape1.Draw(Vector2{25,25}, 2);
+		circle->Draw(3.0f);
 		//shape2->Draw();
 		//shape3->Draw();
 
