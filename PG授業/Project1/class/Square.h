@@ -6,7 +6,7 @@ class Square :
     public Shape
 {
 public:
-    Square(Potision2 pos, Size size);
+    Square(Potision2f&& pos, Size&& size, Vector2f&& speed, int&& color);
     ~Square();
 
     /// <summary>
@@ -24,6 +24,11 @@ public:
     /// <param name="rate">拡大率</param>
     /// <param name="offset">オフセット</param>
     void Draw(Vector2 offset, float rate = 1);
+
+    bool Update(const float& delta, const ShapeVec& vec)override;
 private:
+
+    Vector2f CheckHitWall(const ShapeVec& vec)override;
+    void HitShape(const SharedShape& shape) override;
 };
 
