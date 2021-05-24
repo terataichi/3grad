@@ -1,6 +1,9 @@
 #include <DxLib.h>
 #include "common/Vector2.h"
 
+constexpr int ScreenSizeX = 1024;
+constexpr int ScreenSizeY = 768;
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	DxLib::SetGraphMode(1024, 768, 32);
