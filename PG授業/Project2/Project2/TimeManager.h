@@ -13,14 +13,14 @@ public:
 	/// 開始時間からの経過時間
 	/// </summary>
 	/// <returns></returns>
-	const double& GetElapsedTime(void);
-	const float& GetElapsedTimeF(void);
+	const double& GetElapsedTime(void)const;
+	const float GetElapsedTimeF(void)const;
 	/// <summary>
 	/// デルタタイム取得用
 	/// </summary>
 	/// <returns>デルタタイム</returns>
-	const double& GetDeltaTime(void);
-	const float& GetDeltaTimeF(void);
+	const double& GetDeltaTime(void)const;
+	const float GetDeltaTimeF(void)const;
 
 	/// <summary>
 	/// 更新
@@ -31,7 +31,7 @@ private:
 	ChronoTimeP now_;
 	ChronoTimeP old_;
 
-	double deltaTime_;
+	double deltaTime_;															// 1フレーム間の時間
 	double elapsedTime_;														// 経過時間
 };
 

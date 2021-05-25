@@ -159,13 +159,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common\SceneManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene\BaseScene.cpp" />
+    <ClCompile Include="Scene\GameScene.cpp" />
+    <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="Scene\TransitionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\details\Vector2.h" />
+    <ClInclude Include="common\SceneManager.h" />
     <ClInclude Include="common\Vector2.h" />
+    <ClInclude Include="Scene\BaseScene.h" />
+    <ClInclude Include="Scene\GameScene.h" />
+    <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="Scene\TransitionScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

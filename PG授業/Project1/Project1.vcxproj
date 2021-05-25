@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="class\Capsule.cpp" />
     <ClCompile Include="class\Carrot.cpp" />
     <ClCompile Include="class\Circle.cpp" />
     <ClCompile Include="class\Shape.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="class\Capsule.h" />
     <ClInclude Include="class\Carrot.h" />
     <ClInclude Include="class\Circle.h" />
     <ClInclude Include="class\Shape.h" />

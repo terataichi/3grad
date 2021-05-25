@@ -13,22 +13,22 @@ TimeManager::~TimeManager()
 {
 }
 
-const double& TimeManager::GetElapsedTime(void)
+const double& TimeManager::GetElapsedTime(void)const
 {
 	return elapsedTime_;
 }
 
-const float& TimeManager::GetElapsedTimeF(void)
+const float TimeManager::GetElapsedTimeF(void)const
 {
 	return static_cast<float>(elapsedTime_);
 }
 
-const double& TimeManager::GetDeltaTime(void)
+const double& TimeManager::GetDeltaTime(void)const
 {
 	return deltaTime_;
 }
 
-const float& TimeManager::GetDeltaTimeF(void)
+const float TimeManager::GetDeltaTimeF(void)const
 {
 	return static_cast<float>(deltaTime_);
 }
