@@ -10,19 +10,19 @@ Shape::Shape()
 }
 
 Shape::Shape(Potision2f& pos, Size& size, Vector2f& speed, int& color)
-	:pos_(pos), size_(size), speed_(speed), color_(color)
+	:pos_(pos), size_(size), speed_(speed), color_(color), defSpeed_(speed)
 {
 	Init();
 }
 
 Shape::Shape(Potision2f& pos, float& radius, Vector2f& speed, int& color)
-	:pos_(pos), radius_(radius), speed_(speed), color_(color)
+	:pos_(pos), radius_(radius), speed_(speed), color_(color), defSpeed_(speed)
 {
 	Init();
 }
 
 Shape::Shape(Potision2f& pos, Vector2f& speed, int& color)
-	: pos_(pos), speed_(speed), color_(color)
+	: pos_(pos), speed_(speed), color_(color), defSpeed_(speed)
 {
 	Init();
 }
@@ -30,6 +30,7 @@ Shape::Shape(Potision2f& pos, Vector2f& speed, int& color)
 Shape::Shape(Vector2f& point1, Vector2f& point2, Vector2f& point3, Vector2f& speed, int& color)
 {
 	speed_ = speed;
+	defSpeed_ = speed;
 	color_ = color;
 	point_.push_back(point1);
 	point_.push_back(point2);
@@ -91,12 +92,22 @@ const std::vector<Potision2f> Shape::GetHitPoint(void) const
 	return hitPoint_;
 }
 
+const bool Shape::GetHit() const
+{
+	return hit_;
+}
+
 bool Shape::Update(const float& delta, const ShapeVec& shapeVec)
 {
 	if (!alive_)
 	{
 		return false;
 	}
+
+	//if (speed_ >= defSpeed_)
+	//{
+	//	speed_ -= Vector2f{5, 5} * delta;
+	//}
 
 	auto refSpeed = CheckHitWall(shapeVec);
 	if (refSpeed != Vector2f{ 0.0f,0.0f })
@@ -233,6 +244,9 @@ bool Shape::CheckHitShapeTriangle(const std::vector<Potision2f>& sPoint, const s
 
 void Shape::SetAlive(bool alive)
 {
+
+	if (muteki_ > 0)
+		return;
 	alive_ = alive;
 }
 
@@ -241,9 +255,41 @@ void Shape::SetPotision(Potision2f& pos)
 	pos_ = pos;
 }
 
+void Shape::SetColor(int c)
+{
+	color_ = c;
+}
+
 void Shape::SetSpeed(Vector2f vec)
 {
 	speed_ = vec;
+}
+
+void Shape::MultiplySpeed(Vector2f vec)
+{
+	if (mutekiCount_ <= 0.0)
+	{
+		if (multiplyCount_ <= 2)
+		{
+			speed_ *= vec;
+			multiplyCount_++;
+		}
+	}
+}
+
+void Shape::SetHit(bool hit)
+{
+	hit_ = hit;
+}
+
+void Shape::SetRadius(float radius)
+{
+	radius_ = radius;
+}
+
+void Shape::SetSize(Size size)
+{
+	size_ = size;
 }
 
 Vector2f Shape::Reflection(Vector2f N)
@@ -263,5 +309,9 @@ void Shape::Init(void)
 	myNamber_ = objectNumber_;
 	objectNumber_++;
 	alive_ = true;
+	hit_ = false;
 	radius_ = 0;
+	muteki_ = 0;
+	mutekiCount_ = 0;
+	multiplyCount_ = 0;
 }

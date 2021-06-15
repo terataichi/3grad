@@ -27,7 +27,7 @@ public:
 
     bool Update(const float& delta, const ShapeVec& vec)override;
 private:
-
+    int hitCount_;
     Vector2f CheckHitWall(const ShapeVec& vec)override;
     void HitShape(const SharedShape& shape) override;
 };

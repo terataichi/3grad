@@ -14,5 +14,6 @@ public:
 private:
     Vector2f CheckHitWall(const ShapeVec& vec)override;
     void HitShape(const SharedShape& shape) override;
+
 };
 

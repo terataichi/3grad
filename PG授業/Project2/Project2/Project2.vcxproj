@@ -30,27 +30,27 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -159,23 +159,51 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common\ImageManager.cpp" />
     <ClCompile Include="common\SceneManager.cpp" />
+    <ClCompile Include="common\TileMap.cpp" />
+    <ClCompile Include="common\TmxLoader.cpp" />
+    <ClCompile Include="Input\Controller.cpp" />
+    <ClCompile Include="Input\Gamepad.cpp" />
+    <ClCompile Include="Input\InputID.cpp" />
+    <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Object\Object.cpp" />
+    <ClCompile Include="Object\Player.cpp" />
+    <ClCompile Include="Scene\Transition\BrightRotationScene.cpp" />
+    <ClCompile Include="Scene\Transition\Fade_InOutScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
+    <ClCompile Include="Scene\Transition\CrossOverScene.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="Scene\TransitionScene.cpp" />
+    <ClCompile Include="Scene\Transition\TransitionScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\details\Vector2.h" />
+    <ClInclude Include="common\ImageManager.h" />
     <ClInclude Include="common\SceneManager.h" />
+    <ClInclude Include="common\TileMap.h" />
+    <ClInclude Include="common\TmxLoader.h" />
     <ClInclude Include="common\Vector2.h" />
+    <ClInclude Include="Input\Controller.h" />
+    <ClInclude Include="Input\Gamepad.h" />
+    <ClInclude Include="Input\InputID.h" />
+    <ClInclude Include="Input\Keyboard.h" />
+    <ClInclude Include="Object\Object.h" />
+    <ClInclude Include="Object\Player.h" />
+    <ClInclude Include="Scene\Transition\BrightRotationScene.h" />
+    <ClInclude Include="Scene\Transition\Fade_InOutScene.h" />
     <ClInclude Include="Scene\BaseScene.h" />
+    <ClInclude Include="Scene\Transition\CrossOverScene.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="TileMap\rapidxml.hpp" />
+    <ClInclude Include="TileMap\rapidxml_iterators.hpp" />
+    <ClInclude Include="TileMap\rapidxml_print.hpp" />
+    <ClInclude Include="TileMap\rapidxml_utils.hpp" />
     <ClInclude Include="TimeManager.h" />
-    <ClInclude Include="Scene\TransitionScene.h" />
+    <ClInclude Include="Scene\Transition\TransitionScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

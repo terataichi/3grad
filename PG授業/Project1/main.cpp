@@ -12,6 +12,7 @@
 #include "class/Circle.h"
 #include "class/Triangle.h"
 #include "class/Carrot.h"
+#include "class/Capsule.h"
 #include "class/System/TimeManager.h"
 #include "class/System/SystemManager.h"
 
@@ -36,15 +37,39 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 		
 	ShapeVec shape;
 	shape.reserve(100);
-	shape.push_back(std::make_shared<Square>(Potision2f{ 600,200 }, Size{ 50,50 }, Vector2f{ 100,-50 }, 0xffff00));
-	shape.push_back(std::make_shared<Square>(Potision2f{ 300,200 }, Size{ 100,100 }, Vector2f{ 100,-50 }, 0xffff00));
-	shape.push_back(std::make_shared<Circle>(Potision2f{ 200,300 }, 50.0f, Vector2f{ 100,50}, 0xff0000));
-	shape.push_back(std::make_shared<Circle>(Potision2f{ 500,300 }, 50.0f, Vector2f{ 100,50 }, 0xff0000));
+	shape.push_back(std::make_shared<Square>(Potision2f{ 600,500 }, Size{ 50,50 }, Vector2f{ 100,-50 }, 0xff0000));
+	shape.push_back(std::make_shared<Square>(Potision2f{ 700,500 }, Size{ 30,30 }, Vector2f{ 50,-100 }, 0xff0000));
+	shape.push_back(std::make_shared<Square>(Potision2f{ 700,500 }, Size{ 30,30 }, Vector2f{ 100,50 }, 0xff0000));
+	shape.push_back(std::make_shared<Square>(Potision2f{ 700,500 }, Size{ 30,30 }, Vector2f{ 300,-50 }, 0xff0000));
+	shape.push_back(std::make_shared<Square>(Potision2f{ 700,500 }, Size{ 30,30 }, Vector2f{ 50,50 }, 0xff0000));
+	shape.push_back(std::make_shared<Square>(Potision2f{ 700,500 }, Size{ 30,30 }, Vector2f{ 60,-75 }, 0xff0000));
+	shape.push_back(std::make_shared<Square>(Potision2f{ 700,500 }, Size{ 30,30 }, Vector2f{ 90,-30 }, 0xff0000));
 
-	shape.push_back(std::make_shared<Triangle>(Potision2f{ 300,400 }, Potision2f{ 200,200 }, Potision2f{ 100,300 }, Vector2f{ 300,100 }, 0x0000ff));
-	shape.push_back(std::make_shared<Triangle>(Potision2f{ 300,100 }, Potision2f{ 200,50 }, Potision2f{ 100,30 }, Vector2f{ 200,-300 }, 0xff00ff));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 200,300 }, 50.0f, Vector2f{ 100,50}, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 50,500 }, 50.0f, Vector2f{ 100,50 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 50,500 }, 50.0f, Vector2f{ 100,-50 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 50,500 }, 50.0f, Vector2f{ -100,50 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 50,500 }, 50.0f, Vector2f{ 200,50 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 50,500 }, 50.0f, Vector2f{ 100,200 }, 0xffff00));
 
-	//shape.push_back(std::make_shared<Carrot>(Potision2f{ 400,200 }, Vector2f{ 30,-70 }, 0xff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 600,200 }, 50.0f, Vector2f{ -100,50 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 900,500 }, 50.0f, Vector2f{ 300,-50 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 900,500 }, 50.0f, Vector2f{ 100,-200 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 900,500 }, 50.0f, Vector2f{ 50,-50 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 900,500 }, 50.0f, Vector2f{ 70,-10 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 900,500 }, 50.0f, Vector2f{ 90,90 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 900,500 }, 50.0f, Vector2f{ 10,-100 }, 0xffff00));
+	shape.push_back(std::make_shared<Circle>(Potision2f{ 900,500 }, 50.0f, Vector2f{ 30,200 }, 0xffff00));
+
+	shape.push_back(std::make_shared<Triangle>(Potision2f{ 300,330 }, Potision2f{ 250,300 }, Potision2f{ 200,320 }, Vector2f{ 300,100 }, 0x0000ff));
+	shape.push_back(std::make_shared<Triangle>(Potision2f{ 250,100 }, Potision2f{ 230,50 }, Potision2f{ 210,30 }, Vector2f{ 200,-300 }, 0xff00ff));
+
+	shape.push_back(std::make_shared<Carrot>(Potision2f{ 400,200 }, Vector2f{ 30,-70 }, 0xff00));
+	shape.push_back(std::make_shared<Carrot>(Potision2f{ 870,200 }, Vector2f{ 30,20 }, 0xff00));
+
+	shape.push_back(std::make_shared<Capsule>(Potision2f{ 800,200 }, Vector2f{ 30,-70 }, 0xff00));
+	shape.push_back(std::make_shared<Capsule>(Potision2f{ 200,500 }, Vector2f{ -30,-70 }, 0xff00));
+	shape.push_back(std::make_shared<Capsule>(Potision2f{ 400,600 }, Vector2f{ -30,70 }, 0xff00));
 
 	std::unique_ptr<TimeManager>timeManager_;
 	timeManager_ = std::make_unique<TimeManager>();
@@ -55,7 +80,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 		DxLib::ClsDrawScreen();
 		timeManager_->Update();
 
-
+		DrawBox(0, 0, lpSysMng.GetScreenSize("x"), lpSysMng.GetScreenSize("y"),0xffffff, true);
 		for (auto& obj : shape)
 		{
 			(*obj).Update(timeManager_->GetDeltaTime(), shape);
@@ -65,7 +90,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 		shape.erase(std::remove_if(shape.begin(), shape.end(), [&](SharedShape& s) {return !s->GetAlive(); }), shape.end());
 		DrawFormatString(0, 10, 0xff, "%f", timeManager_->GetDeltaTime());
 
-		_dbgDraw();
 		DxLib::ScreenFlip();
 	}
 	return 1;

@@ -42,12 +42,18 @@ public:
 	const Size GetSize(void)const;
 	const std::vector<Vector2f> GetPoint(void)const;
 	const std::vector<Potision2f>GetHitPoint(void)const;
+	const bool GetHit()const;
 	/// <summary>
 	/// Set関数
 	/// </summary>
 	void SetAlive(bool alive);					// false：死亡</param>
 	void SetPotision(Potision2f& pos);
+	void SetColor(int c);
 	void SetSpeed(Vector2f vec);
+	void MultiplySpeed(Vector2f vec);
+	void SetHit(bool hit = true);								// trueになる
+	void SetRadius(float radius);
+	void SetSize(Size size);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -74,13 +80,19 @@ protected:
 	Potision2f pos_;
 	Size size_;
 	Vector2f speed_;
+	int multiplyCount_;
+	Vector2f defSpeed_;
 	float radius_;
 	int color_;
 	ShapeType shapeType_;
 	std::vector<Vector2f>point_;
 	bool alive_;												// true:生きてる
+	bool hit_;													// 当たったかどうか
 	int myNamber_;												// 自分の番号保存用
 	std::vector<Potision2f> hitPoint_;							// 矩形用
+	float muteki_;
+	float mutekiCount_;
+	
 	/// <summary>
 	/// 反射ベクトルを求める
 	/// </summary>

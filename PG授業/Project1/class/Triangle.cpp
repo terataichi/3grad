@@ -68,7 +68,7 @@ Vector2f Triangle::CheckHitWall(const ShapeVec& vec)
 			p.y_ <= 0.0f)
 		{
 			Vector2f n1 = { static_cast<float>(lpSysMng.GetScreenSize("x")),0.0f };
-			color_ = rand() % 0x00ff00;
+			color_ = rand() % 0xffffff;
 			return Reflection(Normal(n1).Normalized());
 		}
 	}
@@ -82,12 +82,23 @@ void Triangle::HitShape(const SharedShape& shape)
 		return;
 	}
 
+	bool check = false;
+
 	if (shape->GetType() == ShapeType::Triangle)
 	{
-		CheckHitTriangle(shape);
+		check |= CheckHitTriangle(shape);
 	}
 	if (shape->GetType() == ShapeType::Square || shape->GetType() == ShapeType::Circle)
 	{
-		CheckHitShapeTriangle(shape->GetHitPoint(), point_);
+		check |= CheckHitShapeTriangle(shape->GetHitPoint(), point_);
+	}
+
+	if (check || hit_)
+	{
+		if (shape->GetType() == ShapeType::Circle)
+		{
+			shape->MultiplySpeed(Vector2f{ 0.5f,0.5f });
+		}
+		hit_ = false;
 	}
 }

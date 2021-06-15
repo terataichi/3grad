@@ -7,20 +7,24 @@ Circle::Circle(Potision2f&& pos, float&& radius, Vector2f&& speed, int&& color) 
 {
 	shapeType_ = ShapeType::Circle;
 	radius_ = radius;
-
+	muteki_ = 0.0f;
 	for (int i = 0; i < 360; i++)
 	{
 		if (i % 30 == 0)
 		{
-			hitPoint_.emplace_back(Vector2f{ pos.x_ + radius_ * cosf(DX_PI_F / 180.0f * i),pos.x_ + radius_ * sinf(DX_PI_F / 180.0f * i) });
+			hitPoint_.emplace_back(Vector2f{ pos.x_ + radius_ * cosf(DX_PI_F / 180.0f * i),pos.y_ + radius_ * sinf(DX_PI_F / 180.0f * i) });
 		}
 	}
 }
 
 void Circle::Draw(void)
 {
-	Vector2 pos = Vector2(pos_);
-	DrawCircle(pos.x_, pos.y_, static_cast<int>(radius_), color_, true);
+	if (static_cast<int>(mutekiCount_) % 2 == 0)
+	{
+		Vector2 pos = Vector2(pos_);
+		DrawCircle(pos.x_, pos.y_, static_cast<int>(radius_), color_, true);
+	}
+
 }
 
 void Circle::Draw(float rate)
@@ -32,6 +36,23 @@ void Circle::Draw(float rate)
 bool Circle::Update(const float& delta, const ShapeVec& vec)
 {
 	Shape::Update(delta, vec);
+
+	if (muteki_ > 0.0f)
+	{
+		
+		muteki_ -= delta;
+		mutekiCount_ += delta * 6.0f;
+	}
+	else
+	{
+		mutekiCount_ = 0.0f;
+	}
+
+	if (radius_ < 10.0f)
+	{
+		alive_ = false;
+	}
+
 	return false;
 }
 
@@ -59,17 +80,46 @@ void Circle::HitShape(const SharedShape& shape)
 	{
 		return;
 	}
+	if (muteki_ > 0)
+	{
+		hit_ = false;
+		return;
+	}
+
+	bool check = false;
 
 	if (shape->GetType() == ShapeType::Circle)
 	{
-		CheckHitCircle(shape);
+		check |= CheckHitCircle(shape);
 	}
 	else if(shape->GetType() == ShapeType::Square)
 	{
-		CheckHitSquareCircle(shape->GetPotision(), shape->GetSize(), pos_, radius_);
+		check |= CheckHitSquareCircle(shape->GetPotision(), shape->GetSize(), pos_, radius_);
 	}
 	else if (shape->GetType() == ShapeType::Triangle)
 	{
-		CheckHitShapeTriangle(hitPoint_, shape->GetPoint());
+		check |= CheckHitShapeTriangle(hitPoint_, shape->GetPoint());
 	}
+
+	if (check || hit_)
+	{
+		if (shape->GetType() == ShapeType::Square)
+		{
+			shape->SetAlive(false);
+		}
+
+		radius_ *= 0.8f;
+
+		hitPoint_.clear();
+		for (int i = 0; i < 360; i++)
+		{
+			if (i % 30 == 0)
+			{
+				hitPoint_.emplace_back(Vector2f{ pos_.x_ + radius_ * cosf(DX_PI_F / 180.0f * i),pos_.y_ + radius_ * sinf(DX_PI_F / 180.0f * i) });
+			}
+		}
+		muteki_ = 3.0f;
+		hit_ = false;
+	}
+
 }

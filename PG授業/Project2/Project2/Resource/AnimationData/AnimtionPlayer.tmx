@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soure tilewidth="32" tileheight="32" tsxpath="AnimationPlayer.tsx"> // がぞうの情報：画像サイズとか
+ <state name="normal" width="" height="">// stateNameと分割数
+ データ書く
