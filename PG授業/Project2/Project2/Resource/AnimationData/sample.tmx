@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<source chipWidth="" chipHeight="" imagePath=">
+ <state name="" width="" height="" animSpeed="" loop="">
+  <data encoding="csv">
+1,2,3,4
+</data>
+ </state>
+ <state name="normal" width="4" height="1">
+  <data encoding="csv">
+</data>
+ </state>
+  </source>

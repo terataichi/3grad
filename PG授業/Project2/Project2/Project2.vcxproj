@@ -162,6 +162,7 @@
     <ClCompile Include="common\ImageManager.cpp" />
     <ClCompile Include="common\SceneManager.cpp" />
     <ClCompile Include="common\TileMap.cpp" />
+    <ClCompile Include="common\TmxAnimation.cpp" />
     <ClCompile Include="common\TmxLoader.cpp" />
     <ClCompile Include="Input\Controller.cpp" />
     <ClCompile Include="Input\Gamepad.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="common\ImageManager.h" />
     <ClInclude Include="common\SceneManager.h" />
     <ClInclude Include="common\TileMap.h" />
+    <ClInclude Include="common\TmxAnimation.h" />
     <ClInclude Include="common\TmxLoader.h" />
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="Input\Controller.h" />
