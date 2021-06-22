@@ -21,5 +21,6 @@ protected:
 	Vector2f speed_;
 	Size size_;
 	float radius_;
+	double elapsedTime_;			// Œo‰ßŠÔ•Û—p
 };
 

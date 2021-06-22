@@ -4,9 +4,17 @@
 #include "../Input/Keyboard.h"
 #include "../Input/Gamepad.h"
 #include "../common/ImageManager.h"
+#include "../common/TmxAnimation.h"
+#include "../common/AnimationManager.h"
 
 Player::Player(Potision2f&& pos, Vector2f&& speed, Size&& size, ControllType type) :Object(pos, speed, size)
 {
+	animation_ = std::make_unique<TmxAnimation>("Resource/AnimationData/AnimationPlayer.tmx");
+
+	lpAnimManager.AddAnimation("Player", animation_->GetAnimData(), animation_->GetImageData());
+
+	lpAnimManager.SetState("Player", Animation_State::Run);
+
 	Init(type);
 }
 
@@ -16,7 +24,7 @@ Player::~Player()
 
 void Player::Init(ControllType type)
 {
-	lpImageManager.GetImageHandle("Character/player01.png", { 24,1 }, { 32,32 });
+	//lpImageManager.GetImageHandle("Character/player01.png", { 24,1 }, { 32,32 });
 
 	if (type == ControllType::GamePad)
 	{
@@ -43,6 +51,7 @@ bool Player::Update(const double& delta)
 	move({ 0,-speed_.y_ }, InputID::Up);
 
 
+	elapsedTime_ += delta;
 
 	return false;
 }
@@ -50,5 +59,5 @@ bool Player::Update(const double& delta)
 void Player::Draw(const double& delta)
 {
 	auto pos = static_cast<Potision2>(pos_);
-	DrawGraph(pos.x_, pos.y_, lpImageManager.GetImageHandle("Character/player01.png")[0], true);
+	DrawGraph(pos.x_, pos.y_, lpAnimManager.GetAnimation("Player", elapsedTime_), true);
 }

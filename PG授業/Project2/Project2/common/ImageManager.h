@@ -11,9 +11,9 @@ class ImageManager
 {
 public:
 	/// <summary>
-	/// ŽÀ‘Ô‚ÌŽæ“¾
+	/// ŽÀ‘Ì‚ÌŽæ“¾
 	/// </summary>
-	/// <returns>ŽÀ‘Ô‚ª•Ô‚é</returns>
+	/// <returns>ŽÀ‘Ì‚ª•Ô‚é</returns>
 	static ImageManager& GetInstance()
 	{
 		return *sInstance_;
@@ -59,7 +59,7 @@ private:
 		}
 	};
 
-	static std::unique_ptr<ImageManager, ImageManagerDeleter> sInstance_;		// ŽÀ‘Ô
+	static std::unique_ptr<ImageManager, ImageManagerDeleter> sInstance_;		// ŽÀ‘Ì
 
 	std::map<std::string, std::vector<int>> imageID_;							// ‰æ‘œID
 };
