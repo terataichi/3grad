@@ -1,8 +1,11 @@
 #pragma once
 #include <memory>
+#include <string>
 
 #include "../common/Vector2.h"
 #include "../Input/Controller.h"
+#include "../common/AnimationManager.h"
+
 
 class Object
 {
@@ -22,5 +25,7 @@ protected:
 	Size size_;
 	float radius_;
 	double elapsedTime_;			// 経過時間保持用
+	std::string animKey_;			// 登録したアニメーションのkey保存用
+	Animation_State state_;			// ステータス管理用
 };
 

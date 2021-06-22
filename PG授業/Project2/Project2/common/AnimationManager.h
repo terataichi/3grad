@@ -18,11 +18,12 @@ enum class Animation_State
 
 struct Animation
 {
-	AnimImageData imageData;
-	AnimDataMap animVec;
+	AnimImageData imageData_;
+	AnimDataMap animVec_;
+	std::string oldState_;				// 前回のステータス
 	std::string nowState_;				// 現在のステート
 	int animCount_;						// 何回再生されたか
-	double time_;						// アニメーション再生時間管理用
+	double nowElapsedTime_;				// ステータスが変わったときに経過時間を保存しておく
 };
 
 class AnimationManager
@@ -41,21 +42,21 @@ public:
 	/// アニメーション登録
 	/// 登録するアニメーション名とアニメーションの情報
 	/// </summary>
-	bool AddAnimation(const std::string key, const AnimDataMap& animData, const AnimImageData& animImageData);
+	const std::string AddAnimation(const std::string& path,std::string key);
 	/// <summary>
 	/// アニメーションのコマ取得
 	/// </summary>
 	/// <param name="key">アニメーションkey</param>
 	/// <param name="elapsedTime">経過時間</param>
 	/// <returns>-1 : なし それ以外 : -1以外</returns>
-	int GetAnimation(const std::string key, double elapsedTime);
+	int GetAnimation(const std::string& key,const double& elapsedTime);
 	/// <summary>
 	/// 登録されているアニメーションのステータスを変える
 	/// </summary>
 	/// <param name="key"></param>
 	/// <param name="state"></param>
 	/// <returns></returns>
-	bool SetState(const std::string& key, const Animation_State& state);
+	bool SetState(const std::string& key, const Animation_State& state, const double& nowElapsedTime);
 private:
 	AnimationManager();
 	~AnimationManager();

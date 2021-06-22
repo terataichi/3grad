@@ -12,7 +12,7 @@ void SceneManager::Run(void)
 		return;
 	}
 
-	scene_ = std::make_unique<TitleScene>();
+	scene_ = std::make_unique<GameScene>();
 	time_ = std::make_unique<TimeManager>();
 
 	while (DxLib::ProcessMessage() == 0 && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))

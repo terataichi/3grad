@@ -17,6 +17,5 @@ public:
 	bool Update(const double& delta) override;
 	void Draw(const double& delta) override;
 private:
-	std::unique_ptr<TmxAnimation> animation_;
 };
 
