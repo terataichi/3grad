@@ -28,27 +28,23 @@ const std::string AnimationManager::AddAnimation(const std::string& path,std::st
 		key += std::to_string(count);
 		count++;
 	}
+	// TMX“Ç‚İ‚İ
+	std::unique_ptr<TmxAnimation> animation_;
+	animation_ = std::make_unique<TmxAnimation>(path);
 
-	if (!animMap_.contains(key))
-	{
-		std::unique_ptr<TmxAnimation> animation_;
-		animation_ = std::make_unique<TmxAnimation>(path);
-		auto animImageData = animation_->GetImageData();
-		auto animData = animation_->GetAnimData();
+	// “o˜^‚·‚éî•ñ‚ÌŠi”[
+	Animation anim;
+	anim.imageData_ = animation_->GetImageData();
+	lpImageManager.GetImageHandle(anim.imageData_.imageName, anim.imageData_.imageDivSize, anim.imageData_.imageSize);
 
-		auto debug = lpImageManager.GetImageHandle(animImageData.imageName, animImageData.imageDivSize, animImageData.imageSize);
+	anim.animVec_ = animation_->GetAnimData();
+	anim.nowState_ = stateMap_[Animation_State::Non];
+	anim.animCount_ = 0;
+	anim.startTime_ = 0.0;
 
-		Animation anim;
-		anim.imageData_ = animImageData;
-		anim.animVec_ = animData;
-		anim.nowState_ = stateMap_[Animation_State::Non];
-		anim.animCount_ = 0;
-		anim.nowElapsedTime_ = 0.0;
-		//anim.nowState_ = stateMap_[Animation_State::Normal];
+	// “o˜^
+	animMap_.try_emplace(key, anim);
 
-		// “o˜^
-		animMap_.try_emplace(key, anim);
-	}
 	return key;
 }
 
@@ -69,7 +65,7 @@ int AnimationManager::GetAnimation(const std::string& key, const double& elapsed
 			{
 				// ‚PƒRƒ}‚Ì•\¦ŠÔ‚ğ‰ÁZ‚µ‚ÄŒo‰ßŠÔ‚æ‚è‘å‚«‚­‚È‚Á‚½‚ç‚»‚±‚ªŒ»İ‚Ì•\¦ƒRƒ}‚É‚È‚é
 				time += vec.interval;
-				if (time >= elapsedTime - animMap_[key].nowElapsedTime_)
+				if (time >= elapsedTime - animMap_[key].startTime_)
 				{
 					animMap_[key].animCount_ = 0;
 					return 	lpImageManager.GetImageHandle(animMap_[key].imageData_.imageName,
@@ -77,6 +73,10 @@ int AnimationManager::GetAnimation(const std::string& key, const double& elapsed
 						animMap_[key].imageData_.imageSize)
 						[vec.chip];
 				}
+			}
+			if (state.loop == -1)
+			{
+				animMap_[key].startTime_ = elapsedTime;
 			}
 			animMap_[key].animCount_++;
 		}
@@ -96,15 +96,15 @@ bool AnimationManager::SetState(const std::string& key, const Animation_State& s
 			assert(!"SetState : ƒXƒe[ƒ^ƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
 			return false;
 		}
+
 		// ‚¢‚Ü‚Æ“¯‚¶‚¾‚Á‚½‚çƒŠƒZƒbƒg‚µ‚È‚¢
 		if (animMap_[key].nowState_ == stateMap_[state])
 		{
 			return true;
 		}
-
 		animMap_[key].nowState_ = stateMap_[state];
 		animMap_[key].animCount_ = 0;
-		animMap_[key].nowElapsedTime_ = nowElapsedTime;
+		animMap_[key].startTime_ = nowElapsedTime;
 		return true;
 	}
 	assert(!"SetState : ƒL[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");

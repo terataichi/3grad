@@ -10,7 +10,6 @@
 class Object
 {
 public:
-	Object();
 	Object(Potision2f& pos, Vector2f& speed, Size& size);
 	~Object();
 
@@ -24,6 +23,7 @@ protected:
 	Vector2f speed_;
 	Size size_;
 	float radius_;
+	bool turn_;						// 左向いてるか右向いてるか(画像が右向いてたらfalseで右)
 	double elapsedTime_;			// 経過時間保持用
 	std::string animKey_;			// 登録したアニメーションのkey保存用
 	Animation_State state_;			// ステータス管理用

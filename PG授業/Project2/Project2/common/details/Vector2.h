@@ -3,6 +3,9 @@
 #include <cassert>
 
 template<class T>
+Vector2Template<T> Vector2Template<T>::ZERO = {static_cast<T>(0),static_cast<T>(0)};
+
+template<class T>
 Vector2Template<T>::Vector2Template()
 {
 	x_ = 0;

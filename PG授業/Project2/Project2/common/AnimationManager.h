@@ -20,10 +20,9 @@ struct Animation
 {
 	AnimImageData imageData_;
 	AnimDataMap animVec_;
-	std::string oldState_;				// 前回のステータス
 	std::string nowState_;				// 現在のステート
 	int animCount_;						// 何回再生されたか
-	double nowElapsedTime_;				// ステータスが変わったときに経過時間を保存しておく
+	double startTime_;					// ステータスが変わったときに経過時間を保存しておく
 };
 
 class AnimationManager
@@ -39,10 +38,12 @@ public:
 	}
 
 	/// <summary>
-	/// アニメーション登録
-	/// 登録するアニメーション名とアニメーションの情報
+	/// アニメーションを登録する
 	/// </summary>
-	const std::string AddAnimation(const std::string& path,std::string key);
+	/// <param name="tmxPath">登録するアニメーションの情報が入っているTMXへのパス</param>
+	/// <param name="key">名前何にするか</param>
+	/// <returns>登録されたキーが返ってくる(名前被りしたら別の名前で返ってくる)</returns>
+	const std::string AddAnimation(const std::string& tmxPath,std::string key);
 	/// <summary>
 	/// アニメーションのコマ取得
 	/// </summary>
@@ -53,9 +54,9 @@ public:
 	/// <summary>
 	/// 登録されているアニメーションのステータスを変える
 	/// </summary>
-	/// <param name="key"></param>
-	/// <param name="state"></param>
-	/// <returns></returns>
+	/// <param name="key">登録して保持しているキー</param>
+	/// <param name="state">ステータス(登録されていないステータスは投げても更新されない)</param>
+	/// <returns>true : 成功</returns>
 	bool SetState(const std::string& key, const Animation_State& state, const double& nowElapsedTime);
 private:
 	AnimationManager();
@@ -71,7 +72,6 @@ private:
 			delete manager;
 		}
 	};
-
 
 	std::map<Animation_State, std::string> stateMap_;									// ステータス別アニメーションにアクセスするためのマップ
 	std::map<std::string, Animation> animMap_;											// AddAnimationで登録するkeyを使う

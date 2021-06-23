@@ -46,6 +46,7 @@ public:
 	Vector2Template& operator /= (T k);
 
 	float Magnitude()const;
+	static Vector2Template ZERO;
 	Vector2Template<float> Normalized(void);
 };
 

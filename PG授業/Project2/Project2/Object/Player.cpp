@@ -37,18 +37,33 @@ bool Player::Update(const double& delta)
 {
 	controller_->Update();
 	state_ = Animation_State::Normal;
-	auto move = [&](Vector2f vel, InputID id)
+	Vector2f velValue = { 0.0f,0.0f };
+	auto move = [&](Vector2f&& vel, InputID id)
 	{
 		if (controller_->GetPushingTrigger(id))
 		{
-			pos_ += vel * static_cast<float>(delta);
-			state_ = Animation_State::Run;
+			if (id == InputID::Left)
+			{
+				turn_ = true;
+			}
+			else if (id == InputID::Right)
+			{
+				turn_ = false;
+			}
+
+			velValue += vel * static_cast<float>(delta);
 		}
 	};
 	move({ 0,speed_.y_ }, InputID::Down);
 	move({ -speed_.x_,0 }, InputID::Left);
 	move({ speed_.x_,0 }, InputID::Right);
 	move({ 0,-speed_.y_ }, InputID::Up);
+
+	if (velValue != Vector2f::ZERO)
+	{
+		pos_ += velValue;
+		state_ = Animation_State::Run;
+	}
 
 
 	elapsedTime_ += delta;
@@ -61,5 +76,5 @@ void Player::Draw(const double& delta)
 	auto pos = static_cast<Potision2>(pos_);
 
 	lpAnimManager.SetState(animKey_, state_, elapsedTime_);
-	DrawGraph(pos.x_, pos.y_, lpAnimManager.GetAnimation(animKey_, elapsedTime_), true);
+	DrawRotaGraph(pos.x_, pos.y_, 1.7, 0.0, lpAnimManager.GetAnimation(animKey_, elapsedTime_), true, turn_);
 }
