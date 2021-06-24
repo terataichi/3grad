@@ -41,6 +41,11 @@ public:
 	/// 自分がなんのシーンなのか
 	/// </summary>
 	virtual SceneName MyName() = 0;
+	/// <summary>
+	/// スクリーンID取得
+	/// </summary>
+	/// <returns>スクリーンID</returns>
+	const int& GetScreenID(void);
 
 protected:
 	int screenID_;

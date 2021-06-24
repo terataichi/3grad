@@ -18,13 +18,11 @@
 9,0.1
 </data>
  </state>
- <state name="run" loop="-1" width="2" height="7">
+ <state name="run" loop="-1" width="2" height="5">
   <data encoding="csv">
-17,0.2,
 18,0.2,
 19,0.2,
-20,0.3,
-21,0.3,
+20,0.2,
 22,0.2,
 23,0.2
 </data>

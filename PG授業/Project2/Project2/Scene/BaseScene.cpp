@@ -20,3 +20,8 @@ void BaseScene::Draw(const double& deltaTime)
 {
 	DrawGraph(0, 0, screenID_,true);
 }
+
+const int& BaseScene::GetScreenID(void)
+{
+	return screenID_;
+}

@@ -12,7 +12,7 @@ void SceneManager::Run(void)
 		return;
 	}
 
-	scene_ = std::make_unique<GameScene>();
+	scene_ = std::make_unique<TitleScene>();
 	time_ = std::make_unique<TimeManager>();
 
 	while (DxLib::ProcessMessage() == 0 && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
@@ -41,7 +41,7 @@ void SceneManager::Draw(void)
 
 bool SceneManager::SystemInit(void)
 {
-	DxLib::SetGraphMode(ScreenSizeX, ScreenSizeY, 32);
+	DxLib::SetGraphMode(screenSize_.x_, screenSize_.y_, 32);
 	DxLib::ChangeWindowMode(true);
 	DxLib::SetWindowText("1916025_éõçËëÂíq");
 	if (DxLib::DxLib_Init() == -1) return false;
@@ -49,7 +49,7 @@ bool SceneManager::SystemInit(void)
 	return true;
 }
 
-SceneManager::SceneManager()
+SceneManager::SceneManager():screenSize_(1024, 768)
 {
 	initFlag_ = SystemInit();
 }

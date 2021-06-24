@@ -6,7 +6,7 @@
 #include "../common/ImageManager.h"
 #include "../common/AnimationManager.h"
 
-Player::Player(Potision2f&& pos, Vector2f&& speed, Size&& size, ControllType type) :Object(pos, speed, size)
+Player::Player(Potision2f&& pos, Vector2f&& speed, ControllType type) :Object(pos, speed)
 {
 	Init(type);
 }

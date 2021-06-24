@@ -7,6 +7,7 @@
 #include "GameScene.h"
 #include "Transition/CrossOverScene.h"
 #include "Transition/Fade_InOutScene.h"
+#include "Transition/BrightRotationScene.h"
 #include "../common/ImageManager.h"
 
 TitleScene::TitleScene()
@@ -29,7 +30,7 @@ UniqueBase TitleScene::Update(UniqueBase scene, const double& deltaTime)
 {
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		return std::make_unique<Fade_InOutScene>(std::move(scene), std::make_unique<GameScene>(), 5.0);
+		return std::make_unique<BrightRotationScene>(std::move(scene), std::make_unique<GameScene>(), 5.0);
 	}
 	return scene;
 }

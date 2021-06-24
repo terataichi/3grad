@@ -21,6 +21,6 @@ private:
     SceneName MyName()override { return SceneName::Game; };
 
     std::list<std::unique_ptr<Object>> objList_;
-    std::unique_ptr<TileMap> map_;
+    std::shared_ptr<TileMap> map_;
 };
 

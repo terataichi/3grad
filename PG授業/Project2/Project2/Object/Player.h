@@ -10,7 +10,7 @@ class Player:
 	public Object
 {
 public:
-	Player(Potision2f&& pos, Vector2f&& speed, Size&& size, ControllType type = ControllType::Keybord);
+	Player(Potision2f&& pos, Vector2f&& speed, ControllType type = ControllType::Keybord);
 	~Player();
 
 	void Init(ControllType type)override;

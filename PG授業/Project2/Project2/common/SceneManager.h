@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "Vector2.h"
 
 class TimeManager;
 class BaseScene;
@@ -21,10 +22,13 @@ public:
 	void Run(void);
 	void Update(void);
 	void Draw(void);
+	const Size screenSize_;
 private:
 	std::unique_ptr<BaseScene> scene_;
 	std::unique_ptr<TimeManager> time_;
 	
+
+
 	/// <summary>
 	/// ƒVƒXƒeƒ€‚Ì‰Šú‰»
 	/// </summary>

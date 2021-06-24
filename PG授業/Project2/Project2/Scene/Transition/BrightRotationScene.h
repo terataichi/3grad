@@ -16,8 +16,9 @@ public:
 
 private:
 	bool TransitionUpdate(const double& deltaTime)override;
-	void Draw(const double& deltaTime)override;
+	void DrawOwnScreen(const double& deltaTime)override;
 
+	double angle_;													// Šp“x
 	double limit_;													// ‰½•b‚ÅŠ®—¹‚µ‚Ä‚Ù‚µ‚¢‚©
 	double time_;													// Œo‰ßŽžŠÔ
 	double fadeCount_;												// ‰æ–ÊŒø‰Ê—p
