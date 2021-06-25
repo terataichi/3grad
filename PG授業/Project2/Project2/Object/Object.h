@@ -6,7 +6,6 @@
 #include "../Input/Controller.h"
 #include "../common/AnimationManager.h"
 
-
 class Object
 {
 public:

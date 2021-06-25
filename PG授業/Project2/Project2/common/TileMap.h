@@ -47,6 +47,21 @@ public:
 	/// <param name="name">レイヤー名</param>
 	const LayerData& GetLayerData(Map_Layer&& name) const;
 	/// <summary>
+	/// 座標からチップの場所を特定
+	/// </summary>
+	/// <param name="layer">レイヤー名</param>
+	/// <param name="pos">座標</param>
+	/// <returns>失敗-1</returns>
+	const int GetChipData(Map_Layer&& layer, const Potision2& pos);
+	/// <summary>
+	/// チップデータの取得
+	/// </summary>
+	/// <param name="layer">レイヤー名</param>
+	/// <param name="x">横の番号</param>
+	/// <param name="y">縦の番号</param>
+	/// <returns>失敗：-1</returns>
+	const int GetChipData(Map_Layer layer,const int x,const int y);
+	/// <summary>
 	/// マップデータの情報取得
 	/// </summary>
 	const MapData& GetMapData(void) const;
@@ -67,6 +82,6 @@ private:
 	LayerVec layerVec_;
 	MapData mapData_;
 	ImageData imageData_;
-	std::map<Map_Layer, std::string> accessLayer_;
+	std::map<Map_Layer, std::string> accessLayer_;			// レイヤー名がstringなので変換器
 };
 

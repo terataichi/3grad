@@ -110,3 +110,13 @@ bool AnimationManager::SetState(const std::string& key, const Animation_State& s
 	assert(!"SetState : ƒL[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
 	return false;
 }
+
+const Sizef& AnimationManager::GetChipSize(const std::string& key)
+{
+	if (animMap_.contains(key))
+	{
+		return Sizef(animMap_[key].imageData_.imageSize);
+	}
+
+	return Sizef::ZERO;
+}

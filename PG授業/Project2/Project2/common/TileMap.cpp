@@ -60,6 +60,27 @@ const LayerData& TileMap::GetLayerData(Map_Layer&& name)const
 	return tmp;
 }
 
+const int TileMap::GetChipData(Map_Layer&& layer, const Potision2& pos)
+{
+	return GetChipData(layer, pos.x_ / mapData_.tileWidth, pos.y_ / mapData_.tileHeight);
+}
+
+const int TileMap::GetChipData(Map_Layer layer, const int x, const int y)
+{
+	for (auto& data : layerVec_)
+	{
+		if (data.name == accessLayer_.at(layer))
+		{
+			if (data.chipData.size() > x + y * data.width && x + y * data.width >= 0)
+			{
+				return data.chipData[x + y * data.width];
+			}
+			return -1;
+		}
+	}
+	return -1;
+}
+
 const MapData& TileMap::GetMapData(void) const
 {
 	return mapData_;

@@ -5,9 +5,11 @@
 #include "../Input/Gamepad.h"
 #include "../common/ImageManager.h"
 #include "../common/AnimationManager.h"
+#include "../common/TileMap.h"
 
-Player::Player(Potision2f&& pos, Vector2f&& speed, ControllType type) :Object(pos, speed)
+Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Object(pos, speed)
 {
+	tileMap_ = tileMap;
 	Init(type);
 }
 
@@ -37,7 +39,9 @@ bool Player::Update(const double& delta)
 {
 	controller_->Update();
 	state_ = Animation_State::Normal;
-	Vector2f velValue = { 0.0f,0.0f };
+	Vector2f velValue = Vector2f::ZERO;
+	Sizef offsetSize = Sizef::ZERO;
+
 	auto move = [&](Vector2f&& vel, InputID id)
 	{
 		if (controller_->GetPushingTrigger(id))
@@ -50,7 +54,7 @@ bool Player::Update(const double& delta)
 			{
 				turn_ = false;
 			}
-
+			// “–‚½‚è”»’è—p‚ÌoffsetŽæ“¾
 			velValue += vel * static_cast<float>(delta);
 		}
 	};
@@ -61,7 +65,10 @@ bool Player::Update(const double& delta)
 
 	if (velValue != Vector2f::ZERO)
 	{
-		pos_ += velValue;
+		if (tileMap_->GetChipData(Map_Layer::Block, pos_ + velValue) == 0)
+		{
+			pos_ += velValue;
+		};
 		state_ = Animation_State::Run;
 	}
 
@@ -77,4 +84,20 @@ void Player::Draw(const double& delta)
 
 	lpAnimManager.SetState(animKey_, state_, elapsedTime_);
 	DrawRotaGraph(pos.x_, pos.y_, 1.7, 0.0, lpAnimManager.GetAnimation(animKey_, elapsedTime_), true, turn_);
+}
+
+Sizef Player::GetOffSet(Vector2f vel)
+{
+	Sizef size;
+	Sizef animSize = lpAnimManager.GetChipSize(animKey_);
+	if (vel.x_ > 0)
+	{
+		size.x_ += animSize.x_ / 2;
+	}
+	else
+	{
+		size.x_ -= animSize.x_ / 2;
+	}
+
+	return;
 }

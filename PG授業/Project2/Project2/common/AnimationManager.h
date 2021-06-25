@@ -58,6 +58,9 @@ public:
 	/// <param name="state">ステータス(登録されていないステータスは投げても更新されない)</param>
 	/// <returns>true : 成功</returns>
 	bool SetState(const std::string& key, const Animation_State& state, const double& nowElapsedTime);
+
+	const Sizef& GetChipSize(const std::string& key);
+
 private:
 	AnimationManager();
 	~AnimationManager();
