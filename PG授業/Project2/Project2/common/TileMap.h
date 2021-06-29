@@ -67,6 +67,14 @@ public:
 	const MapData& GetMapData(void) const;
 
 	/// <summary>
+	/// コリジョンデータに当たってるかどうか
+	/// </summary>
+	/// <param name="pos">判定したい座標</param>
+	/// <param name="size">サイズ</param>
+	/// <returns></returns>
+	bool CheckHitCollision(Potision2f pos, Sizef size);
+
+	/// <summary>
 	/// 指定したレイヤー情報の描画
 	/// </summary>
 	/// <param name="layerData"></param>
@@ -82,6 +90,7 @@ private:
 	LayerVec layerVec_;
 	MapData mapData_;
 	ImageData imageData_;
+	CollisionPList collisionList_;
 	std::map<Map_Layer, std::string> accessLayer_;			// レイヤー名がstringなので変換器
 };
 

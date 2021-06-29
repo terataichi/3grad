@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include <list>
 #include "Vector2.h"
 
 // rappidXml
@@ -35,6 +36,7 @@ struct ImageData
 
 
 using LayerVec = std::vector<LayerData>;
+using CollisionPList = std::list<std::pair<Potision2f, Sizef>>;
 
 class TmxLoader
 {
@@ -48,6 +50,7 @@ public:
 	MapData GetMapData(void);
 	ImageData GetImageData(void);
 	std::string GetTmxFileName(void);
+	CollisionPList GetCollisionList(void);
 private:
 	bool LoadTsx(std::string fileName);
 
@@ -60,6 +63,8 @@ private:
 	ImageData imageData_;
 	unsigned int leyerGID_;
 	unsigned int layerSize_;										// 最大レイヤー数
+
+	CollisionPList collisionVec_;										// 当たり判定用の座標とサイズ格納
 
 	rapidxml::xml_document<> docment;
 };

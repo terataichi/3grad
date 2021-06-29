@@ -37,7 +37,7 @@ bool TileMap::LoadTmx(std::string fileName)
 	layerVec_ = loader_.GetLayerData();
 	mapData_ = loader_.GetMapData();
 	imageData_ = loader_.GetImageData();
-
+	collisionList_ = loader_.GetCollisionList();
 	return true;
 }
 
@@ -71,9 +71,10 @@ const int TileMap::GetChipData(Map_Layer layer, const int x, const int y)
 	{
 		if (data.name == accessLayer_.at(layer))
 		{
-			if (data.chipData.size() > x + y * data.width && x + y * data.width >= 0)
+			auto tmpwidth = x + y * data.width;
+			if (data.chipData.size() > tmpwidth && x + y * data.width >= 0)
 			{
-				return data.chipData[x + y * data.width];
+				return data.chipData[tmpwidth];
 			}
 			return -1;
 		}
@@ -84,6 +85,23 @@ const int TileMap::GetChipData(Map_Layer layer, const int x, const int y)
 const MapData& TileMap::GetMapData(void) const
 {
 	return mapData_;
+}
+
+bool TileMap::CheckHitCollision(Potision2f pos, Sizef size)
+{
+	Sizef tmpSize = { size.x_ / 2 ,size.y_ / 2 };
+	for (auto& data : collisionList_)
+	{
+		if (data.first.x_ < pos.x_ - tmpSize.x_ &&
+			data.first.x_ + data.second.x_ > pos.x_ + tmpSize.x_ &&
+			data.first.y_ < pos.y_ - tmpSize.y_ &&
+			data.first.y_ + data.second.y_ > pos.y_ + tmpSize.y_)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void TileMap::DrawMap(LayerData layerData)

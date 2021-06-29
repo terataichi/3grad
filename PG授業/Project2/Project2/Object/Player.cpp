@@ -65,11 +65,11 @@ bool Player::Update(const double& delta)
 
 	if (velValue != Vector2f::ZERO)
 	{
-		if (tileMap_->GetChipData(Map_Layer::Block, pos_ + velValue) == 0)
+		if (!tileMap_->CheckHitCollision(pos_ + velValue,lpAnimManager.GetChipSize(animKey_)))
 		{
 			pos_ += velValue;
+			state_ = Animation_State::Run;
 		};
-		state_ = Animation_State::Run;
 	}
 
 
@@ -99,5 +99,5 @@ Sizef Player::GetOffSet(Vector2f vel)
 		size.x_ -= animSize.x_ / 2;
 	}
 
-	return;
+	return size;
 }

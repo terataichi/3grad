@@ -9,6 +9,7 @@ TmxLoader::TmxLoader()
     version_.try_emplace("1.4.1", 1);
     version_.try_emplace("1.4.2", 1);
     version_.try_emplace("1.4.3", 1);
+    version_.try_emplace("1.5", 1);
 
     mapData_ = {};
     layerData_ = {};
@@ -27,7 +28,8 @@ bool TmxLoader::LoadTmx(std::string fileName)
     root_node = docment.first_node("map");
 
     // バージョンチェック
-    if (version_.count(root_node->first_attribute("version")->value()) == 0) {
+    auto ver = root_node->first_attribute("version")->value();
+    if (version_.count(ver) == 0) {
         assert(!"バージョンが対応していません");
         return false;
     }
@@ -80,6 +82,24 @@ bool TmxLoader::LoadTmx(std::string fileName)
         layerData_.emplace_back(layer);
     }
 
+    // 当たり判定用のデータがあったらそれを格納しておく
+    rapidxml::xml_node<>* col_node = root_node->first_node("objectgroup");
+    if (col_node)
+    {
+        for (rapidxml::xml_node<>* object = col_node->first_node("object");
+            object != nullptr;
+            object = object->next_sibling("object"))
+        {
+            float x = static_cast<float>(atof(object->first_attribute("x")->value()));
+            float y = static_cast<float>(atof(object->first_attribute("y")->value()));
+            float width = static_cast<float>(atof(object->first_attribute("width")->value()));
+            float height = static_cast<float>(atof(object->first_attribute("height")->value()));
+
+            collisionVec_.emplace_back(
+                Potision2f{ x,y },
+                Sizef{ width,height });
+        }
+    }
 
     //  Tsxファイル名を保存
     rapidxml::xml_node<>* tileset_node = root_node->first_node("tileset");
@@ -140,4 +160,9 @@ ImageData TmxLoader::GetImageData(void)
 std::string TmxLoader::GetTmxFileName(void)
 {
     return tmxFileName_;
+}
+
+CollisionPList TmxLoader::GetCollisionList(void)
+{
+    return collisionVec_;
 }
