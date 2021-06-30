@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "Object.h"
+#include "../common/Raycast.h"
 
 class Controller;
 class TmxAnimation;
@@ -19,7 +20,7 @@ public:
 	void Draw(const double& delta) override;
 private:
 	Sizef GetOffSet(Vector2f vel);
-
+	Raycast raycast_;
 	std::shared_ptr<TileMap> tileMap_;						// ƒQ[ƒ€ƒV[ƒ“‚©‚ç‚à‚ç‚Á‚Ä‚­‚é
 };
 

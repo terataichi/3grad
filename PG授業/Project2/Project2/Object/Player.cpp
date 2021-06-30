@@ -6,6 +6,7 @@
 #include "../common/ImageManager.h"
 #include "../common/AnimationManager.h"
 #include "../common/TileMap.h"
+#include "../_debug/_DebugDispOut.h"
 
 Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Object(pos, speed)
 {
@@ -38,11 +39,28 @@ void Player::Init(ControllType type)
 bool Player::Update(const double& delta)
 {
 	controller_->Update();
+
+	auto checkMove = [&](Vector2f&& moveVec) 
+	{
+		Raycast::Ray ray{ pos_,pos_ + moveVec ,moveVec };
+		_dbgDrawLine(ray.p1.x_, ray.p1.y_, ray.p1.x_ + ray.v.x_, ray.p1.y_ + ray.v.y_,0xfff);
+
+		for (auto& col: tileMap_->GetCollitionData())
+		{
+			_dbgDrawBox(col.first.x_, col.first.y_, col.first.x_ + col.second.x_, col.first.y_ + col.second.y_, 0xfff, false);
+			if (raycast_.CheckCollision(ray, col))
+			{
+				return false;
+			}
+		}
+		return true;
+	};
+
 	state_ = Animation_State::Normal;
 	Vector2f velValue = Vector2f::ZERO;
 	Sizef offsetSize = Sizef::ZERO;
 
-	auto move = [&](Vector2f&& vel, InputID id)
+	auto move = [&](Vector2f&& vel, InputID id, Sizef offset)
 	{
 		if (controller_->GetPushingTrigger(id))
 		{
@@ -54,22 +72,24 @@ bool Player::Update(const double& delta)
 			{
 				turn_ = false;
 			}
-			// “–‚½‚è”»’è—p‚ÌoffsetŽæ“¾
-			velValue += vel * static_cast<float>(delta);
+			if (checkMove(vel * static_cast<float>(delta) + offset))
+			{
+				// “–‚½‚è”»’è—p‚ÌoffsetŽæ“¾
+				velValue += vel * static_cast<float>(delta);
+			}
 		}
 	};
-	move({ 0,speed_.y_ }, InputID::Down);
-	move({ -speed_.x_,0 }, InputID::Left);
-	move({ speed_.x_,0 }, InputID::Right);
-	move({ 0,-speed_.y_ }, InputID::Up);
+	Sizef animSize = lpAnimManager.GetChipSize(animKey_);
+	move({ 0,speed_.y_ }, InputID::Down, Sizef{ 0,animSize.y_ / 2.0f});
+	move({ -speed_.x_,0 }, InputID::Left, Sizef{ -animSize.x_ / 2.0f,0 });
+	move({ speed_.x_,0 }, InputID::Right, Sizef{ animSize.x_ / 2.0f,0 });
+	move({ 0,-speed_.y_ }, InputID::Up, Sizef{ 0,-animSize.y_ / 2.0f });
+
 
 	if (velValue != Vector2f::ZERO)
 	{
-		if (!tileMap_->CheckHitCollision(pos_ + velValue,lpAnimManager.GetChipSize(animKey_)))
-		{
-			pos_ += velValue;
-			state_ = Animation_State::Run;
-		};
+		pos_ += velValue;
+		state_ = Animation_State::Run;
 	}
 
 
@@ -83,7 +103,7 @@ void Player::Draw(const double& delta)
 	auto pos = static_cast<Potision2>(pos_);
 
 	lpAnimManager.SetState(animKey_, state_, elapsedTime_);
-	DrawRotaGraph(pos.x_, pos.y_, 1.7, 0.0, lpAnimManager.GetAnimation(animKey_, elapsedTime_), true, turn_);
+	DrawRotaGraph(pos.x_, pos.y_, 1, 0.0, lpAnimManager.GetAnimation(animKey_, elapsedTime_), true, turn_);
 }
 
 Sizef Player::GetOffSet(Vector2f vel)

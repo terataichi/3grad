@@ -2,7 +2,7 @@
 #include "../Scene/TitleScene.h"
 #include "../Scene/GameScene.h"
 #include "../TimeManager.h"
-
+#include "../_debug/_DebugDispOut.h"
 #include <DxLib.h>
 
 void SceneManager::Run(void)
@@ -17,7 +17,7 @@ void SceneManager::Run(void)
 
 	while (DxLib::ProcessMessage() == 0 && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
-
+		_dbgStartDraw();
 		time_->Update();
 
 		scene_ = scene_->Update(std::move(scene_), time_->GetDeltaTime());
@@ -26,6 +26,7 @@ void SceneManager::Run(void)
 		DxLib::SetDrawScreen(DX_SCREEN_BACK);
 		DxLib::ClsDrawScreen();
 		scene_->Draw(time_->GetDeltaTime());
+		_dbgAddDraw();
 		DxLib::ScreenFlip();
 	}
 	DxLib_End();
@@ -45,6 +46,7 @@ bool SceneManager::SystemInit(void)
 	DxLib::ChangeWindowMode(true);
 	DxLib::SetWindowText("1916025_éõçËëÂíq");
 	if (DxLib::DxLib_Init() == -1) return false;
+	_dbgSetup(screenSize_.x_, screenSize_.y_, 255);
 
 	return true;
 }

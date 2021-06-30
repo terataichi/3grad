@@ -7,6 +7,7 @@
 // rappidXml
 #include "../TileMap/rapidxml.hpp"
 #include "../TileMap/rapidxml_utils.hpp"
+#include "Collision.h"
 
 #define TMX_VERSION "1.4"
 
@@ -36,7 +37,6 @@ struct ImageData
 
 
 using LayerVec = std::vector<LayerData>;
-using CollisionPList = std::list<std::pair<Potision2f, Sizef>>;
 
 class TmxLoader
 {

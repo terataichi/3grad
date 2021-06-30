@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="common\AnimationManager.cpp" />
     <ClCompile Include="common\ImageManager.cpp" />
+    <ClCompile Include="common\Raycast.cpp" />
     <ClCompile Include="common\SceneManager.cpp" />
     <ClCompile Include="common\TileMap.cpp" />
     <ClCompile Include="common\TmxAnimation.cpp" />
@@ -180,11 +181,15 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Scene\Transition\TransitionScene.cpp" />
+    <ClCompile Include="_debug\_DebugConOut.cpp" />
+    <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\AnimationManager.h" />
+    <ClInclude Include="common\Collision.h" />
     <ClInclude Include="common\details\Vector2.h" />
     <ClInclude Include="common\ImageManager.h" />
+    <ClInclude Include="common\Raycast.h" />
     <ClInclude Include="common\SceneManager.h" />
     <ClInclude Include="common\TileMap.h" />
     <ClInclude Include="common\TmxAnimation.h" />
@@ -208,6 +213,8 @@
     <ClInclude Include="TileMap\rapidxml_utils.hpp" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Scene\Transition\TransitionScene.h" />
+    <ClInclude Include="_debug\_DebugConOut.h" />
+    <ClInclude Include="_debug\_DebugDispOut.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

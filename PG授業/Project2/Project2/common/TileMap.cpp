@@ -87,21 +87,9 @@ const MapData& TileMap::GetMapData(void) const
 	return mapData_;
 }
 
-bool TileMap::CheckHitCollision(Potision2f pos, Sizef size)
+const CollisionPList& TileMap::GetCollitionData(void) const
 {
-	Sizef tmpSize = { size.x_ / 2 ,size.y_ / 2 };
-	for (auto& data : collisionList_)
-	{
-		if (data.first.x_ < pos.x_ - tmpSize.x_ &&
-			data.first.x_ + data.second.x_ > pos.x_ + tmpSize.x_ &&
-			data.first.y_ < pos.y_ - tmpSize.y_ &&
-			data.first.y_ + data.second.y_ > pos.y_ + tmpSize.y_)
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return collisionList_;
 }
 
 void TileMap::DrawMap(LayerData layerData)

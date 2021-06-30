@@ -66,13 +66,17 @@ public:
 	/// </summary>
 	const MapData& GetMapData(void) const;
 
+
+	const CollisionPList& GetCollitionData(void) const;
+
+
 	/// <summary>
 	/// コリジョンデータに当たってるかどうか
 	/// </summary>
 	/// <param name="pos">判定したい座標</param>
 	/// <param name="size">サイズ</param>
 	/// <returns></returns>
-	bool CheckHitCollision(Potision2f pos, Sizef size);
+	//bool CheckHitCollision(Potision2f pos, Sizef size);
 
 	/// <summary>
 	/// 指定したレイヤー情報の描画
