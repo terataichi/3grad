@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<source version="1.4" chipsizeX="32" chipsizeY="32" divwidth="24" divheight="1" imagepath="./Image/Character/player01.png">
+<source version="1.4" chipsizeX="24" chipsizeY="24" divwidth="24" divheight="1" imagepath="./Image/Character/player01.png">
  <state name="normal" loop="-1" width="2" height="3">
   <data encoding="csv">
-0,0.1,
-1,0.1,
-2,0.1
+0,0.2,
+1,0.2,
+2,0.2
 </data>
  </state>
  <state name="walk" loop="-1" width="2" height="7">
@@ -18,13 +18,12 @@
 9,0.1
 </data>
  </state>
- <state name="run" loop="-1" width="2" height="5">
+ <state name="run" loop="-1" width="2" height="4">
   <data encoding="csv">
-18,0.2,
-19,0.2,
-20,0.2,
-22,0.2,
-23,0.2
+18,0.15,
+19,0.15,
+20,0.15,
+22,0.15,
 </data>
  </state>
   </source>
