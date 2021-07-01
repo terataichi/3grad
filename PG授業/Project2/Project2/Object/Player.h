@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <list>
 
 #include "Object.h"
 #include "../common/Raycast.h"
@@ -21,6 +22,12 @@ public:
 private:
 	Sizef GetOffSet(Vector2f vel);
 	Raycast raycast_;
-	std::shared_ptr<TileMap> tileMap_;						// ゲームシーンからもらってくる
+	std::shared_ptr<TileMap> tileMap_;							// ゲームシーンからもらってくる
+	std::map<InputID, std::list<Sizef>> offset_;				// レイを飛ばすためのやつ
+
+	float displacement_;										// 変化量
+	double g_elapsedTime_;										// 重力の経過時間計測用
+
+	bool jump_;													// ジャンプするためのトリガー
 };
 

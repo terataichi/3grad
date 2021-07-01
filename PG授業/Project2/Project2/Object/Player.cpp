@@ -27,6 +27,18 @@ void Player::Init(ControllType type)
 	animKey_ = lpAnimManager.AddAnimation("Resource/AnimationData/AnimationPlayer.tmx", "Player");
 	lpAnimManager.SetState(animKey_, state_,elapsedTime_);
 
+
+	Sizef animSize = lpAnimManager.GetChipSize(animKey_) / 2.0f;
+	offset_.try_emplace(InputID::Left, std::list<Sizef>{ Sizef{ -animSize.x_,0 }, Sizef{ -animSize }, Sizef{ -animSize.x_,animSize.y_ } });
+	offset_.try_emplace(InputID::Down, std::list<Sizef>{ Sizef{ 0,animSize.y_ }, Sizef{  animSize }, Sizef{ -animSize.x_,animSize.y_ } });
+	offset_.try_emplace(InputID::Right, std::list<Sizef>{ Sizef{ animSize }, Sizef{ animSize.x_,0 }, Sizef{ animSize.x_,-animSize.y_ } });
+	offset_.try_emplace(InputID::Up, std::list<Sizef>{ Sizef{ -animSize }, Sizef{ 0,-animSize.y_ }, Sizef{ animSize.x_,-animSize.y_ } });
+
+	// 重力と
+	displacement_ = 1.0f;
+	g_elapsedTime_ = 4.0;
+	jump_ = false;
+
 	// コントローラーの設定
 	if (type == ControllType::GamePad)
 	{
@@ -43,7 +55,7 @@ bool Player::Update(const double& delta)
 	auto checkMove = [&](Vector2f&& moveVec) 
 	{
 		Raycast::Ray ray{ pos_,pos_ + moveVec ,moveVec };
-		_dbgDrawLine(ray.p1.x_, ray.p1.y_, ray.p1.x_ + ray.v.x_, ray.p1.y_ + ray.v.y_,0xfff);
+		_dbgDrawLine(ray.p1.x_, ray.p1.y_, ray.p1.x_ + ray.v.x_, ray.p1.y_ + ray.v.y_,0xff0000);
 
 		for (auto& col: tileMap_->GetCollitionData())
 		{
@@ -60,41 +72,69 @@ bool Player::Update(const double& delta)
 	Vector2f velValue = Vector2f::ZERO;
 	Sizef offsetSize = Sizef::ZERO;
 
-	auto move = [&](Vector2f&& vel, InputID id, Sizef offset)
+	// 入力に対しての動き
+	auto move = [&](Vector2f&& vel, InputID id, std::list<Sizef> offset,bool lock = false)
 	{
-		if (controller_->GetPushingTrigger(id))
+		if (lock || controller_->GetPushingTrigger(id))
 		{
+			// 反転
 			if (id == InputID::Left)
 			{
 				turn_ = true;
+				state_ = Animation_State::Run;
 			}
 			else if (id == InputID::Right)
 			{
 				turn_ = false;
+				state_ = Animation_State::Run;
 			}
-			if (checkMove(vel * static_cast<float>(delta) + offset))
+
+			bool check = true;
+			for (auto& size : offset)
 			{
-				// 当たり判定用のoffset取得
+				check &= checkMove(vel * static_cast<float>(delta) + size);
+			}
+			if (check)
+			{
 				velValue += vel * static_cast<float>(delta);
+				return true;
 			}
 		}
+		return false;
 	};
-	Sizef animSize = lpAnimManager.GetChipSize(animKey_);
-	move({ 0,speed_.y_ }, InputID::Down, Sizef{ 0,animSize.y_ / 2.0f});
-	move({ -speed_.x_,0 }, InputID::Left, Sizef{ -animSize.x_ / 2.0f,0 });
-	move({ speed_.x_,0 }, InputID::Right, Sizef{ animSize.x_ / 2.0f,0 });
-	move({ 0,-speed_.y_ }, InputID::Up, Sizef{ 0,-animSize.y_ / 2.0f });
+
+	// 重力操作
+	float v = displacement_ + GRAVITY * static_cast<float>(g_elapsedTime_);
+	displacement_ = GRAVITY / 2 * (g_elapsedTime_ * g_elapsedTime_);
+	if (!move({ 0,v }, InputID::Down, offset_[InputID::Down], true))
+	{
+		displacement_ = 1.0f;
+		g_elapsedTime_ = 4.0;
+		jump_ = false;
+		if (!jump_ && controller_->GetPushingTrigger(InputID::Up))
+		{
+			jump_ = true;
+		}
+	}
+
+	if (jump_)
+	{
+		if (!move({ 0,-500 }, InputID::Up, offset_[InputID::Up], true))
+		{
+			jump_ = false;
+		}
+	}
+	move({ -speed_.x_,0 }, InputID::Left, offset_[InputID::Left]);
+	move({ speed_.x_,0 }, InputID::Right, offset_[InputID::Right]);
 
 
 	if (velValue != Vector2f::ZERO)
 	{
 		pos_ += velValue;
-		state_ = Animation_State::Run;
 	}
 
-
+	g_elapsedTime_ += delta * 7.5;
 	elapsedTime_ += delta;
-
 	return false;
 }
 

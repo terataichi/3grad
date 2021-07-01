@@ -59,7 +59,7 @@ public:
 	/// <returns>true : ¬Œ÷</returns>
 	bool SetState(const std::string& key, const Animation_State& state, const double& nowElapsedTime);
 
-	const Sizef& GetChipSize(const std::string& key);
+	const Sizef GetChipSize(const std::string& key);
 
 private:
 	AnimationManager();

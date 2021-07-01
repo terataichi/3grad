@@ -111,7 +111,7 @@ bool AnimationManager::SetState(const std::string& key, const Animation_State& s
 	return false;
 }
 
-const Sizef& AnimationManager::GetChipSize(const std::string& key)
+const Sizef AnimationManager::GetChipSize(const std::string& key)
 {
 	if (animMap_.contains(key))
 	{
