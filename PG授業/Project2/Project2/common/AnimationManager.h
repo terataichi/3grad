@@ -4,17 +4,9 @@
 #include <string>
 
 #include "TmxAnimation.h"
+#include "../Status/Animation_State.h"
 
 #define lpAnimManager AnimationManager::GetInstance()
-
-enum class Animation_State
-{
-	Non,
-	Normal,
-	Walk,
-	Run,
-	Max,
-};
 
 struct Animation
 {

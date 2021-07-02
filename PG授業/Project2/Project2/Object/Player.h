@@ -2,7 +2,7 @@
 #include <memory>
 #include <list>
 
-#include "Object.h"
+#include "Pawn.h"
 #include "../common/Raycast.h"
 
 class Controller;
@@ -10,13 +10,13 @@ class TmxAnimation;
 class TileMap;
 
 class Player:
-	public Object
+	public Pawn
 {
 public:
 	Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap,ControllType type = ControllType::Keybord);
 	~Player();
 
-	void Init(ControllType type)override;
+	void Init()override;
 	bool Update(const double& delta) override;
 	void Draw(const double& delta) override;
 private:
@@ -27,7 +27,6 @@ private:
 
 	float displacement_;										// 変化量
 	double g_elapsedTime_;										// 重力の経過時間計測用
-
 	bool jump_;													// ジャンプするためのトリガー
 };
 

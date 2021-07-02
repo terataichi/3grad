@@ -1,24 +1,23 @@
 #include <DxLib.h>
 
 #include "Player.h"
-#include "../Input/Keyboard.h"
-#include "../Input/Gamepad.h"
 #include "../common/ImageManager.h"
 #include "../common/AnimationManager.h"
 #include "../common/TileMap.h"
 #include "../_debug/_DebugDispOut.h"
 
-Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Object(pos, speed)
+Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Pawn(pos, speed,type)
 {
 	tileMap_ = tileMap;
-	Init(type);
+
+	Init();
 }
 
 Player::~Player()
 {
 }
 
-void Player::Init(ControllType type)
+void Player::Init()
 {
 	// ステータスの設定
 	state_ = Animation_State::Normal;
@@ -38,14 +37,6 @@ void Player::Init(ControllType type)
 	displacement_ = 1.0f;
 	g_elapsedTime_ = 4.0;
 	jump_ = false;
-
-	// コントローラーの設定
-	if (type == ControllType::GamePad)
-	{
-		controller_ = std::make_unique<Gamepad>();
-		return;
-	}
-	controller_ = std::make_unique<Keyboard>();
 }
 
 bool Player::Update(const double& delta)
@@ -105,7 +96,7 @@ bool Player::Update(const double& delta)
 
 	// 重力操作
 	float v = displacement_ + GRAVITY * static_cast<float>(g_elapsedTime_);
-	displacement_ = GRAVITY / 2 * (g_elapsedTime_ * g_elapsedTime_);
+	displacement_ = static_cast<float>(GRAVITY / 2.0 * (g_elapsedTime_ * g_elapsedTime_));
 	if (!move({ 0,v }, InputID::Down, offset_[InputID::Down], true))
 	{
 		displacement_ = 1.0f;
@@ -121,6 +112,8 @@ bool Player::Update(const double& delta)
 	{
 		if (!move({ 0,-500 }, InputID::Up, offset_[InputID::Up], true))
 		{
+			displacement_ = 1.0f;
+			g_elapsedTime_ = 4.0;
 			jump_ = false;
 		}
 	}
