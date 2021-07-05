@@ -74,6 +74,12 @@ namespace rapidxml
             return &m_data.front();
         }
 
+        // Vector‚Å•Ô‚·
+        std::vector<Ch> vecData()const
+        {
+            return m_data;
+        }
+
         //! Gets file data size.
         //! \return Size of file data, in characters.
         std::size_t size() const
@@ -84,7 +90,6 @@ namespace rapidxml
     private:
 
         std::vector<Ch> m_data;   // File data
-
     };
 
     //! Counts children of node. Time complexity is O(n).

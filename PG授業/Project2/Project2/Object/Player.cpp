@@ -20,7 +20,7 @@ Player::~Player()
 void Player::Init()
 {
 	// ステータスの設定
-	state_ = Animation_State::Normal;
+	state_ = Anim_State::Normal;
 	elapsedTime_ = 0;
 	// アニメーション登録初期化
 	animKey_ = lpAnimManager.AddAnimation("Resource/AnimationData/AnimationPlayer.tmx", "Player");
@@ -37,96 +37,111 @@ void Player::Init()
 	displacement_ = 1.0f;
 	g_elapsedTime_ = 4.0;
 	jump_ = false;
+
+
+	rapidxml::file<> moduleFileName = "Resource/State/PlayerState.tmx";
+	stateVec_ = moduleFileName.vecData();
+
+	stateDoc.parse<0>(stateVec_.data());
+
+	stateNode_ = stateDoc.first_node("moduleList");
+
 }
 
 bool Player::Update(const double& delta)
 {
 	controller_->Update();
 
-	auto checkMove = [&](Vector2f&& moveVec) 
+	// first_nodeに何も書かなければ最初に見つけたやつが入る
+	for (auto node = stateNode_->first_node(); node != nullptr; node = node->next_sibling())
 	{
-		Raycast::Ray ray{ pos_,pos_ + moveVec ,moveVec };
-		_dbgDrawLine(ray.p1.x_, ray.p1.y_, ray.p1.x_ + ray.v.x_, ray.p1.y_ + ray.v.y_,0xff0000);
-
-		for (auto& col: tileMap_->GetCollitionData())
-		{
-			_dbgDrawBox(col.first.x_, col.first.y_, col.first.x_ + col.second.x_, col.first.y_ + col.second.y_, 0xfff, false);
-			if (raycast_.CheckCollision(ray, col))
-			{
-				return false;
-			}
-		}
-		return true;
-	};
-
-	state_ = Animation_State::Normal;
-	Vector2f velValue = Vector2f::ZERO;
-	Sizef offsetSize = Sizef::ZERO;
-
-	// 入力に対しての動き
-	auto move = [&](Vector2f&& vel, InputID id, std::list<Sizef> offset,bool lock = false)
-	{
-		if (lock || controller_->GetPushingTrigger(id))
-		{
-			// 反転
-			if (id == InputID::Left)
-			{
-				turn_ = true;
-				state_ = Animation_State::Run;
-			}
-			else if (id == InputID::Right)
-			{
-				turn_ = false;
-				state_ = Animation_State::Run;
-			}
-
-			bool check = true;
-			for (auto& size : offset)
-			{
-				check &= checkMove(vel * static_cast<float>(delta) + size);
-			}
-			if (check)
-			{
-				velValue += vel * static_cast<float>(delta);
-				return true;
-			}
-		}
-		return false;
-	};
-
-	// 重力操作
-	float v = displacement_ + GRAVITY * static_cast<float>(g_elapsedTime_);
-	displacement_ = static_cast<float>(GRAVITY / 2.0 * (g_elapsedTime_ * g_elapsedTime_));
-	if (!move({ 0,v }, InputID::Down, offset_[InputID::Down], true))
-	{
-		displacement_ = 1.0f;
-		g_elapsedTime_ = 4.0;
-		jump_ = false;
-		if (!jump_ && controller_->GetPushingTrigger(InputID::Up))
-		{
-			jump_ = true;
-		}
+		moduleNode(this, node);
 	}
 
-	if (jump_)
-	{
-		if (!move({ 0,-500 }, InputID::Up, offset_[InputID::Up], true))
-		{
-			displacement_ = 1.0f;
-			g_elapsedTime_ = 4.0;
-			jump_ = false;
-		}
-	}
-	move({ -speed_.x_,0 }, InputID::Left, offset_[InputID::Left]);
-	move({ speed_.x_,0 }, InputID::Right, offset_[InputID::Right]);
+	//auto checkMove = [&](Vector2f&& moveVec) 
+	//{
+	//	Raycast::Ray ray{ pos_,pos_ + moveVec ,moveVec };
+	//	_dbgDrawLine(ray.p1.x_, ray.p1.y_, ray.p1.x_ + ray.v.x_, ray.p1.y_ + ray.v.y_,0xff0000);
+
+	//	for (auto& col: tileMap_->GetCollitionData())
+	//	{
+	//		_dbgDrawBox(col.first.x_, col.first.y_, col.first.x_ + col.second.x_, col.first.y_ + col.second.y_, 0xfff, false);
+	//		if (raycast_.CheckCollision(ray, col))
+	//		{
+	//			return false;
+	//		}
+	//	}
+	//	return true;
+	//};
+
+	//state_ = Animation_State::Normal;
+	//Vector2f velValue = Vector2f::ZERO;
+	//Sizef offsetSize = Sizef::ZERO;
+
+	//// 入力に対しての動き
+	//auto move = [&](Vector2f&& vel, InputID id, std::list<Sizef> offset,bool lock = false)
+	//{
+	//	if (lock || controller_->GetPushingTrigger(id))
+	//	{
+	//		// 反転
+	//		if (id == InputID::Left)
+	//		{
+	//			turn_ = true;
+	//			state_ = Animation_State::Run;
+	//		}
+	//		else if (id == InputID::Right)
+	//		{
+	//			turn_ = false;
+	//			state_ = Animation_State::Run;
+	//		}
+
+	//		bool check = true;
+	//		for (auto& size : offset)
+	//		{
+	//			check &= checkMove(vel * static_cast<float>(delta) + size);
+	//		}
+	//		if (check)
+	//		{
+	//			velValue += vel * static_cast<float>(delta);
+	//			return true;
+	//		}
+	//	}
+	//	return false;
+	//};
+
+	//// 重力操作
+	//float v = displacement_ + GRAVITY * static_cast<float>(g_elapsedTime_);
+	//displacement_ = static_cast<float>(GRAVITY / 2.0 * (g_elapsedTime_ * g_elapsedTime_));
+	//if (!move({ 0,v }, InputID::Down, offset_[InputID::Down], true))
+	//{
+	//	displacement_ = 1.0f;
+	//	g_elapsedTime_ = 4.0;
+	//	jump_ = false;
+	//	if (!jump_ && controller_->GetPushingTrigger(InputID::Up))
+	//	{
+	//		jump_ = true;
+	//	}
+	//}
+
+	//if (jump_)
+	//{
+	//	if (!move({ 0,-500 }, InputID::Up, offset_[InputID::Up], true))
+	//	{
+	//		displacement_ = 1.0f;
+	//		g_elapsedTime_ = 4.0;
+	//		jump_ = false;
+	//	}
+	//}
+	//move({ -speed_.x_,0 }, InputID::Left, offset_[InputID::Left]);
+	//move({ speed_.x_,0 }, InputID::Right, offset_[InputID::Right]);
 
 
-	if (velValue != Vector2f::ZERO)
-	{
-		pos_ += velValue;
-	}
+	//if (velValue != Vector2f::ZERO)
+	//{
+	//	pos_ += velValue;
+	//}
 
-	g_elapsedTime_ += delta * 7.5;
+	//g_elapsedTime_ += delta * 7.5;
 	elapsedTime_ += delta;
 	return false;
 }

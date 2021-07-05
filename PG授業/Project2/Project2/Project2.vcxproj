@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\Pawn.h" />
+    <ClInclude Include="Object\State.h" />
     <ClInclude Include="Status\Animation_State.h" />
     <ClInclude Include="common\AnimationManager.h" />
     <ClInclude Include="common\Collision.h" />

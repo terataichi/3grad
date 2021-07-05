@@ -1,6 +1,7 @@
 #pragma once
+#include <string>
 
-enum class Animation_State
+enum class Anim_State
 {
 	Non,
 	Normal,

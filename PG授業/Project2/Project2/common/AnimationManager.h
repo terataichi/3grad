@@ -49,7 +49,7 @@ public:
 	/// <param name="key">登録して保持しているキー</param>
 	/// <param name="state">ステータス(登録されていないステータスは投げても更新されない)</param>
 	/// <returns>true : 成功</returns>
-	bool SetState(const std::string& key, const Animation_State& state, const double& nowElapsedTime);
+	bool SetState(const std::string& key, const Anim_State& state, const double& nowElapsedTime);
 
 	const Sizef GetChipSize(const std::string& key);
 
@@ -68,7 +68,7 @@ private:
 		}
 	};
 
-	std::map<Animation_State, std::string> stateMap_;									// ステータス別アニメーションにアクセスするためのマップ
+	std::map<Anim_State, std::string> stateMap_;									// ステータス別アニメーションにアクセスするためのマップ
 	std::map<std::string, Animation> animMap_;											// AddAnimationで登録するkeyを使う
 
 	static std::unique_ptr<AnimationManager, AnimationManagerDeleter> sInstance_;		// 実態

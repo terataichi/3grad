@@ -6,11 +6,11 @@ std::unique_ptr<AnimationManager, AnimationManager::AnimationManagerDeleter>Anim
 
 AnimationManager::AnimationManager()
 {
-	stateMap_.try_emplace(Animation_State::Non,"non");
-	stateMap_.try_emplace(Animation_State::Max, "max");
-	stateMap_.try_emplace(Animation_State::Normal, "normal");
-	stateMap_.try_emplace(Animation_State::Run, "run");
-	stateMap_.try_emplace(Animation_State::Walk, "walk");
+	stateMap_.try_emplace(Anim_State::Non,"non");
+	stateMap_.try_emplace(Anim_State::Max, "max");
+	stateMap_.try_emplace(Anim_State::Normal, "normal");
+	stateMap_.try_emplace(Anim_State::Run, "run");
+	stateMap_.try_emplace(Anim_State::Walk, "walk");
 }
 
 AnimationManager::~AnimationManager()
@@ -38,7 +38,7 @@ const std::string AnimationManager::AddAnimation(const std::string& path,std::st
 	lpImageManager.GetImageHandle(anim.imageData_.imageName, anim.imageData_.imageDivSize, anim.imageData_.imageSize);
 
 	anim.animVec_ = animation_->GetAnimData();
-	anim.nowState_ = stateMap_[Animation_State::Non];
+	anim.nowState_ = stateMap_[Anim_State::Non];
 	anim.animCount_ = 0;
 	anim.startTime_ = 0.0;
 
@@ -86,7 +86,7 @@ int AnimationManager::GetAnimation(const std::string& key, const double& elapsed
 	return -1;
 }
 
-bool AnimationManager::SetState(const std::string& key, const Animation_State& state, const double& nowElapsedTime)
+bool AnimationManager::SetState(const std::string& key, const Anim_State& state, const double& nowElapsedTime)
 {
 	if (animMap_.contains(key))
 	{

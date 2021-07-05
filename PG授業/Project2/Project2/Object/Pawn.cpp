@@ -5,7 +5,7 @@
 Pawn::Pawn(Potision2f& pos, Vector2f& speed, ControllType& type) :Object(pos, speed)
 {
 	elapsedTime_ = 0.0;
-	state_ = Animation_State::Normal;
+	state_ = Anim_State::Normal;
 
 	// コントローラーの設定
 	if (type == ControllType::GamePad)
