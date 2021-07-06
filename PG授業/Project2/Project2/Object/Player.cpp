@@ -5,6 +5,8 @@
 #include "../common/AnimationManager.h"
 #include "../common/TileMap.h"
 #include "../_debug/_DebugDispOut.h"
+#include "../../TimeManager.h"
+#include "../Status/Animation_State.h"
 
 Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Pawn(pos, speed,type)
 {
@@ -33,9 +35,7 @@ void Player::Init()
 	offset_.try_emplace(InputID::Right, std::list<Sizef>{ Sizef{ animSize }, Sizef{ animSize.x_,0 }, Sizef{ animSize.x_,-animSize.y_ } });
 	offset_.try_emplace(InputID::Up, std::list<Sizef>{ Sizef{ -animSize }, Sizef{ 0,-animSize.y_ }, Sizef{ animSize.x_,-animSize.y_ } });
 
-	// d—Í‚Æ
-	displacement_ = 1.0f;
-	g_elapsedTime_ = 4.0;
+
 	jump_ = false;
 
 
@@ -48,11 +48,12 @@ void Player::Init()
 
 }
 
-bool Player::Update(const double& delta)
+bool Player::Update()
 {
 	controller_->Update();
 
 	// first_node‚É‰½‚à‘‚©‚È‚¯‚ê‚ÎÅ‰‚ÉŒ©‚Â‚¯‚½‚â‚Â‚ª“ü‚é
+	state_ = Anim_State::Normal;
 	for (auto node = stateNode_->first_node(); node != nullptr; node = node->next_sibling())
 	{
 		moduleNode(this, node);
@@ -74,7 +75,6 @@ bool Player::Update(const double& delta)
 	//	return true;
 	//};
 
-	//state_ = Animation_State::Normal;
 	//Vector2f velValue = Vector2f::ZERO;
 	//Sizef offsetSize = Sizef::ZERO;
 
@@ -141,31 +141,14 @@ bool Player::Update(const double& delta)
 	//	pos_ += velValue;
 	//}
 
-	//g_elapsedTime_ += delta * 7.5;
-	elapsedTime_ += delta;
+	elapsedTime_ += lpTimeManager.GetDeltaTime();
 	return false;
 }
 
-void Player::Draw(const double& delta)
+void Player::Draw()
 {
 	auto pos = static_cast<Potision2>(pos_);
 
-	lpAnimManager.SetState(animKey_, state_, elapsedTime_);
-	DrawRotaGraph(pos.x_, pos.y_, 1, 0.0, lpAnimManager.GetAnimation(animKey_, elapsedTime_), true, turn_);
-}
-
-Sizef Player::GetOffSet(Vector2f vel)
-{
-	Sizef size;
-	Sizef animSize = lpAnimManager.GetChipSize(animKey_);
-	if (vel.x_ > 0)
-	{
-		size.x_ += animSize.x_ / 2;
-	}
-	else
-	{
-		size.x_ -= animSize.x_ / 2;
-	}
-
-	return size;
+	lpAnimManager.SetState(animKey_, state_, lpTimeManager.GetElapsedTime());
+	DrawRotaGraph(pos.x_, pos.y_, 1, 0.0, lpAnimManager.GetAnimation(animKey_, lpTimeManager.GetElapsedTime()), true, turn_);
 }

@@ -3,6 +3,8 @@
 #include "../Scene/GameScene.h"
 #include "../TimeManager.h"
 #include "../_debug/_DebugDispOut.h"
+#include "../../TimeManager.h"
+
 #include <DxLib.h>
 
 void SceneManager::Run(void)
@@ -13,19 +15,18 @@ void SceneManager::Run(void)
 	}
 
 	scene_ = std::make_unique<GameScene>();
-	time_ = std::make_unique<TimeManager>();
 
 	while (DxLib::ProcessMessage() == 0 && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
 		_dbgStartDraw();
-		time_->Update();
+		lpTimeManager.Update();
 
-		scene_ = scene_->Update(std::move(scene_), time_->GetDeltaTime());
-		scene_->DrawOwnScreen(time_->GetDeltaTime());
+		scene_ = scene_->Update(std::move(scene_));
+		scene_->DrawOwnScreen();
 
 		DxLib::SetDrawScreen(DX_SCREEN_BACK);
 		DxLib::ClsDrawScreen();
-		scene_->Draw(time_->GetDeltaTime());
+		scene_->Draw();
 		_dbgAddDraw();
 		DxLib::ScreenFlip();
 	}

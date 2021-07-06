@@ -2,12 +2,53 @@
 #include <string>
 #include <functional>
 #include <map>
+#include <list>
 #include <cassert>
 #include "Player.h"
 #include "../Input/InputID.h"
+#include "../common/AnimationManager.h"
+#include "../TimeManager.h"
+#include "../common/Vector2.h"
+#include "../common/TileMap.h"
 
 #include "../TileMap/rapidxml.hpp"
 #include "../TileMap/rapidxml_utils.hpp"
+#include "../_debug/_DebugConOut.h"
+#include "../_debug/_DebugDispOut.h"
+
+namespace
+{
+	// s_to_Anim
+	std::map<std::string, Anim_State> s_to_Anim =
+	{
+		{"Normal",Anim_State::Normal},
+		{"Run",Anim_State::Run},
+	};
+
+	// stringに対応したID
+	std::map<std::string, InputID>keyMap_ =
+	{
+		{"Left",InputID::Left},
+		{"Right",InputID::Right},
+		{"Down",InputID::Down },
+		{"Up",InputID::Up}
+	};
+
+	// 当たり判定用で複数の場所で使用したかった。
+	bool HitRay(Raycast::Ray ray, const CollisionPList& colList, Raycast& raycast)
+	{
+		for (auto& col : colList)
+		{
+			_dbgDrawBox(static_cast<int>(col.first.x_), static_cast<int>(col.first.y_),
+				static_cast<int>(col.first.x_ + col.second.x_), static_cast<int>(col.first.y_ + col.second.y_), 0xfff, false);
+			if (raycast.CheckCollision(ray, col))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+}
 
 // --- 関数オブジェクト
 
@@ -23,11 +64,11 @@ struct Move
 			std::string name = atr->name();
 			if (name == "x")
 			{
-				myself->pos_.x_ += static_cast<float>(atof(atr->value()));
+				myself->pos_.x_ += static_cast<float>(atof(atr->value())) * lpTimeManager.GetDeltaTimeF();
 			}
 			if (name == "y")
 			{
-				myself->pos_.y_ += static_cast<float>(atof(atr->value()));
+				myself->pos_.y_ += static_cast<float>(atof(atr->value())) * lpTimeManager.GetDeltaTimeF();
 			}
 		}
 		return true;
@@ -56,14 +97,6 @@ struct CheckKey
 		}
 		return false;
 	}
-
-private:
-	// stringに対応したID
-	std::map<std::string, InputID>keyMap_ = 
-	{
-		{"Left",InputID::Left},
-		{"Right",InputID::Right}
-	};
 };
 /// <summary>
 /// ステータスチェック
@@ -72,8 +105,23 @@ struct CheckState
 {
 	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
 	{
+		for (auto atr = node->first_attribute(); atr != nullptr; atr = atr->next_attribute())
+		{
+			std::string name = atr->name();
 
-		return true;
+			if (name == "state")
+			{
+				std::string value = atr->value();
+				if (s_to_Anim.count(value))
+				{
+					if (myself->state_ == s_to_Anim[value])
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 };
 /// <summary>
@@ -83,16 +131,189 @@ struct SetAnimation
 {
 	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
 	{
+		for (auto atr = node->first_attribute(); atr != nullptr; atr = atr->next_attribute())
+		{
+			std::string name = atr->name();
+			if (name == "state")
+			{
+				std::string value = atr->value();
+				if (s_to_Anim.count(value))
+				{
+					myself->state_ = s_to_Anim[value];
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+};
+/// <summary>
+/// 画像を反転させるかどうか
+/// </summary>
+struct SetTurn
+{
+	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
+	{
+		for (auto atr = node->first_attribute(); atr != nullptr; atr = atr->next_attribute())
+		{
+			std::string name = atr->name();
+			if (name == "turn")
+			{
+				std::string trun = atr->value();
+				myself->turn_ = trun == "true" ? true : false;
+				return true;
+			}
+		}
+		return false;
+	}
+};
+/// <summary>
+/// コリジョンデータとの当たり判定
+/// </summary>
+struct CheckCollision
+{
+	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
+	{
+		// 必要な情報の取得
+		InputID id{};
+		Vector2f vec = Vector2f::ZERO;
+		for (auto atr = node->first_attribute(); atr != nullptr; atr = atr->next_attribute())
+		{
+			std::string name = atr->name();
+			if (name == "x")
+			{
+				vec.x_ = static_cast<float>(atof(atr->value()));
+			}
+			if (name == "y")
+			{
+				vec.y_ = static_cast<float>(atof(atr->value()));
+			}
+			if (name == "key")
+			{
+				if (!keyMap_.count(atr->value()))
+				{
+					return false;
+				}
+				id = keyMap_[atr->value()];
+			}
+		}
+		// 当たり判定
+		for (auto offset : myself->offset_[id])
+		{
+			Raycast::Ray ray{ myself->pos_,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset};
+			_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
+				static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
+
+			if (HitRay(ray,myself->tileMap_->GetCollitionData(),myself->raycast_))
+			{
+				return false;
+			}
+		}
 		return true;
 	}
 };
+struct SetJump
+{
+	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
+	{
+		if (myself->isGround_)
+		{
+			myself->isJump_ = true;
+			myself->isGround_ = false;
+			return true;
+		}
+		return false;
+	}
+};
+/// <summary>
+/// ジャンプ処理
+/// </summary>
+struct Jump
+{
+	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
+	{
+		if (myself->isJump_)
+		{
+			Vector2f vec = Vector2f::ZERO;
 
+			for (auto atr = node->first_attribute(); atr != nullptr; atr = atr->next_attribute())
+			{
+				std::string name = atr->name();
+				if (name == "y")
+				{
+					vec.y_ = static_cast<float>(atof(atr->value())) * lpTimeManager.GetDeltaTimeF();
+					myself->pos_.y_ += vec.y_;
+				}
+			}
 
+			// 当たり判定
+			for (auto offset : myself->offset_[InputID::Up])
+			{
+				Raycast::Ray ray{ myself->pos_,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset };
+				_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
+					static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
+
+				if (HitRay(ray, myself->tileMap_->GetCollitionData(), myself->raycast_))
+				{
+					myself->isJump_ = false;
+					return false;
+				}
+			}
+			if (myself->isGround_)
+			{
+				myself->isJump_ = false;
+				return false;
+			}
+
+		}
+		return true;
+	}
+
+};
+/// <summary>
+/// 重力処理
+/// </summary>
+struct Gravity
+{
+	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
+	{
+		// 重力操作
+		float vy = displacement_ + GRAVITY * g_elapsedTime_;
+		displacement_ = static_cast<float>(GRAVITY / 2.0 * (g_elapsedTime_ * g_elapsedTime_));
+		Vector2f vec{ 0.0f,vy };
+
+		// 当たり判定
+		for (auto offset : myself->offset_[InputID::Down])
+		{
+			Raycast::Ray ray{ myself->pos_,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset };
+			_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
+				static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
+
+			if (HitRay(ray, myself->tileMap_->GetCollitionData(), myself->raycast_))
+			{
+				displacement_ = 1.0f;
+				g_elapsedTime_ = 4.0;
+				myself->isGround_ = true;
+				return false;
+			}
+		}
+
+		myself->pos_.y_ += vy * lpTimeManager.GetDeltaTimeF();
+		g_elapsedTime_ += lpTimeManager.GetDeltaTimeF() * 8.0f;
+		myself->isGround_ = false;
+		return true;
+	}
+
+private:
+	float displacement_;										// 変化量
+	float g_elapsedTime_;										// 重力の経過時間計測用
+};
+
+/// <summary>
+/// 本体
+/// </summary>
 struct ModuleNode
 {
-	/// <summary>
-	/// 本体
-	/// </summary>
 	/// <param name="myself">自分自身</param>
 	/// <param name="node">ノード</param>
 	/// <returns></returns>
@@ -125,14 +346,17 @@ struct ModuleNode
 		}
 		return true;
 	}
-
-
-
+private:
 	std::map<std::string, std::function<bool(Pawn* myself, rapidxml::xml_node<>* node)>> module_ =
 	{
 		{"Move",Move()},
 		{"CheckState",CheckState()},
 		{"CheckKey",CheckKey()},
 		{"SetAnimation",SetAnimation()},
+		{"Turn",SetTurn()},
+		{"CheckCollision",CheckCollision()},
+		{"Gravity",Gravity()},
+		{"Jump",Jump()},
+		{"SetJump",SetJump()},
 	};
 };

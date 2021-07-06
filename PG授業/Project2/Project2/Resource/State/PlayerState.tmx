@@ -2,11 +2,38 @@
 <moduleList name="Player" version="1.0">
 	<ActionNode name="MoveLR">
 		<module name="CheckKey" state="Cnt" key="Left">
-			<module name="CheckState" state="Normal">
+			<module name="CheckCollision" x="-50" key="Left">
 				<module name="SetAnimation" state="Run">
-					<module name="Move" x="-10"/>
+					<module name="Move" x="-50">
+						<module name="Turn" turn="true"/>
+					</module>
 				</module>
 			</module>
+		</module>
+	</ActionNode>
+	<ActionNode name="MoveLR">
+		<module name="CheckKey" state="Cnt" key="Right">
+			<module name="CheckCollision" x="50" key="Right">
+				<module name="SetAnimation" state="Run">
+					<module name="Move" x="50">
+						<module name="Turn" turn="false"/>
+					</module>
+				</module>
+			</module>
+		</module>
+	</ActionNode>
+	<ActionNode name="Jump">
+		<module name="CheckKey" state="Cnt" key="Up">
+			<module name="SetJump">
+			</module>
+		</module>
+	</ActionNode>
+	<ActionNode name="Jump">
+		<module name="Jump" y="-500">
+		</module>
+	</ActionNode>
+	<ActionNode name="Gravity">
+			<module name="Gravity">
 		</module>
 	</ActionNode>
 </moduleList>

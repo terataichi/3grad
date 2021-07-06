@@ -16,8 +16,8 @@ public:
 
 private:
     bool Init(void)override;
-    UniqueBase Update(UniqueBase scene, const double& deltaTime)override;
-    void DrawOwnScreen(const double& deltaTime)override;
+    UniqueBase Update(UniqueBase scene)override;
+    void DrawOwnScreen()override;
     SceneName MyName()override { return SceneName::Game; };
 
     std::list<std::unique_ptr<Object>> objList_;

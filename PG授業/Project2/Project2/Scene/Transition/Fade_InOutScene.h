@@ -15,8 +15,8 @@ public:
 	~Fade_InOutScene();
 
 private:
-	bool TransitionUpdate(const double& deltaTime)override;
-	void DrawOwnScreen(const double& deltaTime)override;
+	bool TransitionUpdate()override;
+	void DrawOwnScreen()override;
 
 	double limit_;													// ‰½•b‚ÅŠ®—¹‚µ‚Ä‚Ù‚µ‚¢‚©
 	double time_;													// Œo‰ßŽžŠÔ

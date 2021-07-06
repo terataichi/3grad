@@ -1,5 +1,7 @@
 #include "TimeManager.h"
 
+std::unique_ptr<TimeManager, TimeManager::TimeManagerDeleter>TimeManager::sInstance_(new TimeManager);
+
 TimeManager::TimeManager()
 {
 	startTime_ = std::chrono::system_clock::now();
@@ -41,5 +43,5 @@ void TimeManager::Update(void)
 	deltaTime_ = std::chrono::duration_cast<std::chrono::microseconds>(now_ - old_).count() / 1000000.0;
 	if (deltaTime_ > 1.0) deltaTime_ = 0.0;
 
-	elapsedTime_ = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(now_ - startTime_).count());
+	elapsedTime_ += deltaTime_;
 }

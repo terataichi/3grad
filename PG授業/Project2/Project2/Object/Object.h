@@ -22,12 +22,12 @@ public:
 	/// </summary>
 	/// <param name="delta">‚PƒtƒŒ[ƒ€“–‚½‚è‚ÌŠÔ‚ğ‚à‚ç‚¤</param>
 	/// <returns></returns>
-	virtual bool Update(const double& delta) = 0;
+	virtual bool Update() = 0;
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
 	/// <param name="delta"></param>
-	virtual void Draw(const double& delta) = 0;
+	virtual void Draw() = 0;
 protected:
 
 	Potision2f pos_;										// ©•ª‚ÌÀ•W

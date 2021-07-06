@@ -4,12 +4,7 @@
 #include <vector>
 
 #include "Pawn.h"
-#include "../common/Raycast.h"
 #include "State.h"
-
-class Controller;
-class TmxAnimation;
-class TileMap;
 
 class Player:
 	public Pawn
@@ -19,20 +14,13 @@ public:
 	~Player();
 
 	void Init()override;
-	bool Update(const double& delta) override;
-	void Draw(const double& delta) override;
+	bool Update() override;
+	void Draw() override;
 private:
-	Sizef GetOffSet(Vector2f vel);
-	Raycast raycast_;
-	std::shared_ptr<TileMap> tileMap_;							// ゲームシーンからもらってくる
-	std::map<InputID, std::list<Sizef>> offset_;				// レイを飛ばすためのやつ
-
 
 	ModuleNode moduleNode;
 
 
-	float displacement_;										// 変化量
-	double g_elapsedTime_;										// 重力の経過時間計測用
 	bool jump_;													// ジャンプするためのトリガー
 
 };

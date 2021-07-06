@@ -16,13 +16,13 @@ bool TransitionScene::Init(void)
 {
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();
-	beforScene_->Draw(0.0);
+	beforScene_->Draw();
 	return false;
 }
 
-UniqueBase TransitionScene::Update(UniqueBase scene, const double& deltaTime)
+UniqueBase TransitionScene::Update(UniqueBase scene)
 {
-	if (TransitionUpdate(deltaTime))
+	if (TransitionUpdate())
 	{
 		return std::move(afterScene_);
 	}

@@ -22,11 +22,11 @@ TitleScene::~TitleScene()
 bool TitleScene::Init(void)
 {
 
-	DrawOwnScreen(0.0);
+	DrawOwnScreen();
 	return true;
 }
 
-UniqueBase TitleScene::Update(UniqueBase scene, const double& deltaTime)
+UniqueBase TitleScene::Update(UniqueBase scene)
 {
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
@@ -35,7 +35,7 @@ UniqueBase TitleScene::Update(UniqueBase scene, const double& deltaTime)
 	return scene;
 }
 
-void TitleScene::DrawOwnScreen(const double& deltaTime)
+void TitleScene::DrawOwnScreen()
 {
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();

@@ -21,20 +21,20 @@ bool GameScene::Init(void)
 	objList_.emplace_back(std::make_unique<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_, ControllType::GamePad));
 	objList_.emplace_back(std::make_unique<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_,ControllType::Keybord));
 
-	DrawOwnScreen(0.0);
+	DrawOwnScreen();
 	return true;
 }
 
-UniqueBase GameScene::Update(UniqueBase scene, const double& deltaTime)
+UniqueBase GameScene::Update(UniqueBase scene)
 {
 	for (auto& obj : objList_)
 	{
-		obj->Update(deltaTime);
+		obj->Update();
 	}
 	return scene;
 }
 
-void GameScene::DrawOwnScreen(const double& deltaTime)
+void GameScene::DrawOwnScreen()
 {
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();
@@ -42,6 +42,6 @@ void GameScene::DrawOwnScreen(const double& deltaTime)
 
 	for (auto& obj : objList_)
 	{
-		obj->Draw(deltaTime);
+		obj->Draw();
 	}
 }

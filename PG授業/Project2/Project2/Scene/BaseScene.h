@@ -26,17 +26,17 @@ public:
 	/// 更新
 	/// </summary>
 	/// <param name="deltaTime">１フレーム間の時間</param>
-	virtual UniqueBase Update(UniqueBase scene,const double& deltaTime) = 0;
+	virtual UniqueBase Update(UniqueBase scene) = 0;
 	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name="deltaTime">１フレーム間の時間</param>
-	virtual void Draw(const double& deltaTime);
+	virtual void Draw();
 	/// <summary>
 	/// 自分の持っているスクリーンを描画
 	/// </summary>
 	/// <param name="deltaTime"></param>
-	virtual void DrawOwnScreen(const double& deltaTime) = 0;
+	virtual void DrawOwnScreen() = 0;
 	/// <summary>
 	/// 自分がなんのシーンなのか
 	/// </summary>

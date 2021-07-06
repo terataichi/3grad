@@ -1,5 +1,7 @@
 #include "BrightRotationScene.h"
 #include "../../common/SceneManager.h"
+#include "../../TimeManager.h"
+
 #include <DxLib.h>
 
 BrightRotationScene::BrightRotationScene(UniqueBase beforScene, UniqueBase afterScene, double&& limit)
@@ -8,15 +10,16 @@ BrightRotationScene::BrightRotationScene(UniqueBase beforScene, UniqueBase after
 	limit_ = limit;
 	time_ = 0;
 	fadeCount_ = 0;
+	angle_ = 0.0;
 }
 
 BrightRotationScene::~BrightRotationScene()
 {
 }
 
-bool BrightRotationScene::TransitionUpdate(const double& deltaTime)
+bool BrightRotationScene::TransitionUpdate()
 {
-	time_ += deltaTime;
+	time_ += lpTimeManager.GetDeltaTime();
 	fadeCount_ = 255.0 * time_ / limit_;
 	angle_ = atan(fadeCount_);
 	if (fadeCount_ >= 255)
@@ -26,7 +29,7 @@ bool BrightRotationScene::TransitionUpdate(const double& deltaTime)
 	return false;
 }
 
-void BrightRotationScene::DrawOwnScreen(const double& deltaTime)
+void BrightRotationScene::DrawOwnScreen()
 {
 	SetDrawScreen(screenID_);
 	//ClsDrawScreen();

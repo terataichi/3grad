@@ -160,7 +160,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Object\Pawn.cpp" />
-    <ClCompile Include="Status\Animation_State.cpp" />
     <ClCompile Include="common\AnimationManager.cpp" />
     <ClCompile Include="common\ImageManager.cpp" />
     <ClCompile Include="common\Raycast.cpp" />
@@ -181,6 +180,7 @@
     <ClCompile Include="Scene\Transition\CrossOverScene.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Status\Animation_State.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Scene\Transition\TransitionScene.cpp" />
     <ClCompile Include="_debug\_DebugConOut.cpp" />
@@ -189,7 +189,6 @@
   <ItemGroup>
     <ClInclude Include="Object\Pawn.h" />
     <ClInclude Include="Object\State.h" />
-    <ClInclude Include="Status\Animation_State.h" />
     <ClInclude Include="common\AnimationManager.h" />
     <ClInclude Include="common\Collision.h" />
     <ClInclude Include="common\details\Vector2.h" />
@@ -212,8 +211,7 @@
     <ClInclude Include="Scene\Transition\CrossOverScene.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Scene\TitleScene.h" />
-    <ClInclude Include="Status\NormalState.h" />
-    <ClInclude Include="Status\RunState.h" />
+    <ClInclude Include="Status\Animation_State.h" />
     <ClInclude Include="TileMap\rapidxml.hpp" />
     <ClInclude Include="TileMap\rapidxml_iterators.hpp" />
     <ClInclude Include="TileMap\rapidxml_print.hpp" />

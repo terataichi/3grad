@@ -25,7 +25,6 @@ public:
 	const Size screenSize_;
 private:
 	std::unique_ptr<BaseScene> scene_;
-	std::unique_ptr<TimeManager> time_;
 	
 	/// <summary>
 	/// ƒVƒXƒeƒ€‚Ì‰Šú‰»

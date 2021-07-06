@@ -15,8 +15,8 @@ public:
 	~BrightRotationScene();
 
 private:
-	bool TransitionUpdate(const double& deltaTime)override;
-	void DrawOwnScreen(const double& deltaTime)override;
+	bool TransitionUpdate()override;
+	void DrawOwnScreen()override;
 
 	double angle_;													// Šp“x
 	double limit_;													// ‰½•b‚ÅŠ®—¹‚µ‚Ä‚Ù‚µ‚¢‚©

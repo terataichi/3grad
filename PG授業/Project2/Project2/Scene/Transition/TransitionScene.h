@@ -17,8 +17,8 @@ public:
 
 private:
     bool Init(void)override;
-    UniqueBase Update(UniqueBase scene, const double& deltaTime)override;
-    virtual bool TransitionUpdate(const double& deltaTime) = 0;
+    UniqueBase Update(UniqueBase scene)override;
+    virtual bool TransitionUpdate() = 0;
     SceneName MyName()override final { return SceneName::Transition; };
 protected:
     UniqueBase beforScene_;

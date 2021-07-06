@@ -1,4 +1,6 @@
 #include "CrossOverScene.h"
+#include "../../TimeManager.h"
+
 #include <DxLib.h>
 
 CrossOverScene::CrossOverScene(UniqueBase beforScene, UniqueBase afterScene,double&& limit)
@@ -13,9 +15,9 @@ CrossOverScene::~CrossOverScene()
 {
 }
 
-bool CrossOverScene::TransitionUpdate(const double& deltaTime)
+bool CrossOverScene::TransitionUpdate()
 {
-	time_ += deltaTime;
+	time_ += lpTimeManager.GetDeltaTime();
 	fadeCount_ = 255.0 * time_ / limit_;
 
 	if (fadeCount_ >= 255)
@@ -26,14 +28,14 @@ bool CrossOverScene::TransitionUpdate(const double& deltaTime)
 	return false;
 }
 
-void CrossOverScene::DrawOwnScreen(const double& deltaTime)
+void CrossOverScene::DrawOwnScreen()
 {
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(fadeCount_));
-	afterScene_->Draw(deltaTime);
+	afterScene_->Draw();
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(255.0 - fadeCount_));
-	beforScene_->Draw(deltaTime);
+	beforScene_->Draw();
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
