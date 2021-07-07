@@ -2,9 +2,9 @@
 <moduleList name="Player" version="1.0">
 	<ActionNode name="MoveLR">
 		<module name="CheckKey" state="Cnt" key="Left">
-			<module name="CheckCollision" x="-50" key="Left">
+			<module name="CheckCollision" x="-100" key="Left">
 				<module name="SetAnimation" state="Run">
-					<module name="Move" x="-50">
+					<module name="Move" x="-100">
 						<module name="Turn" turn="true"/>
 					</module>
 				</module>
@@ -13,9 +13,9 @@
 	</ActionNode>
 	<ActionNode name="MoveLR">
 		<module name="CheckKey" state="Cnt" key="Right">
-			<module name="CheckCollision" x="50" key="Right">
+			<module name="CheckCollision" x="100" key="Right">
 				<module name="SetAnimation" state="Run">
-					<module name="Move" x="50">
+					<module name="Move" x="100">
 						<module name="Turn" turn="false"/>
 					</module>
 				</module>

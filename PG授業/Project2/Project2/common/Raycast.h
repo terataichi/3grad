@@ -21,7 +21,7 @@ public:
 		};
 	};
 
-	bool CheckCollision(Ray ray, std::pair<Potision2f, Sizef> col);
+	bool CheckCollision(Ray ray, std::pair<Potision2f, Sizef> col,float& height);
 	bool CheckRay(Ray ray, Line line);
 private:
 };

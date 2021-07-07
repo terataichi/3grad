@@ -1,14 +1,25 @@
 #include "Raycast.h"
 
-bool Raycast::CheckCollision(Ray ray, std::pair<Potision2f, Sizef> col)
+bool Raycast::CheckCollision(Ray ray, std::pair<Potision2f, Sizef> col, float& height)
 {
-    bool flg = false;
-    flg |= CheckRay(ray, { {col.first.x_,col.first.y_ + col.second.y_},col.first });
-    flg |= CheckRay(ray, { col.first,{col.first.x_ + col.second.x_,col.first.y_} });
-    flg |= CheckRay(ray, { col.first + col.second,{col.first.x_,col.first.y_ + col.second.y_} });
-    flg |= CheckRay(ray, { {col.first.x_ + col.second.x_,col.first.y_},col.first + col.second });
 
-    return flg;
+    Line lineList[4] = {
+        { {col.first.x_,col.first.y_ + col.second.y_},col.first },
+        { col.first,{col.first.x_ + col.second.x_,col.first.y_} },
+        { col.first + col.second,{col.first.x_,col.first.y_ + col.second.y_} },
+        { {col.first.x_ + col.second.x_,col.first.y_},col.first + col.second }
+    };
+
+    for (auto line : lineList)
+    {
+        if (CheckRay(ray, line))
+        {
+            height = line.p1.y_;
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool Raycast::CheckRay(Ray ray, Line line)

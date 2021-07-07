@@ -35,19 +35,22 @@ namespace
 	};
 
 	// 当たり判定用で複数の場所で使用したかった。
-	bool HitRay(Raycast::Ray ray, const CollisionPList& colList, Raycast& raycast)
+	bool HitRay(Raycast::Ray ray, const CollisionPList& colList, Raycast& raycast,float& height)
 	{
 		for (auto& col : colList)
 		{
 			_dbgDrawBox(static_cast<int>(col.first.x_), static_cast<int>(col.first.y_),
 				static_cast<int>(col.first.x_ + col.second.x_), static_cast<int>(col.first.y_ + col.second.y_), 0xfff, false);
-			if (raycast.CheckCollision(ray, col))
+
+			if (raycast.CheckCollision(ray, col, height))
 			{
 				return true;
 			}
 		}
 		return false;
 	}
+
+
 }
 
 // --- 関数オブジェクト
@@ -108,7 +111,6 @@ struct CheckState
 		for (auto atr = node->first_attribute(); atr != nullptr; atr = atr->next_attribute())
 		{
 			std::string name = atr->name();
-
 			if (name == "state")
 			{
 				std::string value = atr->value();
@@ -198,17 +200,31 @@ struct CheckCollision
 			}
 		}
 		// 当たり判定
-		for (auto offset : myself->offset_[id])
+		int count = 0;
+		for (const auto& offset : myself->offset_[id])
 		{
-			Raycast::Ray ray{ myself->pos_,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset};
+			Potision2f p1 = myself->pos_;
+			if (id == InputID::Left || id == InputID::Right)
+			{
+				p1.y_ = p1.y_ - offset.y_ + offset.y_ * count;
+			}
+			else if (id == InputID::Up || id == InputID::Down)
+			{
+				p1.x_ = p1.x_ - offset.x_ + offset.x_ * count;
+			}
+
+			Raycast::Ray ray{ p1 ,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset};
+
 			_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
 				static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
 
-			if (HitRay(ray,myself->tileMap_->GetCollitionData(),myself->raycast_))
+			float height{};
+			if (HitRay(ray,myself->tileMap_->GetCollitionData(),myself->raycast_, height))
 			{
 				return false;
 			}
 		}
+		count++;
 		return true;
 	}
 };
@@ -236,13 +252,18 @@ struct Jump
 		{
 			Vector2f vec = Vector2f::ZERO;
 
+			if (myself->isGround_)
+			{
+				myself->isJump_ = false;
+				return false;
+			}
+
 			for (auto atr = node->first_attribute(); atr != nullptr; atr = atr->next_attribute())
 			{
 				std::string name = atr->name();
 				if (name == "y")
 				{
 					vec.y_ = static_cast<float>(atof(atr->value())) * lpTimeManager.GetDeltaTimeF();
-					myself->pos_.y_ += vec.y_;
 				}
 			}
 
@@ -253,18 +274,15 @@ struct Jump
 				_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
 					static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
 
-				if (HitRay(ray, myself->tileMap_->GetCollitionData(), myself->raycast_))
+				float height{};
+				if (HitRay(ray, myself->tileMap_->GetCollitionData(), myself->raycast_, height))
 				{
 					myself->isJump_ = false;
 					return false;
 				}
 			}
-			if (myself->isGround_)
-			{
-				myself->isJump_ = false;
-				return false;
-			}
 
+			myself->pos_.y_ += vec.y_;
 		}
 		return true;
 	}
@@ -277,11 +295,11 @@ struct Gravity
 {
 	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
 	{
+
 		// 重力操作
 		float vy = displacement_ + GRAVITY * g_elapsedTime_;
-		displacement_ = static_cast<float>(GRAVITY / 2.0 * (g_elapsedTime_ * g_elapsedTime_));
+		displacement_ = GRAVITY / 2.0f * (g_elapsedTime_ * g_elapsedTime_);
 		Vector2f vec{ 0.0f,vy };
-
 		// 当たり判定
 		for (auto offset : myself->offset_[InputID::Down])
 		{
@@ -289,8 +307,18 @@ struct Gravity
 			_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
 				static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
 
-			if (HitRay(ray, myself->tileMap_->GetCollitionData(), myself->raycast_))
+			auto& colData = myself->tileMap_->GetCollitionData();
+
+			float height = 0.0f;
+			if (HitRay(ray,colData , myself->raycast_, height))
 			{
+				// 高さ合わせ
+				float value = height - myself->pos_.y_ + offset.y_;
+				if (value > 0.0f)
+				{
+					myself->pos_.y_ = height - offset.y_ - 1.0f;
+				}
+
 				displacement_ = 1.0f;
 				g_elapsedTime_ = 4.0;
 				myself->isGround_ = true;

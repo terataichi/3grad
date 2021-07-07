@@ -5,7 +5,7 @@
 #include "../common/AnimationManager.h"
 #include "../common/TileMap.h"
 #include "../_debug/_DebugDispOut.h"
-#include "../../TimeManager.h"
+#include "../TimeManager.h"
 #include "../Status/Animation_State.h"
 
 Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Pawn(pos, speed,type)

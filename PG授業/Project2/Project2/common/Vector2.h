@@ -1,6 +1,6 @@
 #pragma once
 
-#define GRAVITY 10
+#define GRAVITY 10.0f
 
 // ÃÝÌßÚ°Ä‰»‚µ‚Ü
 template<class T> class Vector2Template

@@ -3,7 +3,7 @@
 #include "../Scene/GameScene.h"
 #include "../TimeManager.h"
 #include "../_debug/_DebugDispOut.h"
-#include "../../TimeManager.h"
+#include "../TimeManager.h"
 
 #include <DxLib.h>
 
