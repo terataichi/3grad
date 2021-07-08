@@ -203,17 +203,7 @@ struct CheckCollision
 		int count = 0;
 		for (const auto& offset : myself->offset_[id])
 		{
-			Potision2f p1 = myself->pos_;
-			if (id == InputID::Left || id == InputID::Right)
-			{
-				p1.y_ = p1.y_ - offset.y_ + offset.y_ * count;
-			}
-			else if (id == InputID::Up || id == InputID::Down)
-			{
-				p1.x_ = p1.x_ - offset.x_ + offset.x_ * count;
-			}
-
-			Raycast::Ray ray{ p1 ,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset};
+			Raycast::Ray ray{ myself->pos_ ,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset};
 
 			_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
 				static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);

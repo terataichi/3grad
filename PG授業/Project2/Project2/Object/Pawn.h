@@ -22,9 +22,6 @@ public:
 
 protected:
 	std::unique_ptr<Controller> controller_;				// コントローラーの情報保持用
-
-	double deltaTime_;										// １フレーム間の時間保存
-	double elapsedTime_;									// 経過時間保持用
 	std::string animKey_;									// 登録したアニメーションのkey保存用
 	Anim_State state_;										// ステータス管理用
 

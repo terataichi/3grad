@@ -14,7 +14,10 @@ bool Raycast::CheckCollision(Ray ray, std::pair<Potision2f, Sizef> col, float& h
     {
         if (CheckRay(ray, line))
         {
-            height = line.p1.y_;
+            if (line.p1.y_ == line.p2.y_)
+            {
+                height = line.p1.y_;
+            }
             return true;
         }
     }

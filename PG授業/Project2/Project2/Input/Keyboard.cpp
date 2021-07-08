@@ -13,6 +13,7 @@ Keyboard::Keyboard():Controller()
 		{InputID::Button_1,KEY_INPUT_Z},
 		{InputID::Button_2,KEY_INPUT_X},
 		{InputID::Button_3,KEY_INPUT_C},
+		{InputID::Button_4,KEY_INPUT_V},
 	};
 }
 
@@ -36,4 +37,5 @@ void Keyboard::Update(void)
 		triggerMap_[id].second = triggerMap_[id].first;
 		triggerMap_[id].first = buf_[config_[id]];
 	}
+
 }

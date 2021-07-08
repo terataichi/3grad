@@ -8,6 +8,9 @@ Controller::Controller()
 		triggerMap_[id].first = 0;
 		triggerMap_[id].second = 0;
 	}
+
+	commandBuf_.reserve(20);
+	commandBuf_.resize(20);
 }
 
 Controller::~Controller()

@@ -6,8 +6,6 @@ Gamepad::Gamepad() :Controller()
 
 	// êlêîÇ™ëùÇ¶ÇÈÇ∆ëΩÇ≠Ç»ÇÈÇÊÇ§Ç…ÇµÇΩÇ¢
 	padID_ = DX_INPUT_PAD1;
-
-
 	// ìoò^
 	config_ =
 	{
@@ -18,6 +16,7 @@ Gamepad::Gamepad() :Controller()
 		{InputID::Button_1,PAD_INPUT_1},
 		{InputID::Button_2,PAD_INPUT_2},
 		{InputID::Button_3,PAD_INPUT_3},
+		{InputID::Button_4,PAD_INPUT_4},
 	};
 }
 
@@ -37,5 +36,12 @@ void Gamepad::Update(void)
 	{
 		triggerMap_[id].second = triggerMap_[id].first;
 		triggerMap_[id].first = (GetJoypadInputState(padID_) & config_[id]);
+
+		commandBuf_[commandCnt_].first = triggerMap_[id].first ? static_cast<int>(id) : 0;
+		commandCnt_++;
+		if (commandCnt_ > commandBuf_.size())
+		{
+			commandCnt_ = 0;
+		}
 	}
 }

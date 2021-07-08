@@ -2,13 +2,14 @@
 
 enum class InputID
 {
-	Up,
+	Up = 10,
 	Down,
 	Left,
 	Right,
 	Button_1,
 	Button_2,
 	Button_3,
+	Button_4,
 	Max
 };
 

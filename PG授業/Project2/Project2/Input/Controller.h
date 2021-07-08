@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <map>
+#include <vector>
 #include "InputID.h"
 
 /// <summary>
@@ -12,6 +13,23 @@ enum class ControllType
 	GamePad,
 	Max
 };
+
+//enum class Command_ID
+//{
+//	neutral,
+//	left,
+//	right,
+//	up,
+//	down,
+//	LowerRight,
+//	LowerLeft,
+//	UpperRight,
+//	UpperLeft,
+//	Button1,
+//	Button2,
+//	Button3,
+//	Button4,
+//};
 
 /// <summary>
 /// IDに対応するtrigger情報を格納する
@@ -59,7 +77,12 @@ public:
 private:
 
 protected:
+
 	TriggerMap triggerMap_;
-	std::map<InputID, int> config_;										// IDに対応したコンフィグ格納
+
+	std::map<InputID, int> config_;												// IDに対応したコンフィグ格納
+
+	std::vector<std::pair<int,double>> commandBuf_;								// 入力されたコマンドと許容時間を保存する
+	int commandCnt_ = 0;
 };
 

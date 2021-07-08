@@ -19,9 +19,4 @@ public:
 private:
 
 	ModuleNode moduleNode;
-
-
-	bool jump_;													// ジャンプするためのトリガー
-
 };
-

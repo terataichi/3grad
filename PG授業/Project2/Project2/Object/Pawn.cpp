@@ -4,7 +4,6 @@
 
 Pawn::Pawn(Potision2f& pos, Vector2f& speed, ControllType& type) :Object(pos, speed)
 {
-	elapsedTime_ = 0.0;
 	state_ = Anim_State::Normal;
 
 	// コントローラーの設定
