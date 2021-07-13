@@ -25,15 +25,6 @@ namespace
 		{"Run",Anim_State::Run},
 	};
 
-	// stringに対応したID
-	std::map<std::string, InputID>keyMap_ =
-	{
-		{"Left",InputID::Left},
-		{"Right",InputID::Right},
-		{"Down",InputID::Down },
-		{"Up",InputID::Up}
-	};
-
 	// 当たり判定用で複数の場所で使用したかった。
 	bool HitRay(Raycast::Ray ray, const CollisionPList& colList, Raycast& raycast,float& height)
 	{
@@ -91,9 +82,9 @@ struct CheckKey
 			if (name == "key")
 			{
 				std::string value = atr->value();
-				if (keyMap_.count(value))
+				if (myself->keyMap_.count(value))
 				{
-					return myself->controller_->GetPushingTrigger(keyMap_[value]);
+					return myself->controller_->GetPushingTrigger(myself->keyMap_[value]);
 				}
 				assert(!"State.h 53行：キーが見つかりません");
 			}
@@ -192,11 +183,11 @@ struct CheckCollision
 			}
 			if (name == "key")
 			{
-				if (!keyMap_.count(atr->value()))
+				if (!myself->keyMap_.count(atr->value()))
 				{
 					return false;
 				}
-				id = keyMap_[atr->value()];
+				id = myself->keyMap_[atr->value()];
 			}
 		}
 		// 当たり判定

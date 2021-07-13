@@ -18,7 +18,6 @@
 #define _dbgDrawString(fmt, ...)			_DebugDispOut::GetInstance().DrawString(fmt, __VA_ARGS__)
 #define _dbgDrawFormatString(fmt, ...) 		_DebugDispOut::GetInstance().SetScreen(); \
 											DxLib::DrawFormatString(fmt, __VA_ARGS__);\
-											_DebugDispOut::GetInstance().RevScreen()
 
 
 using ChronoSysClock = std::chrono::system_clock::time_point;
@@ -33,7 +32,7 @@ public:
 	int DrawGraph(int x, int y, int GrHandle, int TransFlag);
 	int DrawBox(int x1, int y1, int x2, int y2, unsigned int Color, int FillFlag);
 	int DrawString(int x, int y, std::string String, unsigned int Color);
-//	int DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...);
+	int DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...);
 	int DrawLine(int x1, int y1, int x2, int y2, unsigned int Color);
 	int DrawCircle(int x, int y, int r, unsigned int Color, int FillFlag);
 	int DrawPixel(int x, int y, unsigned int Color);	

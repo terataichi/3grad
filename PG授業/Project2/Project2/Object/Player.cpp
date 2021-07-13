@@ -34,18 +34,15 @@ void Player::Init()
 	offset_.try_emplace(InputID::Right, std::list<Sizef>{ Sizef{ animSize }, Sizef{ animSize.x_,0 }, Sizef{ animSize.x_,-animSize.y_ } });
 	offset_.try_emplace(InputID::Up, std::list<Sizef>{ Sizef{ -animSize }, Sizef{ 0,-animSize.y_ }, Sizef{ animSize.x_,-animSize.y_ } });
 
-	rapidxml::file<> moduleFileName = "Resource/State/PlayerState.tmx";
-	stateVec_ = moduleFileName.vecData();
+	LoadStateModule("Resource/State/PlayerState.tmx");
 
-	stateDoc.parse<0>(stateVec_.data());
-
-	stateNode_ = stateDoc.first_node("moduleList");
-
+	LoadCommandList("Resource/Command/PlayerCommand.tmx");
 }
 
 bool Player::Update()
 {
 	controller_->Update();
+	CommandBufUpdate();
 
 	// first_node‚É‰½‚à‘‚©‚È‚¯‚ê‚ÎÅ‰‚ÉŒ©‚Â‚¯‚½‚â‚Â‚ª“ü‚é
 	state_ = Anim_State::Normal;

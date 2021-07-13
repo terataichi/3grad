@@ -36,12 +36,6 @@ void Gamepad::Update(void)
 	{
 		triggerMap_[id].second = triggerMap_[id].first;
 		triggerMap_[id].first = (GetJoypadInputState(padID_) & config_[id]);
-
-		commandBuf_[commandCnt_].first = triggerMap_[id].first ? static_cast<int>(id) : 0;
-		commandCnt_++;
-		if (commandCnt_ > commandBuf_.size())
-		{
-			commandCnt_ = 0;
-		}
 	}
+	UpdateRingBuf();
 }

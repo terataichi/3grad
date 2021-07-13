@@ -13,14 +13,32 @@ class Controller;
 class TmxAnimation;
 class TileMap;
 
+using CommandData = std::list<std::pair<int, double>>;
+using CommandList = std::list<CommandData>;
+
 class Pawn :
     public Object
 {
 public:
 	Pawn(Potision2f& pos, Vector2f& speed ,ControllType& type);
-	~Pawn();
+	virtual ~Pawn();
 
 protected:
+	/// <summary>
+	/// コマンドのバッファーにためる処理
+	/// </summary>
+	void CommandBufUpdate(void);
+	/// <summary>
+	/// ステータスUpdate用のTmx読み込み
+	/// </summary>
+	void LoadStateModule(std::string&& fileName);
+	/// <summary>
+	/// コマンドを読み込む
+	/// </summary>
+	/// <param name="fileName">ファイルまでのパス</param>
+	/// <returns>読み込んだコマンドリスト</returns>
+	void LoadCommandList(std::string&& fileName);
+
 	std::unique_ptr<Controller> controller_;				// コントローラーの情報保持用
 	std::string animKey_;									// 登録したアニメーションのkey保存用
 	Anim_State state_;										// ステータス管理用
@@ -36,6 +54,14 @@ protected:
 
 	bool isGround_;											// true:地面
 	bool isJump_;											// true:ジャンプ中
+
+	std::vector<std::pair<int, double>> commandBuf_;		// 入力されたコマンドと入力された時の時間を保存する
+	int commandCnt_;
+	CommandList commandList_;								// コマンドを保存
+
+	// stringに対応したID
+	static std::map<std::string, InputID>keyMap_;
+
 	// --- 関数オブジェクト
 	friend struct Move;
 	friend struct CheckKey;

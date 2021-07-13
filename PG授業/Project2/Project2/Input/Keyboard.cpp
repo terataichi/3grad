@@ -37,5 +37,5 @@ void Keyboard::Update(void)
 		triggerMap_[id].second = triggerMap_[id].first;
 		triggerMap_[id].first = buf_[config_[id]];
 	}
-
+	UpdateRingBuf();
 }

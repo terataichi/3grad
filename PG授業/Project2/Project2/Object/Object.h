@@ -10,7 +10,7 @@ class Object
 {
 public:
 	Object(Potision2f& pos, Vector2f& speed);
-	~Object();
+	virtual ~Object();
 
 	/// <summary>
 	/// ‰Šú‰»

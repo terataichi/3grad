@@ -13,7 +13,7 @@ class TransitionScene :
 {
 public:
     TransitionScene(UniqueBase beforScene, UniqueBase afterScene);
-    ~TransitionScene();
+    virtual ~TransitionScene();
 
 private:
     bool Init(void)override;

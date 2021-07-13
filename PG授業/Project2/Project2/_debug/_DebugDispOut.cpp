@@ -125,17 +125,17 @@ int _DebugDispOut::DrawString(int x, int y, std::string String, unsigned int Col
 	RevScreen();
 	return rtnFlag;
 }
-//
-//int _DebugDispOut::DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...)
-//{
-//	va_list arglist;
-//	va_start(arglist, FormatString);
-//	SetScreen();
-//	int rtnFlag = DxLib::DrawFormatString(x , y , Color, FormatString.c_str(), va_arg(arglist, int), va_arg(arglist, int));
-//	RevScreen();
-//	va_end(arglist);
-//	return rtnFlag;
-//}
+
+int _DebugDispOut::DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...)
+{
+	va_list arglist;
+	va_start(arglist, FormatString);
+	SetScreen();
+	int rtnFlag = DxLib::DrawFormatString(x , y , Color, FormatString.c_str(), va_arg(arglist, int), va_arg(arglist, int));
+	RevScreen();
+	va_end(arglist);
+	return rtnFlag;
+}
 
 int _DebugDispOut::DrawLine(int x1, int y1, int x2, int y2, unsigned int Color)
 {

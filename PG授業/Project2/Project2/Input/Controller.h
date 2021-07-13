@@ -14,23 +14,6 @@ enum class ControllType
 	Max
 };
 
-//enum class Command_ID
-//{
-//	neutral,
-//	left,
-//	right,
-//	up,
-//	down,
-//	LowerRight,
-//	LowerLeft,
-//	UpperRight,
-//	UpperLeft,
-//	Button1,
-//	Button2,
-//	Button3,
-//	Button4,
-//};
-
 /// <summary>
 /// IDに対応するtrigger情報を格納する
 /// first : 現座フレームの情報
@@ -38,9 +21,18 @@ enum class ControllType
 /// </summary>
 using TriggerMap = std::map<InputID, std::pair<bool, bool>>;
 
+
 class Controller
 {
 public:
+	// 双方向リスト
+	struct RingBuffer
+	{
+		int id_;
+		RingBuffer* next_;			// 次の要素
+		RingBuffer* prev_;			// 前の要素
+	};
+
 	Controller();
 	virtual ~Controller();
 
@@ -53,7 +45,10 @@ public:
 	/// 更新
 	/// </summary>
 	virtual void Update(void) = 0;
-
+	/// <summary>
+	/// リングバッファー更新処理
+	/// </summary>
+	void UpdateRingBuf(void);
 	/// <summary>
 	/// 押された瞬間かどうか
 	/// </summary>
@@ -81,8 +76,6 @@ protected:
 	TriggerMap triggerMap_;
 
 	std::map<InputID, int> config_;												// IDに対応したコンフィグ格納
-
-	std::vector<std::pair<int,double>> commandBuf_;								// 入力されたコマンドと許容時間を保存する
-	int commandCnt_ = 0;
+	RingBuffer* ringBuf_;														// 入力処理保持よう双方向リスト
 };
 
