@@ -17,6 +17,8 @@ _DebugDispOut::_DebugDispOut()
 	pouseKey_[1] = 0;
 	ghBefor_ = 0;
 	clsFlag_ = true;
+	fpsCount_ = 0;
+	fpsView_ = 0;
 }
 
 _DebugDispOut::~_DebugDispOut()
@@ -159,6 +161,23 @@ int _DebugDispOut::DrawPixel(int x, int y, unsigned int Color)
 	int rtnFlag = DxLib::DrawPixel(x , y , Color);
 	RevScreen();
 	return rtnFlag;
+}
+
+void _DebugDispOut::DrawFPS(void)
+{
+	fpsEndTime_ = std::chrono::system_clock::now();
+	if (std::chrono::duration_cast<std::chrono::milliseconds>(fpsEndTime_ - fpsStartTime_).count() >= 1000)
+	{
+		fpsView_ = fpsCount_;
+		fpsCount_ = 0;
+		fpsStartTime_ = fpsEndTime_;
+	}
+	else
+	{
+		fpsCount_++;
+	}
+	_DebugDispOut::DrawBox(0, 0, 80, 24, 0, true);
+	_dbgDrawFormatString(4, 4, 0xffffff, "fps:1/%d", fpsView_);
 }
 
 bool _DebugDispOut::StartDrawDebug(void)

@@ -4,6 +4,8 @@
 #include <vector>
 #include "InputID.h"
 
+#define CREATE_RINGBUF_NUM 30
+
 /// <summary>
 /// 入力装置の種類定義
 /// </summary>
@@ -21,7 +23,6 @@ enum class ControllType
 /// </summary>
 using TriggerMap = std::map<InputID, std::pair<bool, bool>>;
 
-
 class Controller
 {
 public:
@@ -29,6 +30,7 @@ public:
 	struct RingBuffer
 	{
 		int id_;
+		int num_;					// 番号
 		RingBuffer* next_;			// 次の要素
 		RingBuffer* prev_;			// 前の要素
 	};
@@ -69,6 +71,8 @@ public:
 	/// </summary>
 	/// <param name="id">取得したいID</param>
 	const bool GetReleasingTrigger(InputID id)const;
+
+	const RingBuffer* GetRingBuf(void)const;
 private:
 
 protected:
@@ -76,6 +80,8 @@ protected:
 	TriggerMap triggerMap_;
 
 	std::map<InputID, int> config_;												// IDに対応したコンフィグ格納
+
 	RingBuffer* ringBuf_;														// 入力処理保持よう双方向リスト
+	RingBuffer* startBuf_;														// 
 };
 

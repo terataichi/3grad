@@ -209,6 +209,9 @@ struct CheckCollision
 		return true;
 	}
 };
+/// <summary>
+/// ジャンプをセット
+/// </summary>
 struct SetJump
 {
 	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
@@ -317,6 +320,22 @@ private:
 	float displacement_;										// 変化量
 	float g_elapsedTime_;										// 重力の経過時間計測用
 };
+/// <summary>
+/// コマンドが入力されているかチェック
+/// </summary>
+struct CheckCommand
+{
+	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
+	{
+		auto buf = myself->controller_->GetRingBuf();
+
+		for (auto cmdData : myself->commandList_)
+		{
+
+		}
+		return true;
+	}
+};
 
 /// <summary>
 /// 本体
@@ -367,5 +386,6 @@ private:
 		{"Gravity",Gravity()},
 		{"Jump",Jump()},
 		{"SetJump",SetJump()},
+		{"CheckCommand",CheckCommand()}
 	};
 };

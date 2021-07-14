@@ -13,7 +13,13 @@ class Controller;
 class TmxAnimation;
 class TileMap;
 
-using CommandData = std::list<std::pair<int, double>>;
+// コマンドの情報
+struct CommandData 
+{
+	std::string name_;
+	std::list<int> input_;
+};
+
 using CommandList = std::list<CommandData>;
 
 class Pawn :
@@ -55,8 +61,6 @@ protected:
 	bool isGround_;											// true:地面
 	bool isJump_;											// true:ジャンプ中
 
-	std::vector<std::pair<int, double>> commandBuf_;		// 入力されたコマンドと入力された時の時間を保存する
-	int commandCnt_;
 	CommandList commandList_;								// コマンドを保存
 
 	// stringに対応したID
@@ -72,5 +76,6 @@ protected:
 	friend struct Gravity;
 	friend struct Jump;
 	friend struct SetJump;
+	friend struct CheckCommand;
 };
 

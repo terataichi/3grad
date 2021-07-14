@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commandList name="Player" version="1.0">
 	<command name="fire">
-		<data num="Down" time="3.0"/>
-		<data num="Right" time="3.0"/>
-		<data num="Button_1" time="3.0"/>
+		<data num="4" time="3.0"/>
+		<data num="20" time="3.0"/>
+    <data num="16" time="3.0"/>
+    <data num="32" time="3.0"/>
 	</command>
 </commandList>

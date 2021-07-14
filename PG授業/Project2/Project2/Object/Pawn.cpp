@@ -59,15 +59,24 @@ void Pawn::LoadCommandList(std::string&& fileName)
 
 	for (auto command = node->first_node(); command != nullptr; command = command->next_sibling())
 	{
-		std::string str = command->first_attribute("name")->value();
-		TRACE(str.c_str());
+		CommandData cmdData{};
+
+		std::string name = command->first_attribute("name")->value();
+		TRACE(name.c_str());
 		TRACE("\n");
+		cmdData.name_ = name;
+
 		for (auto data = command->first_node("data"); data != nullptr; data = data->next_sibling())
 		{
-			std::string datas = data->first_attribute("num")->value();
-			TRACE(datas.c_str());
+			std::string num = data->first_attribute("num")->value();
+			TRACE(num.c_str());
 			TRACE("\n");
+
+			cmdData.input_.push_back(atoi(num.c_str()));
 		}
 		TRACE("\n");
+
+		commandList_.push_back(cmdData);
 	}
+
 }
