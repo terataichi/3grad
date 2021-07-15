@@ -29,7 +29,7 @@ public:
 	// 双方向リスト
 	struct RingBuffer
 	{
-		int id_;
+		unsigned int id_;
 		int num_;					// 番号
 		RingBuffer* next_;			// 次の要素
 		RingBuffer* prev_;			// 前の要素
@@ -47,10 +47,6 @@ public:
 	/// 更新
 	/// </summary>
 	virtual void Update(void) = 0;
-	/// <summary>
-	/// リングバッファー更新処理
-	/// </summary>
-	void UpdateRingBuf(void);
 	/// <summary>
 	/// 押された瞬間かどうか
 	/// </summary>
@@ -71,17 +67,25 @@ public:
 	/// </summary>
 	/// <param name="id">取得したいID</param>
 	const bool GetReleasingTrigger(InputID id)const;
-
+	/// <summary>
+	/// 入力情報をためたバッファー取得
+	/// </summary>
 	const RingBuffer* GetRingBuf(void)const;
+	const RingBuffer* GetStartBuf(void)const;
 private:
 
 protected:
+	/// <summary>
+	/// リングバッファー更新処理
+	/// </summary>
+	void UpdateRingBuf(void);
+
 
 	TriggerMap triggerMap_;
 
 	std::map<InputID, int> config_;												// IDに対応したコンフィグ格納
 
-	RingBuffer* ringBuf_;														// 入力処理保持よう双方向リスト
-	RingBuffer* startBuf_;														// 
+	RingBuffer* ringBuf_ = nullptr;												// 入力処理保持よう双方向リスト
+	RingBuffer* startBuf_ = nullptr;											// 入力開始位置
 };
 

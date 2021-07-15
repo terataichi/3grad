@@ -327,11 +327,18 @@ struct CheckCommand
 {
 	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
 	{
-		auto buf = myself->controller_->GetRingBuf();
+		auto ringBuf = myself->controller_->GetRingBuf();
+		auto startBuf = myself->controller_->GetStartBuf();
+
+
 
 		for (auto cmdData : myself->commandList_)
 		{
-
+			while (startBuf != ringBuf)
+			{
+				startBuf->id_;
+				startBuf = startBuf->prev_;
+			}
 		}
 		return true;
 	}

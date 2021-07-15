@@ -2,19 +2,32 @@
 
 enum class InputID
 {
-	Up = 2,
-	Down = 4,
-	Left = 8,
-	Right = 16,
+	Up = 1,
+	Down = 2,
+	Left = 4,
+	Right = 8,
+	Button_1 = 16,
+	Button_2 = 32,
+	Button_3 = 64,
+	Button_4 = 128,
+	Max = 256,
+};
+
+enum class CommandID
+{
+	Up = 1,
+	Down = 2,
+	Left = 4,
+	Right = 8,
 	LowerLeft = Down + Left,
 	LowerRight = Down + Right,
 	UpperLeft = Up + Left,
 	UpperRight = Up + Right,
-	Button_1 = 32,
-	Button_2 = 64,
-	Button_3 = 128,
-	Button_4 = 256,
-	Max = 512,
+	Button_1 = 16,
+	Button_2 = 32,
+	Button_3 = 64,
+	Button_4 = 128,
+	Max = 256,
 };
 
 InputID begin(InputID);

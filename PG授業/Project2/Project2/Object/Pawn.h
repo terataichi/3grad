@@ -16,8 +16,9 @@ class TileMap;
 // コマンドの情報
 struct CommandData 
 {
-	std::string name_;
-	std::list<int> input_;
+	std::string name_;											// コマンド名
+	double allTime_;											// このコマンド全体に対しての許容時間
+	std::list<std::pair<unsigned int, double>> input_;			// CommandIDとIDに対しての許容時間
 };
 
 using CommandList = std::list<CommandData>;

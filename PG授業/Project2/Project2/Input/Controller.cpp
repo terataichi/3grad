@@ -20,7 +20,6 @@ Controller::Controller()
 		RingBuffer* first = now;
 		first->id_ = 0;
 		first->num_ = 0;
-		startBuf_ = first;
 		// 最初に一個作らないといけないからiは１から始める
 		for (int i = 1; i < num; i++)
 		{
@@ -39,7 +38,7 @@ Controller::Controller()
 		// 最後に先頭ポインタの前後をセットする
 		now->next_ = first;
 		first->prev_ = now;
-
+		startBuf_ = now;
 		return first;
 	};
 
@@ -63,11 +62,13 @@ Controller::~Controller()
 void Controller::UpdateRingBuf(void)
 {
 	bool neutral = false;
+	ringBuf_ = ringBuf_->next_;
+	ringBuf_->id_ = 0;
 	for (auto id : InputID())
 	{
 		if (GetPushingTrigger(id))
 		{
-			ringBuf_->id_ |= static_cast<int>(id);
+			ringBuf_->id_ |= static_cast<unsigned int>(id);
 			//TRACE("%d\n", ringBuf_->id_);
 			neutral = true;
 		}
@@ -76,14 +77,23 @@ void Controller::UpdateRingBuf(void)
 	if (!neutral)
 	{
 		ringBuf_->id_ = 0;
-		//TRACE("%d\n", ringBuf_->id_);
+		startBuf_ = ringBuf_;
 	}
-	ringBuf_ = ringBuf_->prev_;
-
-	for (int i = 0; i < CREATE_RINGBUF_NUM; i++)
+	else 
 	{
-		_dbgDrawFormatString(30 * ( 1 + i), 700, 0xfff, "%d", startBuf_->id_);
-		startBuf_ = startBuf_->next_;
+		if (startBuf_ == ringBuf_)
+		{
+			startBuf_ = startBuf_->next_;
+		}
+	}
+
+	auto debug = startBuf_;
+	int i = 0;
+	while (debug != ringBuf_)
+	{
+		_dbgDrawFormatString(30 * (CREATE_RINGBUF_NUM - i), 700, 0xfff, "%d", debug->id_);
+		debug = debug->next_;
+		i++;
 	}
 }
 
@@ -105,6 +115,11 @@ const bool Controller::GetReleaseTrigger(InputID id) const
 const Controller::RingBuffer* Controller::GetRingBuf(void) const
 {
 	return ringBuf_;
+}
+
+const Controller::RingBuffer* Controller::GetStartBuf(void) const
+{
+	return startBuf_;
 }
 
 const bool Controller::GetReleasingTrigger(InputID id) const
