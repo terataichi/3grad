@@ -36,4 +36,8 @@
 			<module name="Gravity">
 		</module>
 	</ActionNode>
+  <ActionNode name="Command">
+    <module name="CheckCommand">
+    </module>
+  </ActionNode>
 </moduleList>

@@ -330,17 +330,37 @@ struct CheckCommand
 		auto ringBuf = myself->controller_->GetRingBuf();
 		auto startBuf = myself->controller_->GetStartBuf();
 
-
-
-		for (auto cmdData : myself->commandList_)
+		for (auto& cmdData : myself->commandList_)
 		{
-			while (startBuf != ringBuf)
+			int cnt = 0;
+			for (auto& cmd : cmdData.input_)
 			{
-				startBuf->id_;
-				startBuf = startBuf->prev_;
+				auto checkBuf = startBuf;				// 初期位置保存
+				while (startBuf != ringBuf)
+				{
+					if (cmd.first == startBuf->id_)
+					{
+						startBuf = startBuf->prev_;
+						continue;
+					}
+					break;
+				}
+
+				// 位置が変わっていない
+				if (checkBuf == startBuf)
+				{
+					break;
+				}
+				cnt++;
+			}
+			// コマンド成功
+			if (cnt == cmdData.input_.size())
+			{
+				TRACE(cmdData.name_.c_str());
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 };
 

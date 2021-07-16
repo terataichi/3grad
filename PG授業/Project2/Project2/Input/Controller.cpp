@@ -77,7 +77,7 @@ void Controller::UpdateRingBuf(void)
 	if (!neutral)
 	{
 		ringBuf_->id_ = 0;
-		startBuf_ = ringBuf_;
+		startBuf_ = ringBuf_->next_;
 	}
 	else 
 	{

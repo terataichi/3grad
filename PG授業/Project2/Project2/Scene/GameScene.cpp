@@ -18,8 +18,8 @@ GameScene::~GameScene()
 bool GameScene::Init(void)
 {
 	map_ = std::make_shared<TileMap>("Resource/TileMap/testStage01.tmx");
-	//objList_.emplace_back(std::make_unique<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_, ControllType::GamePad));
-	objList_.emplace_back(std::make_unique<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_,ControllType::Keybord));
+	objList_.emplace_back(std::make_unique<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_, ControllType::GamePad));
+	//objList_.emplace_back(std::make_unique<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_,ControllType::Keybord));
 
 	DrawOwnScreen();
 	return true;
