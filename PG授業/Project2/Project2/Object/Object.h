@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <list>
 
 #include "../common/Vector2.h"
 #include "../Input/Controller.h"
@@ -29,9 +30,8 @@ public:
 	/// <param name="delta"></param>
 	virtual void Draw() = 0;
 protected:
-
 	Potision2f pos_;										// 自分の座標
-	Vector2f speed_;										// 速度
+	Vector2f vel_;											// 速度
 	Size size_;												// 大きさ
 	float radius_;											// 半径
 	bool turn_;												// 左向いてるか右向いてるか(画像が右向いてたらfalseで右)

@@ -202,6 +202,12 @@ struct CheckCollision
 			float height{};
 			if (HitRay(ray,myself->tileMap_->GetCollitionData(),myself->raycast_, height))
 			{
+				// 高さ合わせ
+				float value = height - myself->pos_.y_ + offset.y_;
+				if (value > 0.0f)
+				{
+					myself->pos_.y_ = height - offset.y_ - 1.0f;
+				}
 				return false;
 			}
 		}
@@ -328,38 +334,80 @@ struct CheckCommand
 	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
 	{
 		auto ringBuf = myself->controller_->GetRingBuf();
-		auto startBuf = myself->controller_->GetStartBuf();
+		auto nowBuf = myself->controller_->GetStartBuf();
+		auto backupBuf = nowBuf;
 
 		for (auto& cmdData : myself->commandList_)
 		{
 			int cnt = 0;
+			nowBuf = backupBuf;
+			bool catchCom = false;														// 1つ目のコマンドを検知したらtrue
+			double allTime = nowBuf->time_;
 			for (auto& cmd : cmdData.input_)
 			{
-				auto checkBuf = startBuf;				// 初期位置保存
-				while (startBuf != ringBuf)
+				auto checkBuf = nowBuf;												// 初期位置保存
+				while (nowBuf != ringBuf)
 				{
-					if (cmd.first == startBuf->id_)
+					if (cmd.first == nowBuf->id_)
 					{
-						startBuf = startBuf->prev_;
+						// 入力時間チェック
+						auto time = lpTimeManager.GetElapsedTime() - nowBuf->time_;
+						if (time >= cmd.second)
+						{
+							break;
+						}
+
+						catchCom = true;
+						nowBuf = nowBuf->next_;
 						continue;
 					}
-					break;
+					// 1つ目のコマンドを見つけるまでは回す
+					if (catchCom)
+					{
+						// neutralを許容するかしないか
+						if (nowBuf->id_ != 0)
+						{
+							break;
+						}
+					}
+					nowBuf = nowBuf->next_;
 				}
 
 				// 位置が変わっていない
-				if (checkBuf == startBuf)
+				if (!catchCom || checkBuf == nowBuf)
 				{
+					// コマンド中断
 					break;
 				}
+				// コマンドがあってる場合
 				cnt++;
 			}
 			// コマンド成功
+			// cntがsizeと同じで成功
 			if (cnt == cmdData.input_.size())
 			{
+				// の前に全体の時間チェックして長すぎるか確認
+				if(nowBuf->time_ - allTime > cmdData.allTime_)
+				{
+					TRACE("入力時間が長すぎます\n");
+					break;
+				}
+				myself->controller_->ResetBuffer(cmdData.reset_);
 				TRACE(cmdData.name_.c_str());
+				TRACE("\n");
 				return true;
 			}
 		}
+		return false;
+	}
+};
+/// <summary>
+/// 弾生成
+/// </summary>
+struct InstanceBulled
+{
+	bool operator()(Pawn* myself, rapidxml::xml_node<>* node)
+	{
 		return false;
 	}
 };
@@ -413,6 +461,7 @@ private:
 		{"Gravity",Gravity()},
 		{"Jump",Jump()},
 		{"SetJump",SetJump()},
-		{"CheckCommand",CheckCommand()}
+		{"CheckCommand",CheckCommand()},
+		{"InstanceBulled",InstanceBulled()}
 	};
 };

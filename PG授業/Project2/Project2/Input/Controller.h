@@ -29,8 +29,9 @@ public:
 	// 双方向リスト
 	struct RingBuffer
 	{
-		unsigned int id_;
-		int num_;					// 番号
+		unsigned int id_;			// 入力した情報格納
+		double time_;				// 入力したときの時間を保持しておく
+		int num_;					// デバッグ用自分の番号
 		RingBuffer* next_;			// 次の要素
 		RingBuffer* prev_;			// 前の要素
 	};
@@ -72,6 +73,11 @@ public:
 	/// </summary>
 	const RingBuffer* GetRingBuf(void)const;
 	const RingBuffer* GetStartBuf(void)const;
+	/// <summary>
+	/// バッファーのリセット
+	/// </summary>
+	/// <param name="reset">リセットするかしないか</param>
+	void ResetBuffer(bool reset);
 private:
 
 protected:

@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Bulled.cpp" />
     <ClCompile Include="Object\Pawn.cpp" />
     <ClCompile Include="common\AnimationManager.cpp" />
     <ClCompile Include="common\ImageManager.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Bulled.h" />
     <ClInclude Include="Object\Pawn.h" />
     <ClInclude Include="Object\State.h" />
     <ClInclude Include="common\AnimationManager.h" />

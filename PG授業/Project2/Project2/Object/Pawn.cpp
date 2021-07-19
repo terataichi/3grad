@@ -63,17 +63,20 @@ void Pawn::LoadCommandList(std::string&& fileName)
 
 		std::string name = command->first_attribute("name")->value();
 		std::string allTime = command->first_attribute("allTime")->value();
+		std::string reset = command->first_attribute("reset")->value();
 		TRACE(name.c_str());
 		TRACE("\n");
 		// コマンド名と全体許容時間格納
 		cmdData.name_ = name;
 		cmdData.allTime_ = atof(allTime.c_str());
-
+		cmdData.reset_ = atoi(reset.c_str());
 		for (auto data = command->first_node("data"); data != nullptr; data = data->next_sibling())
 		{
 			std::string num = data->first_attribute("num")->value();
 			std::string time = data->first_attribute("time")->value();
 			TRACE(num.c_str());
+			TRACE(" , ");
+			TRACE(time.c_str());
 			TRACE("\n");
 
 			// コマンドIDの値と各IDの許容時間の値を追加

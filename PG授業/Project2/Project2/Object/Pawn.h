@@ -18,6 +18,7 @@ struct CommandData
 {
 	std::string name_;											// コマンド名
 	double allTime_;											// このコマンド全体に対しての許容時間
+	bool reset_;												// リセットをするかどうか
 	std::list<std::pair<unsigned int, double>> input_;			// CommandIDとIDに対しての許容時間
 };
 
@@ -78,5 +79,6 @@ protected:
 	friend struct Jump;
 	friend struct SetJump;
 	friend struct CheckCommand;
+	friend struct InstanceBulled;
 };
 

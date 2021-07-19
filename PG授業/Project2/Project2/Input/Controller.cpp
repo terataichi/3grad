@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include "../_debug/_DebugDispOut.h"
 #include "../_debug/_DebugConOut.h"
+#include "../TimeManager.h"
 #include <DxLib.h>
 
 Controller::Controller()
@@ -68,11 +69,13 @@ void Controller::UpdateRingBuf(void)
 	{
 		if (GetPushingTrigger(id))
 		{
-			ringBuf_->id_ |= static_cast<unsigned int>(id);
+			ringBuf_->id_ |= 1 << static_cast<unsigned int>(id);
 			//TRACE("%d\n", ringBuf_->id_);
 			neutral = true;
 		}
 	}
+	// ŽžŠÔ‚ð•Û‘¶
+	ringBuf_->time_ = lpTimeManager.GetElapsedTime();
 	// “ü—Í‚ª‚³‚ê‚È‚©‚Á‚½
 	if (!neutral)
 	{
@@ -120,6 +123,18 @@ const Controller::RingBuffer* Controller::GetRingBuf(void) const
 const Controller::RingBuffer* Controller::GetStartBuf(void) const
 {
 	return startBuf_;
+}
+
+void Controller::ResetBuffer(bool reset)
+{
+	if (reset)
+	{
+		while (startBuf_ != ringBuf_)
+		{
+			startBuf_->id_ = 0;
+			startBuf_ = startBuf_->next_;
+		}
+	}
 }
 
 const bool Controller::GetReleasingTrigger(InputID id) const

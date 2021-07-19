@@ -22,6 +22,7 @@ public:
 	void Run(void);
 	void Update(void);
 	void Draw(void);
+	
 	const Size screenSize_;
 private:
 	std::unique_ptr<BaseScene> scene_;
