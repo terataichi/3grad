@@ -327,7 +327,7 @@ private:
 	float g_elapsedTime_;										// 重力の経過時間計測用
 };
 /// <summary>
-/// コマンドが入力されているかチェック
+/// コマンドが入力されているかチェックして成功していたら技リストにぶち込む
 /// </summary>
 struct CheckCommand
 {
@@ -345,10 +345,17 @@ struct CheckCommand
 			double allTime = nowBuf->time_;
 			for (auto& cmd : cmdData.input_)
 			{
-				auto checkBuf = nowBuf;												// 初期位置保存
+				auto checkBuf = nowBuf;													// 初期位置保存
 				while (nowBuf != ringBuf)
 				{
-					if (cmd.first == nowBuf->id_)
+					// 左右反転
+					auto command = cmd.first;
+					if (command & (1 << static_cast<unsigned int>(InputID::Right)) && myself->turn_)
+					{
+						command ^= (1 << static_cast<unsigned int>(InputID::Left)) | (1 << static_cast<unsigned int>(InputID::Right));
+					}
+
+					if (command == nowBuf->id_)
 					{
 						// 入力時間チェック
 						auto time = lpTimeManager.GetElapsedTime() - nowBuf->time_;
@@ -395,6 +402,9 @@ struct CheckCommand
 				myself->controller_->ResetBuffer(cmdData.reset_);
 				TRACE(cmdData.name_.c_str());
 				TRACE("\n");
+				
+				// アタックリストに追加
+				myself->attackList_.emplace_back(cmdData.name_.c_str());
 				return true;
 			}
 		}

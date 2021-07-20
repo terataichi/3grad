@@ -21,6 +21,8 @@ Player::~Player()
 
 void Player::Init()
 {
+	objType_ = ObjectType::Pawn;
+
 	// ステータスの設定
 	state_ = Anim_State::Normal;
 	// アニメーション登録初期化

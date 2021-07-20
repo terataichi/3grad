@@ -6,6 +6,7 @@
 
 Bulled::Bulled(Potision2f&& pos, Vector2f&& vel) :Object(pos, vel)
 {
+	Init();
 }
 
 Bulled::~Bulled()
@@ -14,6 +15,7 @@ Bulled::~Bulled()
 
 void Bulled::Init()
 {
+	objType_ = ObjectType::Actor;
 }
 
 bool Bulled::Update()

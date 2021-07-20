@@ -7,6 +7,13 @@
 #include "../Input/Controller.h"
 #include "../Status/Animation_State.h"
 
+enum class ObjectType
+{
+	Non,
+	Pawn,
+	Actor,
+};
+
 class Object
 {
 public:
@@ -35,5 +42,6 @@ protected:
 	Size size_;												// ‘å‚«‚³
 	float radius_;											// ”¼Œa
 	bool turn_;												// ¶Œü‚¢‚Ä‚é‚©‰EŒü‚¢‚Ä‚é‚©(‰æ‘œ‚ª‰EŒü‚¢‚Ä‚½‚çfalse‚Å‰E)
+	ObjectType objType_;
 };
 

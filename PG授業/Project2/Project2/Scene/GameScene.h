@@ -20,7 +20,7 @@ private:
     void DrawOwnScreen()override;
     SceneName MyName()override { return SceneName::Game; };
 
-    std::list<std::unique_ptr<Object>> objList_;
+    std::list<std::shared_ptr<Object>> objList_;
     std::shared_ptr<TileMap> map_;
 };
 

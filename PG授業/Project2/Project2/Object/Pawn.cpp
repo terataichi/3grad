@@ -88,3 +88,8 @@ void Pawn::LoadCommandList(std::string&& fileName)
 	}
 
 }
+
+bool Pawn::InstanceAttackList(std::list<std::shared_ptr<Object>>& obj)
+{
+	return false;
+}

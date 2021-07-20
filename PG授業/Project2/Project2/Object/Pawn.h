@@ -46,6 +46,12 @@ protected:
 	/// <param name="fileName">ファイルまでのパス</param>
 	/// <returns>読み込んだコマンドリスト</returns>
 	void LoadCommandList(std::string&& fileName);
+	/// <summary>
+	/// ゲームシーンからオブジェクトリストもらって
+	/// </summary>
+	/// <param name="obj">追加したいリスト</param>
+	/// <returns>true : ちゃんと追加できた</returns>
+	bool InstanceAttackList(std::list <std::shared_ptr<Object>>& obj);
 
 	std::unique_ptr<Controller> controller_;				// コントローラーの情報保持用
 	std::string animKey_;									// 登録したアニメーションのkey保存用
@@ -64,6 +70,8 @@ protected:
 	bool isJump_;											// true:ジャンプ中
 
 	CommandList commandList_;								// コマンドを保存
+
+	std::list<std::string> attackList_;						// 弾とか打つ
 
 	// stringに対応したID
 	static std::map<std::string, InputID>keyMap_;
