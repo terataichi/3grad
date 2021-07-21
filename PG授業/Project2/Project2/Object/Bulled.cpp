@@ -19,11 +19,11 @@ void Bulled::Init()
 
 bool Bulled::Update()
 {
-	pos_ += vel_ * lpTimeManager.GetDeltaTimeF();
+	pos_.x_ += vel_.x_ * lpTimeManager.GetDeltaTimeF();
 	return true;
 }
 
 void Bulled::Draw()
 {
-	DrawRotaGraphF(0.0f, 0.0f, 1.0, 0.0, lpImageManager.GetImageHandle("test01.png")[0], true);
+	DrawRotaGraphF(pos_.x_, pos_.y_, 1.0, 0.0, lpImageManager.GetImageHandle("test01.png")[0], true);
 }

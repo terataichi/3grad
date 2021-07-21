@@ -26,7 +26,7 @@ struct CommandData
 
 using CommandList = std::list<CommandData>;
 
-using InstanceFunc = std::function<std::shared_ptr<Object>(void)>;
+// using InstanceFunc = std::function<std::shared_ptr<Object>(void)>;
 using InstanceMap = std::map<std::string, std::function<std::shared_ptr<Object>(void)>>;
 
 class Pawn :

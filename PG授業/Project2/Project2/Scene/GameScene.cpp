@@ -33,7 +33,7 @@ UniqueBase GameScene::Update(UniqueBase scene)
 		obj->Update();
 
 		// 技が出てたらインスタンスリストに追加する
-		if (obj->GetObjectType() == ObjectType::Actor)
+		if (obj->GetObjectType() == ObjectType::Pawn)
 		{
 			auto pawn = std::dynamic_pointer_cast<Pawn>(obj);
 			AddInstanceList(pawn);
@@ -70,5 +70,6 @@ bool GameScene::AddInstanceList(std::shared_ptr<Pawn>& pawn)
 			instanceList_.push_back(pawn->GetInstanceFuncMap().at(attack)());
 		}
 	}
+	pawn->GetAttackList().clear();
 	return true;
 }

@@ -4,6 +4,7 @@
 #include "../common/ImageManager.h"
 #include "../common/AnimationManager.h"
 #include "../common/TileMap.h"
+#include "../_debug/_DebugConOut.h"
 #include "../_debug/_DebugDispOut.h"
 #include "../TimeManager.h"
 #include "../Status/Animation_State.h"
@@ -14,6 +15,7 @@ Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& til
 	tileMap_ = tileMap;
 
 	Init();
+	InitFunction();
 }
 
 Player::~Player()
@@ -66,11 +68,14 @@ void Player::Draw()
 
 void Player::InitFunction(void)
 {
-	auto a = [&]()->std::shared_ptr<Object> {
+	auto a = [&](void)->std::shared_ptr<Object> {
 		std::shared_ptr<Object> obj;
 		obj.reset(new Bulled(std::move(pos_), std::move(vel_)));
+		TRACE("bulledê∂ê¨\n");
 		return obj;
 	};
 
-	instanceMap_.try_emplace({ "at1", a });
+	instanceMap_ = { 
+		{ "at1", a }
+	};
 }
