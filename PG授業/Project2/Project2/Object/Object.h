@@ -17,7 +17,7 @@ enum class ObjectType
 class Object
 {
 public:
-	Object(Potision2f& pos, Vector2f& speed);
+	Object(Potision2f& pos, Vector2f& speed, ObjectType&& objtype);
 	virtual ~Object();
 
 	/// <summary>
@@ -36,12 +36,14 @@ public:
 	/// </summary>
 	/// <param name="delta"></param>
 	virtual void Draw() = 0;
+
+	const ObjectType& GetObjectType(void)const;
 protected:
 	Potision2f pos_;										// 自分の座標
 	Vector2f vel_;											// 速度
 	Size size_;												// 大きさ
 	float radius_;											// 半径
 	bool turn_;												// 左向いてるか右向いてるか(画像が右向いてたらfalseで右)
-	ObjectType objType_;
+	const ObjectType objType_;
 };
 

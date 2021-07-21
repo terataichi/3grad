@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commandList name="Player" version="1.0">
-	<command name="hadoken" allTime ="3.0" reset="1">
-		<data num="2" time="0.5"/>
-		<data num="10" time="0.5"/>
-    <data num="8" time="0.5"/>
-    <data num="16" time="0.5"/>
+	<command name="at1" allTime ="3.0" reset="1">
+		<data num="2" time="0.8"/>
+		<data num="10" time="0.8"/>
+    <data num="8" time="0.8"/>
+    <data num="16" time="0.8"/>
 	</command>
 </commandList>

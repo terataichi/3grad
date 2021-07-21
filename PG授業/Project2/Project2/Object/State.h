@@ -40,8 +40,6 @@ namespace
 		}
 		return false;
 	}
-
-
 }
 
 // --- 関数オブジェクト

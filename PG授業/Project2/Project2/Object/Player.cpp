@@ -7,8 +7,9 @@
 #include "../_debug/_DebugDispOut.h"
 #include "../TimeManager.h"
 #include "../Status/Animation_State.h"
+#include "Bulled.h"
 
-Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Pawn(pos, speed,type)
+Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Pawn(pos, speed, type)
 {
 	tileMap_ = tileMap;
 
@@ -21,7 +22,6 @@ Player::~Player()
 
 void Player::Init()
 {
-	objType_ = ObjectType::Pawn;
 
 	// ステータスの設定
 	state_ = Anim_State::Normal;
@@ -62,4 +62,15 @@ void Player::Draw()
 
 	lpAnimManager.SetState(animKey_, state_, lpTimeManager.GetElapsedTime());
 	DrawRotaGraph(pos.x_, pos.y_, 1, 0.0, lpAnimManager.GetAnimation(animKey_, lpTimeManager.GetElapsedTime()), true, turn_);
+}
+
+void Player::InitFunction(void)
+{
+	auto a = [&]()->std::shared_ptr<Object> {
+		std::shared_ptr<Object> obj;
+		obj.reset(new Bulled(std::move(pos_), std::move(vel_)));
+		return obj;
+	};
+
+	instanceMap_.try_emplace({ "at1", a });
 }

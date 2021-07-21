@@ -2,7 +2,8 @@
 #include "Object.h"
 #include <map>
 #include <list>
-
+#include <functional>
+#include <memory>
 #include "../TileMap/rapidxml.hpp"
 #include "../TileMap/rapidxml_utils.hpp"
 
@@ -22,7 +23,11 @@ struct CommandData
 	std::list<std::pair<unsigned int, double>> input_;			// CommandIDとIDに対しての許容時間
 };
 
+
 using CommandList = std::list<CommandData>;
+
+using InstanceFunc = std::function<std::shared_ptr<Object>(void)>;
+using InstanceMap = std::map<std::string, std::function<std::shared_ptr<Object>(void)>>;
 
 class Pawn :
     public Object
@@ -31,6 +36,17 @@ public:
 	Pawn(Potision2f& pos, Vector2f& speed ,ControllType& type);
 	virtual ~Pawn();
 
+	/// <summary>
+	/// インスタンスする攻撃のリスト
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	std::list<std::string>& GetAttackList(void);
+	/// <summary>
+	/// アタックリストに対応したインスタンスマップ取得
+	/// </summary>
+	/// <returns></returns>
+	const InstanceMap& GetInstanceFuncMap()const;
 protected:
 	/// <summary>
 	/// コマンドのバッファーにためる処理
@@ -47,11 +63,10 @@ protected:
 	/// <returns>読み込んだコマンドリスト</returns>
 	void LoadCommandList(std::string&& fileName);
 	/// <summary>
-	/// ゲームシーンからオブジェクトリストもらって
+	/// 初期化してね
+	/// instanceMap_
 	/// </summary>
-	/// <param name="obj">追加したいリスト</param>
-	/// <returns>true : ちゃんと追加できた</returns>
-	bool InstanceAttackList(std::list <std::shared_ptr<Object>>& obj);
+	virtual void InitFunction(void) = 0;
 
 	std::unique_ptr<Controller> controller_;				// コントローラーの情報保持用
 	std::string animKey_;									// 登録したアニメーションのkey保存用
@@ -72,10 +87,12 @@ protected:
 	CommandList commandList_;								// コマンドを保存
 
 	std::list<std::string> attackList_;						// 弾とか打つ
+	InstanceMap instanceMap_;								// アタックリストに対応したインスタンスマップ
 
 	// stringに対応したID
 	static std::map<std::string, InputID>keyMap_;
 
+private:
 	// --- 関数オブジェクト
 	friend struct Move;
 	friend struct CheckKey;

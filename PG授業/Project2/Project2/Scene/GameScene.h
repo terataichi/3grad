@@ -6,6 +6,7 @@
 
 class TileMap;
 class Object;
+class Pawn;
 
 class GameScene :
     public BaseScene
@@ -20,6 +21,9 @@ private:
     void DrawOwnScreen()override;
     SceneName MyName()override { return SceneName::Game; };
 
+    bool AddInstanceList(std::shared_ptr<Pawn>& pawn);
+
+    std::list<std::shared_ptr<Object>> instanceList_;
     std::list<std::shared_ptr<Object>> objList_;
     std::shared_ptr<TileMap> map_;
 };

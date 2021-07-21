@@ -4,7 +4,7 @@
 
 #include<DxLib.h>
 
-Bulled::Bulled(Potision2f&& pos, Vector2f&& vel) :Object(pos, vel)
+Bulled::Bulled(Potision2f&& pos, Vector2f&& vel) :Object(pos, vel,ObjectType::Actor)
 {
 	Init();
 }
@@ -15,7 +15,6 @@ Bulled::~Bulled()
 
 void Bulled::Init()
 {
-	objType_ = ObjectType::Actor;
 }
 
 bool Bulled::Update()

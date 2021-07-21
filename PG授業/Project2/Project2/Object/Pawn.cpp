@@ -8,7 +8,7 @@
 
 std::map<std::string, InputID> Pawn::keyMap_;
 
-Pawn::Pawn(Potision2f& pos, Vector2f& speed, ControllType& type) :Object(pos, speed)
+Pawn::Pawn(Potision2f& pos, Vector2f& speed, ControllType& type) :Object(pos, speed, ObjectType::Pawn)
 {
 	state_ = Anim_State::Normal;
 
@@ -89,7 +89,12 @@ void Pawn::LoadCommandList(std::string&& fileName)
 
 }
 
-bool Pawn::InstanceAttackList(std::list<std::shared_ptr<Object>>& obj)
+std::list<std::string>& Pawn::GetAttackList(void)
 {
-	return false;
+	return attackList_;
+}
+
+const InstanceMap& Pawn::GetInstanceFuncMap() const
+{
+	return instanceMap_;
 }
