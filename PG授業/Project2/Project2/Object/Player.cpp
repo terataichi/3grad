@@ -10,7 +10,8 @@
 #include "../Status/Animation_State.h"
 #include "Bulled.h"
 
-Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type) :Pawn(pos, speed, type)
+Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type, TeamTag tag)
+	:Pawn(pos, speed, type,tag)
 {
 	tileMap_ = tileMap;
 
@@ -31,7 +32,7 @@ void Player::Init()
 	animKey_ = lpAnimManager.AddAnimation("Resource/AnimationData/AnimationPlayer.tmx", "Player");
 	lpAnimManager.SetState(animKey_, state_,lpTimeManager.GetElapsedTime());
 
-
+	size_ = lpAnimManager.GetChipSize(animKey_);
 	Sizef animSize = lpAnimManager.GetChipSize(animKey_) / 2.0f;
 	offset_.try_emplace(InputID::Left, std::list<Sizef>{ Sizef{ -animSize.x_,0 }, Sizef{ -animSize }, Sizef{ -animSize.x_,animSize.y_ } });
 	offset_.try_emplace(InputID::Down, std::list<Sizef>{ Sizef{ 0,animSize.y_ }, Sizef{  animSize }, Sizef{ -animSize.x_,animSize.y_ } });
@@ -70,7 +71,7 @@ void Player::InitFunction(void)
 {
 	auto a = [&](void)->std::shared_ptr<Object> {
 		std::shared_ptr<Object> obj;
-		obj.reset(new Bulled(std::move(pos_), std::move(vel_)));
+		obj.reset(new Bulled(std::move(pos_), std::move(vel_), teamTag_));
 		TRACE("bulledê∂ê¨\n");
 		return obj;
 	};
@@ -78,4 +79,8 @@ void Player::InitFunction(void)
 	instanceMap_ = { 
 		{ "at1", a }
 	};
+}
+
+void Player::Hit(std::shared_ptr<Object> target)
+{
 }

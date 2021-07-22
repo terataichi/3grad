@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common\Collision.cpp" />
     <ClCompile Include="Object\Bulled.cpp" />
     <ClCompile Include="Object\Pawn.cpp" />
     <ClCompile Include="common\AnimationManager.cpp" />

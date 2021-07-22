@@ -7,6 +7,7 @@
 class TileMap;
 class Object;
 class Pawn;
+class Collision;
 
 class GameScene :
     public BaseScene
@@ -26,5 +27,6 @@ private:
     std::list<std::shared_ptr<Object>> instanceList_;
     std::list<std::shared_ptr<Object>> objList_;
     std::shared_ptr<TileMap> map_;
+    std::unique_ptr<Collision> collision_;
 };
 

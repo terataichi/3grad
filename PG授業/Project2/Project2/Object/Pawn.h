@@ -33,7 +33,7 @@ class Pawn :
     public Object
 {
 public:
-	Pawn(Potision2f& pos, Vector2f& speed ,ControllType& type);
+	Pawn(Potision2f& pos, Vector2f& speed ,ControllType& type,TeamTag& tag);
 	virtual ~Pawn();
 
 	/// <summary>

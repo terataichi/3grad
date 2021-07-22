@@ -37,6 +37,8 @@ struct ImageData
 
 
 using LayerVec = std::vector<LayerData>;
+// À•W‚Æ‚»‚±‚©‚ç‚Ì‘å‚«‚³
+using CollisionPList = std::list<std::pair<Potision2f, Sizef>>;
 
 class TmxLoader
 {

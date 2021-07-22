@@ -8,7 +8,7 @@
 
 std::map<std::string, InputID> Pawn::keyMap_;
 
-Pawn::Pawn(Potision2f& pos, Vector2f& speed, ControllType& type) :Object(pos, speed, ObjectType::Pawn)
+Pawn::Pawn(Potision2f& pos, Vector2f& speed, ControllType& type,TeamTag& tag) :Object(pos, speed, ObjectType::Pawn, tag)
 {
 	state_ = Anim_State::Normal;
 

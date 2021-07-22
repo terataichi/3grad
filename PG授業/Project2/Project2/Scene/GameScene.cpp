@@ -6,6 +6,7 @@
 #include "../common/TileMap.h"
 #include "../Object/Player.h"
 #include "../Object/Pawn.h"
+#include "../common/Collision.h"
 
 GameScene::GameScene()
 {
@@ -19,8 +20,10 @@ GameScene::~GameScene()
 bool GameScene::Init(void)
 {
 	map_ = std::make_shared<TileMap>("Resource/TileMap/testStage01.tmx");
-	objList_.emplace_back(std::make_shared<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_, ControllType::GamePad));
-	objList_.emplace_back(std::make_shared<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_,ControllType::Keybord));
+	objList_.emplace_back(std::make_shared<Player>(Potision2f{ 600.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_, ControllType::GamePad,TeamTag::Bule));
+	objList_.emplace_back(std::make_shared<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f }, map_, ControllType::Keybord, TeamTag::Red));
+
+	collision_.reset(new Collision());
 
 	DrawOwnScreen();
 	return true;
@@ -31,6 +34,8 @@ UniqueBase GameScene::Update(UniqueBase scene)
 	for (auto& obj : objList_)
 	{
 		obj->Update();
+
+		collision_->CheckCollision(obj, objList_);
 
 		// 技が出てたらインスタンスリストに追加する
 		if (obj->GetObjectType() == ObjectType::Pawn)

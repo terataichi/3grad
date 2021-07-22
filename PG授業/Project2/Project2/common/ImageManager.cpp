@@ -84,9 +84,11 @@ const Size ImageManager::GetImageSize(const std::string& name)
 {
 	Size size{ 0,0 };
 	// キーがないかチェックする
-	if (imageID_.find(name) == imageID_.end())
+	if (!imageID_.count(name))
 	{
-		GetGraphSize(imageID_[name][0], &size.x_, &size.y_);
+		lpImageManager.GetImageHandle(name);
 	}
+	GetGraphSize(imageID_[name][0], &size.x_, &size.y_);
+
 	return size;
 }
