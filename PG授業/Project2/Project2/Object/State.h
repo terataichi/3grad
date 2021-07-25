@@ -105,7 +105,7 @@ struct CheckState
 				std::string value = atr->value();
 				if (s_to_Anim.count(value))
 				{
-					if (myself->state_ == s_to_Anim[value])
+					if (myself->animState_ == s_to_Anim[value])
 					{
 						return true;
 					}
@@ -130,7 +130,7 @@ struct SetAnimation
 				std::string value = atr->value();
 				if (s_to_Anim.count(value))
 				{
-					myself->state_ = s_to_Anim[value];
+					myself->animState_ = s_to_Anim[value];
 					return true;
 				}
 			}

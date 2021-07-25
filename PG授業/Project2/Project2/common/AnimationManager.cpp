@@ -11,6 +11,7 @@ AnimationManager::AnimationManager()
 	stateMap_.try_emplace(Anim_State::Normal, "normal");
 	stateMap_.try_emplace(Anim_State::Run, "run");
 	stateMap_.try_emplace(Anim_State::Walk, "walk");
+	stateMap_.try_emplace(Anim_State::Dmage, "damage");
 }
 
 AnimationManager::~AnimationManager()
@@ -59,7 +60,7 @@ int AnimationManager::GetAnimation(const std::string& key, const double& elapsed
 		}
 		const auto& state = animMap_[key].animVec_[animMap_[key].nowState_];
 		double time = 0;
-		while (state.loop == -1 ||  animMap_[key].animCount_ <= state.loop)
+		while (state.loop == -1 ||  animMap_[key].animCount_ < state.loop)
 		{
 			for (const auto& vec : state.chipData)
 			{

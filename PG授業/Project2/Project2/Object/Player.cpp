@@ -25,12 +25,13 @@ Player::~Player()
 
 void Player::Init()
 {
+	hp_ = 5;
 
 	// ステータスの設定
-	state_ = Anim_State::Normal;
+	animState_ = Anim_State::Normal;
 	// アニメーション登録初期化
 	animKey_ = lpAnimManager.AddAnimation("Resource/AnimationData/AnimationPlayer.tmx", "Player");
-	lpAnimManager.SetState(animKey_, state_,lpTimeManager.GetElapsedTime());
+	lpAnimManager.SetState(animKey_, animState_,lpTimeManager.GetElapsedTime());
 
 	size_ = lpAnimManager.GetChipSize(animKey_);
 	Sizef animSize = lpAnimManager.GetChipSize(animKey_) / 2.0f;
@@ -49,11 +50,28 @@ bool Player::Update()
 	controller_->Update();
 	CommandBufUpdate();
 
+	if (animState_ == Anim_State::Dmage)
+	{
+		if (lpAnimManager.GetAnimation(animKey_, lpTimeManager.GetElapsedTime()) == -1)
+		{
+			animState_ = Anim_State::Normal;
+		}
+	}
+	else
+	{
+		animState_ = Anim_State::Normal;
+	}
+
 	// first_nodeに何も書かなければ最初に見つけたやつが入る
-	state_ = Anim_State::Normal;
+	//animState_ = Anim_State::Normal;
 	for (auto node = stateNode_->first_node(); node != nullptr; node = node->next_sibling())
 	{
 		moduleNode(this, node);
+	}
+
+	if (hp_ <= 0)
+	{
+		active_ = false;
 	}
 
 	return false;
@@ -63,13 +81,13 @@ void Player::Draw()
 {
 	auto pos = static_cast<Potision2>(pos_);
 
-	lpAnimManager.SetState(animKey_, state_, lpTimeManager.GetElapsedTime());
+	lpAnimManager.SetState(animKey_, animState_, lpTimeManager.GetElapsedTime());
 	DrawRotaGraph(pos.x_, pos.y_, 1, 0.0, lpAnimManager.GetAnimation(animKey_, lpTimeManager.GetElapsedTime()), true, turn_);
 }
 
 void Player::InitFunction(void)
 {
-	auto a = [&](void)->std::shared_ptr<Object> {
+	auto at1 = [&](void)->std::shared_ptr<Object> {
 		std::shared_ptr<Object> obj;
 		obj.reset(new Bulled(std::move(pos_), std::move(vel_), teamTag_));
 		TRACE("bulled生成\n");
@@ -77,10 +95,15 @@ void Player::InitFunction(void)
 	};
 
 	instanceMap_ = { 
-		{ "at1", a }
+		{ "at1", at1 }
 	};
 }
 
 void Player::Hit(std::shared_ptr<Object> target)
 {
+	if (target->GetObjectType() == ObjectType::Actor)
+	{
+		return;
+	}
+
 }

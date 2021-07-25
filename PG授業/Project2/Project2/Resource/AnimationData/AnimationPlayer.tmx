@@ -26,4 +26,11 @@
 22,0.15,
 </data>
  </state>
+<state name="damage" loop="1" width="2" height="3">
+  <data encoding="csv">
+    14,0.1,
+    15,0.1,
+    16,0.1,
+  </data>
+</state>
   </source>

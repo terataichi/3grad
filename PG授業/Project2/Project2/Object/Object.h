@@ -57,6 +57,7 @@ public:
 	const ObjectType& GetObjectType(void)const;
 	const int& GetObjID(void)const;
 	const TeamTag GetTeamTag(void)const;
+	virtual const bool IsActive(void);
 protected:
 	Potision2f pos_;										// 自分の座標
 	Vector2f vel_;											// 速度
@@ -64,6 +65,10 @@ protected:
 	float radius_;											// 半径
 	bool turn_;												// 左向いてるか右向いてるか(画像が右向いてたらfalseで右)
 	const ObjectType objType_;
+
+	std::string animKey_;									// 登録したアニメーションのkey保存用
+	Anim_State animState_;									// ステータス管理用
+
 	bool active_;
 
 	TeamTag teamTag_;

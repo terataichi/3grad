@@ -47,6 +47,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const InstanceMap& GetInstanceFuncMap()const;
+
+	void Damage(int&& value);
 protected:
 	/// <summary>
 	/// コマンドのバッファーにためる処理
@@ -69,8 +71,6 @@ protected:
 	virtual void InitFunction(void) = 0;
 
 	std::unique_ptr<Controller> controller_;				// コントローラーの情報保持用
-	std::string animKey_;									// 登録したアニメーションのkey保存用
-	Anim_State state_;										// ステータス管理用
 
 	std::vector<char> stateVec_;
 	rapidxml::xml_node<char>* stateNode_;
@@ -86,12 +86,13 @@ protected:
 
 	CommandList commandList_;								// コマンドを保存
 
+	float hp_;												// 体力
+
 	std::list<std::string> attackList_;						// 弾とか打つ
 	InstanceMap instanceMap_;								// アタックリストに対応したインスタンスマップ
 
 	// stringに対応したID
 	static std::map<std::string, InputID>keyMap_;
-
 private:
 	// --- 関数オブジェクト
 	friend struct Move;

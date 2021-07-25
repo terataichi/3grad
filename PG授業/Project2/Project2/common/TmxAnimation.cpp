@@ -33,7 +33,7 @@ bool TmxAnimation::LoadTmx(std::string fileName)
     }
 
     std::string str = root_node->first_attribute("imagepath")->value();
-    imageData_.imageName = str.substr(str.find_first_of("C"));
+    imageData_.imageName = str.substr(str.find_first_of("e") + 1);
     imageData_.imageDivSize = { atoi(root_node->first_attribute("divwidth")->value()),atoi(root_node->first_attribute("divheight")->value()) };
     imageData_.imageSize = { atoi(root_node->first_attribute("chipsizeX")->value()),atoi(root_node->first_attribute("chipsizeY")->value()) };
     tmxFileName_ = fileName;

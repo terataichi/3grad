@@ -9,7 +9,7 @@ Object::Object(Potision2f& pos, Vector2f& speed, ObjectType&& objtype, TeamTag t
 {
     radius_ = 0;
     turn_ = false;
-    active_ = false;
+    active_ = true;
     objID_ = instanceCount_;
     instanceCount_++;
 }
@@ -41,4 +41,9 @@ const int& Object::GetObjID(void) const
 const TeamTag Object::GetTeamTag(void) const
 {
     return teamTag_;
+}
+
+const bool Object::IsActive(void)
+{
+    return active_;
 }

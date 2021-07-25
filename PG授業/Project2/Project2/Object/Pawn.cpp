@@ -10,7 +10,7 @@ std::map<std::string, InputID> Pawn::keyMap_;
 
 Pawn::Pawn(Potision2f& pos, Vector2f& speed, ControllType& type,TeamTag& tag) :Object(pos, speed, ObjectType::Pawn, tag)
 {
-	state_ = Anim_State::Normal;
+	animState_ = Anim_State::Normal;
 
 	keyMap_.try_emplace( "Left",InputID::Left );
 	keyMap_.try_emplace("Right", InputID::Right);
@@ -97,4 +97,13 @@ std::list<std::string>& Pawn::GetAttackList(void)
 const InstanceMap& Pawn::GetInstanceFuncMap() const
 {
 	return instanceMap_;
+}
+
+void Pawn::Damage(int&& value)
+{
+	if (hp_ > 0)
+	{
+		hp_ -= value;
+		animState_ = Anim_State::Dmage;
+	}
 }

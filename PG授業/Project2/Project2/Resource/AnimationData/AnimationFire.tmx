@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<source version="1.4" chipsizeX="24" chipsizeY="9" divwidth="5" divheight="1" imagepath="./Image/Bulled/fire01.png">
+ <state name="normal" loop="1" width="2" height="5">
+  <data encoding="csv">
+0,0.1,
+1,0.1,
+2,0.1,
+3,0.1,
+4,0.1,
+</data>
+ </state>
+ <state name="run" loop="-1" width="2" height="3">
+  <data encoding="csv">
+2,0.1,
+3,0.1,
+4,0.1,
+</data>
+ </state>
+  </source>

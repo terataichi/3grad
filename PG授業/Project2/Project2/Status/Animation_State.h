@@ -7,6 +7,7 @@ enum class Anim_State
 	Normal,
 	Walk,
 	Run,
+	Dmage,
 	Max,
 };
 

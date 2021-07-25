@@ -7,6 +7,7 @@
 #include "../Object/Player.h"
 #include "../Object/Pawn.h"
 #include "../common/Collision.h"
+#include <algorithm>
 
 GameScene::GameScene()
 {
@@ -41,9 +42,15 @@ UniqueBase GameScene::Update(UniqueBase scene)
 		if (obj->GetObjectType() == ObjectType::Pawn)
 		{
 			auto pawn = std::dynamic_pointer_cast<Pawn>(obj);
-			AddInstanceList(pawn);
+			if (obj->IsActive())
+			{
+				AddInstanceList(pawn);
+			}
 		}
 	}
+
+	objList_.erase(std::remove_if(objList_.begin(), objList_.end(), [&](std::shared_ptr<Object>& s) {return !s->IsActive(); }), objList_.end());
+
 	// ƒŠƒXƒg‚É’Ç‰Á
 	for (auto& ins : instanceList_)
 	{
