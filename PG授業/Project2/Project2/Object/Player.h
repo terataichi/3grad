@@ -18,6 +18,7 @@ public:
 	void Draw(void) override;
 	void InitFunction(void) override;
 	void Hit(std::shared_ptr<Object> target)override;
+	void Continue(void)override;
 private:
 
 	ModuleNode moduleNode;

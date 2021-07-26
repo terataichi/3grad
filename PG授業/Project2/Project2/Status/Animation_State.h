@@ -8,6 +8,7 @@ enum class Anim_State
 	Walk,
 	Run,
 	Dmage,
+	Death,
 	Max,
 };
 

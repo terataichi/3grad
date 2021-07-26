@@ -12,6 +12,7 @@ AnimationManager::AnimationManager()
 	stateMap_.try_emplace(Anim_State::Run, "run");
 	stateMap_.try_emplace(Anim_State::Walk, "walk");
 	stateMap_.try_emplace(Anim_State::Dmage, "damage");
+	stateMap_.try_emplace(Anim_State::Death, "death");
 }
 
 AnimationManager::~AnimationManager()

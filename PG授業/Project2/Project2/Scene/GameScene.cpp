@@ -3,6 +3,7 @@
 #include <DxLib.h>
 
 #include "../common/ImageManager.h"
+#include "../common/SceneManager.h"
 #include "../common/TileMap.h"
 #include "../Object/Player.h"
 #include "../Object/Pawn.h"
@@ -27,6 +28,9 @@ bool GameScene::Init(void)
 	collision_.reset(new Collision());
 
 	DrawOwnScreen();
+
+	dethScreen_ = MakeScreen(lpSceneManager.screenSize_.x_, lpSceneManager.screenSize_.y_, true);
+
 	return true;
 }
 
@@ -38,13 +42,21 @@ UniqueBase GameScene::Update(UniqueBase scene)
 
 		collision_->CheckCollision(obj, objList_);
 
-		// 技が出てたらインスタンスリストに追加する
 		if (obj->GetObjectType() == ObjectType::Pawn)
 		{
 			auto pawn = std::dynamic_pointer_cast<Pawn>(obj);
 			if (obj->IsActive())
 			{
+				// 技が出てたらインスタンスリストに追加する
 				AddInstanceList(pawn);
+			}
+
+			if (obj->GetAnimState() == Anim_State::Death)
+			{
+				// スクショ
+				SetDrawScreen(screenID_);
+				obj->Draw();
+				obj->
 			}
 		}
 	}

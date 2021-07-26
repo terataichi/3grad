@@ -8,7 +8,8 @@
 #include "../_debug/_DebugDispOut.h"
 #include "../TimeManager.h"
 #include "../Status/Animation_State.h"
-#include "Bulled.h"
+#include "FireBulled.h"
+#include "RotateFireBulled.h"
 
 Player::Player(Potision2f&& pos, Vector2f&& speed, std::shared_ptr<TileMap>& tileMap, ControllType type, TeamTag tag)
 	:Pawn(pos, speed, type,tag)
@@ -25,7 +26,7 @@ Player::~Player()
 
 void Player::Init()
 {
-	hp_ = 5;
+	hp_ = 1;
 
 	// ステータスの設定
 	animState_ = Anim_State::Normal;
@@ -50,7 +51,7 @@ bool Player::Update()
 	controller_->Update();
 	CommandBufUpdate();
 
-	if (animState_ == Anim_State::Dmage)
+	if (animState_ == Anim_State::Dmage || animState_ == Anim_State::Death)
 	{
 		if (lpAnimManager.GetAnimation(animKey_, lpTimeManager.GetElapsedTime()) == -1)
 		{
@@ -68,12 +69,6 @@ bool Player::Update()
 	{
 		moduleNode(this, node);
 	}
-
-	if (hp_ <= 0)
-	{
-		active_ = false;
-	}
-
 	return false;
 }
 
@@ -88,22 +83,67 @@ void Player::Draw()
 void Player::InitFunction(void)
 {
 	auto at1 = [&](void)->std::shared_ptr<Object> {
+
+		Vector2f vel{ 500,0 };
+		if (turn_)
+		{
+			vel.x_ *= -1;
+		}
 		std::shared_ptr<Object> obj;
-		obj.reset(new Bulled(std::move(pos_), std::move(vel_), teamTag_));
+		obj.reset(new FireBulled(std::move(pos_), std::move(vel), 1, teamTag_));
+		TRACE("bulled生成\n");
+		return obj;
+	};
+	auto at2 = [&](void)->std::shared_ptr<Object> {
+
+		Vector2f vel{ 500,200 };
+		if (turn_)
+		{
+			vel.x_ *= -1;
+		}
+		std::shared_ptr<Object> obj;
+		obj.reset(new FireBulled(std::move(pos_), std::move(vel), 2,teamTag_));
+		TRACE("bulled生成\n");
+		return obj;
+	};
+	auto at3 = [&](void)->std::shared_ptr<Object> {
+
+		Vector2f vel{ 500,200 };
+		if (turn_)
+		{
+			vel.x_ *= -1;
+		}
+		std::shared_ptr<Object> obj;
+		obj.reset(new FireBulled(std::move(pos_), std::move(vel), 2, teamTag_));
+		TRACE("bulled生成\n");
+		return obj;
+	};
+	auto at4 = [&](void)->std::shared_ptr<Object> {
+
+		Vector2f vel{ 600,0 };
+		if (turn_)
+		{
+			vel.x_ *= -1;
+		}
+		std::shared_ptr<Object> obj;
+		obj.reset(new RotateFireBulled(std::move(pos_), std::move(vel), 2, teamTag_));
 		TRACE("bulled生成\n");
 		return obj;
 	};
 
 	instanceMap_ = { 
-		{ "at1", at1 }
+		{ "at1", at1 },
+		{ "at2", at2 },
+		{ "at3", at3 },
+		{ "at4", at4 }
 	};
 }
 
 void Player::Hit(std::shared_ptr<Object> target)
 {
-	if (target->GetObjectType() == ObjectType::Actor)
+	// 同じオブジェクトタイプ同士なら当たらない
+	if (target->GetObjectType() == ObjectType::Pawn)
 	{
 		return;
 	}
-
 }

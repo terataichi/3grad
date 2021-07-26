@@ -28,5 +28,7 @@ private:
     std::list<std::shared_ptr<Object>> objList_;
     std::shared_ptr<TileMap> map_;
     std::unique_ptr<Collision> collision_;
+
+    int dethScreen_;
 };
 

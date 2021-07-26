@@ -43,6 +43,11 @@ const TeamTag Object::GetTeamTag(void) const
     return teamTag_;
 }
 
+const Anim_State Object::GetAnimState(void) const
+{
+    return animState_;
+}
+
 const bool Object::IsActive(void)
 {
     return active_;

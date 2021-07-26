@@ -47,8 +47,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const InstanceMap& GetInstanceFuncMap()const;
+	/// <summary>
+	/// 復活
+	/// </summary>
+	virtual void Continue(void) = 0;
 
-	void Damage(int&& value);
+	void Damage(int& value);
 protected:
 	/// <summary>
 	/// コマンドのバッファーにためる処理
@@ -83,7 +87,7 @@ protected:
 
 	bool isGround_;											// true:地面
 	bool isJump_;											// true:ジャンプ中
-
+	bool alive_;											// 死んだとき
 	CommandList commandList_;								// コマンドを保存
 
 	float hp_;												// 体力

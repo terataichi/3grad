@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="common\Collision.cpp" />
+    <ClCompile Include="Object\FireBulled.cpp" />
     <ClCompile Include="Object\Bulled.cpp" />
     <ClCompile Include="Object\Pawn.cpp" />
     <ClCompile Include="common\AnimationManager.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Object\Player.cpp" />
+    <ClCompile Include="Object\RotateFireBulled.cpp" />
     <ClCompile Include="Scene\Transition\BrightRotationScene.cpp" />
     <ClCompile Include="Scene\Transition\Fade_InOutScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -189,8 +191,10 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Object\FireBulled.h" />
     <ClInclude Include="Object\Bulled.h" />
     <ClInclude Include="Object\Pawn.h" />
+    <ClInclude Include="Object\RotateFireBulled.h" />
     <ClInclude Include="Object\State.h" />
     <ClInclude Include="common\AnimationManager.h" />
     <ClInclude Include="common\Collision.h" />

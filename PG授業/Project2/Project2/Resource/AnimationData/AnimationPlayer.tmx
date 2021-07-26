@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<source version="1.4" chipsizeX="24" chipsizeY="24" divwidth="24" divheight="1" imagepath="./Image/Character/player01.png">
+<source version="1.4" chipsizeX="24" chipsizeY="24" divwidth="25" divheight="1" imagepath="./Image/Character/player01.png">
  <state name="normal" loop="-1" width="2" height="3">
   <data encoding="csv">
 0,0.2,
@@ -31,6 +31,11 @@
     14,0.1,
     15,0.1,
     16,0.1,
+  </data>
+</state>
+<state name="death" loop="-1" width="2" height="1">
+  <data encoding="csv">
+    24,0,
   </data>
 </state>
   </source>

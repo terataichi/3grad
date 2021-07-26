@@ -57,6 +57,7 @@ public:
 	const ObjectType& GetObjectType(void)const;
 	const int& GetObjID(void)const;
 	const TeamTag GetTeamTag(void)const;
+	const Anim_State GetAnimState(void)const;
 	virtual const bool IsActive(void);
 protected:
 	Potision2f pos_;										// é©ï™ÇÃç¿ïW

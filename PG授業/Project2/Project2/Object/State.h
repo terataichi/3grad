@@ -361,6 +361,13 @@ struct CheckCommand
 						{
 							break;
 						}
+						if (!catchCom)
+						{
+							if (nowBuf->prev_->id_ != 0)
+							{
+								break;
+							}
+						}
 
 						catchCom = true;
 						nowBuf = nowBuf->next_;

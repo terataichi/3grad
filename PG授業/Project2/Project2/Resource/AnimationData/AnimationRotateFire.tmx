@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<source version="1.4" chipsizeX="46" chipsizeY="32" divwidth="7" divheight="1" imagepath="./Image/Bulled/fire03.png">
+ <state name="normal" loop="-1" width="2" height="7">
+  <data encoding="csv">
+0,0.05,
+1,0.05,
+2,0.05,
+3,0.05,
+4,0.05,
+5,0.05,
+6,0.05,
+</data>
+ </state>
+  </source>
+  
