@@ -14,7 +14,7 @@ void SceneManager::Run(void)
 		return;
 	}
 
-	scene_ = std::make_unique<GameScene>();
+	scene_ = std::make_unique<TitleScene>();
 
 	while (DxLib::ProcessMessage() == 0 && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{

@@ -19,6 +19,7 @@ private:
 	void DrawOwnScreen()override;
 
 	double angle_;													// Šp“x
+	float angleCount_;												
 	double limit_;													// ‰½•b‚ÅŠ®—¹‚µ‚Ä‚Ù‚µ‚¢‚©
 	double time_;													// Œo‰ßŽžŠÔ
 	double fadeCount_;												// ‰æ–ÊŒø‰Ê—p

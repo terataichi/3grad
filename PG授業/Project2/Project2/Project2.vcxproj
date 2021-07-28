@@ -177,6 +177,7 @@
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Object\RotateFireBulled.cpp" />
+    <ClCompile Include="Scene\Transition\BlockDropScene.cpp" />
     <ClCompile Include="Scene\Transition\BrightRotationScene.cpp" />
     <ClCompile Include="Scene\Transition\Fade_InOutScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Player.h" />
+    <ClInclude Include="Scene\Transition\BlockDropScene.h" />
     <ClInclude Include="Scene\Transition\BrightRotationScene.h" />
     <ClInclude Include="Scene\Transition\Fade_InOutScene.h" />
     <ClInclude Include="Scene\BaseScene.h" />

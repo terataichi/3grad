@@ -56,7 +56,7 @@ UniqueBase GameScene::Update(UniqueBase scene)
 				// ƒXƒNƒVƒ‡
 				SetDrawScreen(screenID_);
 				obj->Draw();
-				obj->
+				//obj->
 			}
 		}
 	}
