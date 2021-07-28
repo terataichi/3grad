@@ -51,6 +51,10 @@ public:
 	/// </summary>
 	/// <param name="obj">当たった相手のポインタ</param>
 	virtual void Hit(std::shared_ptr<Object> target) = 0;
+	/// <summary>
+	/// UIの仕組みを作ってなかったので仮
+	/// </summary>
+	virtual void DrawStatus() {};
 
 	const Potision2f& GetPotision(void)const;
 	const Sizef& GetSize(void)const;

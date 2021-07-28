@@ -37,9 +37,9 @@ void BlockDropScene::DrawOwnScreen()
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();
 
-	for (int y = 0; y < division_.y_; y++)
+	for (float y = 0; y < division_.y_; y++)
 	{
-		for (int x = 0; x < division_.x_; x++)
+		for (float x = 0; x < division_.x_; x++)
 		{
 			Potision2f pos{ x * size_,y * size_ };
 			Potision2 imagePos = static_cast<Potision2>(pos);

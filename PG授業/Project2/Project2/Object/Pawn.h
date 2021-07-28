@@ -14,6 +14,9 @@ class Controller;
 class TmxAnimation;
 class TileMap;
 
+#define DEFAULT_HP 2
+#define MAX_CONTINUE 3
+
 // コマンドの情報
 struct CommandData 
 {
@@ -23,10 +26,7 @@ struct CommandData
 	std::list<std::pair<unsigned int, double>> input_;			// CommandIDとIDに対しての許容時間
 };
 
-
 using CommandList = std::list<CommandData>;
-
-// using InstanceFunc = std::function<std::shared_ptr<Object>(void)>;
 using InstanceMap = std::map<std::string, std::function<std::shared_ptr<Object>(void)>>;
 
 class Pawn :
@@ -49,8 +49,9 @@ public:
 	const InstanceMap& GetInstanceFuncMap()const;
 	/// <summary>
 	/// 復活
+	/// 出来なかったらfalse
 	/// </summary>
-	virtual void Continue(void) = 0;
+	virtual bool Continue(void);
 
 	void Damage(int& value);
 protected:
@@ -91,6 +92,7 @@ protected:
 	CommandList commandList_;								// コマンドを保存
 
 	float hp_;												// 体力
+	int continueCount_;										// 復活回数
 
 	std::list<std::string> attackList_;						// 弾とか打つ
 	InstanceMap instanceMap_;								// アタックリストに対応したインスタンスマップ

@@ -94,7 +94,7 @@ void Controller::UpdateRingBuf(void)
 	int i = 0;
 	while (debug != ringBuf_)
 	{
-		_dbgDrawFormatString(30 * (CREATE_RINGBUF_NUM - i), 700, 0xfff, "%d", debug->id_);
+		//_dbgDrawFormatString(30 * (CREATE_RINGBUF_NUM - i), 700, 0xfff, "%d", debug->id_);
 		debug = debug->next_;
 		i++;
 	}

@@ -22,14 +22,14 @@ GameScene::~GameScene()
 bool GameScene::Init(void)
 {
 	map_ = std::make_shared<TileMap>("Resource/TileMap/testStage01.tmx");
-	objList_.emplace_back(std::make_shared<Player>(Potision2f{ 600.0f,100.0f }, Vector2f{ 80.0f,50.0f },map_, ControllType::GamePad,TeamTag::Bule));
+	objList_.emplace_back(std::make_shared<Player>(Potision2f{ 600.0f,100.0f }, Vector2f{ 80.0f,50.0f }, map_, ControllType::GamePad, TeamTag::Bule));
 	objList_.emplace_back(std::make_shared<Player>(Potision2f{ 300.0f,100.0f }, Vector2f{ 80.0f,50.0f }, map_, ControllType::Keybord, TeamTag::Red));
 
 	collision_.reset(new Collision());
 
 	DrawOwnScreen();
 
-	dethScreen_ = MakeScreen(lpSceneManager.screenSize_.x_, lpSceneManager.screenSize_.y_, true);
+	deathScreen_ = MakeScreen(lpSceneManager.screenSize_.x_, lpSceneManager.screenSize_.y_, true);
 
 	return true;
 }
@@ -54,9 +54,9 @@ UniqueBase GameScene::Update(UniqueBase scene)
 			if (obj->GetAnimState() == Anim_State::Death)
 			{
 				// ƒXƒNƒVƒ‡
-				SetDrawScreen(screenID_);
+				SetDrawScreen(deathScreen_);
 				obj->Draw();
-				//obj->
+				pawn->Continue();					// •œŠˆ
 			}
 		}
 	}
@@ -78,10 +78,11 @@ void GameScene::DrawOwnScreen()
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();
 	map_->DrawMap();
-
+	DrawGraph(0, 0, deathScreen_, true);
 	for (auto& obj : objList_)
 	{
 		obj->Draw();
+		obj->DrawStatus();
 	}
 }
 

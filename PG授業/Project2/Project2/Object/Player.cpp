@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "../common/ImageManager.h"
 #include "../common/AnimationManager.h"
+#include "../common/SceneManager.h"
 #include "../common/TileMap.h"
 #include "../_debug/_DebugConOut.h"
 #include "../_debug/_DebugDispOut.h"
@@ -26,8 +27,8 @@ Player::~Player()
 
 void Player::Init()
 {
-	hp_ = 1;
-
+	hp_ = DEFAULT_HP;
+	continueCount_ = 0;
 	// ステータスの設定
 	animState_ = Anim_State::Normal;
 	// アニメーション登録初期化
@@ -145,5 +146,36 @@ void Player::Hit(std::shared_ptr<Object> target)
 	if (target->GetObjectType() == ObjectType::Pawn)
 	{
 		return;
+	}
+}
+
+bool Player::Continue(void)
+{
+	if (continueCount_ <= MAX_CONTINUE)
+	{
+		hp_ = DEFAULT_HP;
+		animState_ = Anim_State::Normal;
+		continueCount_++;
+		return true;
+	}
+	TRACE("復活可能回数上限に達しました\n");
+	active_ = false;
+	return false;
+}
+
+void Player::DrawStatus(void)
+{
+	
+	DrawFormatStringF(pos_.x_ - 10, pos_.y_ - size_.y_ * 1.2f, 0xff0000, "%dP", objID_);
+
+	auto iSize = lpImageManager.GetImageSize("Character/tale.png");
+	auto sSize = lpSceneManager.screenSize_;
+
+	auto x = 330 * objID_;
+	DrawGraph(x, sSize.y_ - 100, lpImageManager.GetImageHandle("UI/PlayerState01.png")[0], true);
+
+	for (int i = 0; i < MAX_CONTINUE - continueCount_; i++)
+	{
+		DrawGraph(iSize.x_ * i + x + 50, sSize.y_ - 100, lpImageManager.GetImageHandle("Character/tale.png")[0], true);
 	}
 }

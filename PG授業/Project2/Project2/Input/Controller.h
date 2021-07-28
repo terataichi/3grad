@@ -4,7 +4,7 @@
 #include <vector>
 #include "InputID.h"
 
-#define CREATE_RINGBUF_NUM 30
+#define CREATE_RINGBUF_NUM 60
 
 /// <summary>
 /// “ü—Í‘•’u‚ÌŽí—Þ’è‹`

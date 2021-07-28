@@ -29,6 +29,6 @@ private:
     std::shared_ptr<TileMap> map_;
     std::unique_ptr<Collision> collision_;
 
-    int dethScreen_;
+    int deathScreen_;
 };
 

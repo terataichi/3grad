@@ -194,8 +194,8 @@ struct CheckCollision
 		{
 			Raycast::Ray ray{ myself->pos_ ,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset};
 
-			_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
-				static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
+			//_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
+				//static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
 
 			float height{};
 			if (HitRay(ray,myself->tileMap_->GetCollitionData(),myself->raycast_, height))
@@ -259,8 +259,8 @@ struct Jump
 			for (auto offset : myself->offset_[InputID::Up])
 			{
 				Raycast::Ray ray{ myself->pos_,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset };
-				_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
-					static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
+				//_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
+					//static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
 
 				float height{};
 				if (HitRay(ray, myself->tileMap_->GetCollitionData(), myself->raycast_, height))
@@ -292,8 +292,8 @@ struct Gravity
 		for (auto offset : myself->offset_[InputID::Down])
 		{
 			Raycast::Ray ray{ myself->pos_,vec ,vec * lpTimeManager.GetDeltaTimeF() + offset };
-			_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
-				static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
+			//_dbgDrawLine(static_cast<int>(ray.p1.x_), static_cast<int>(ray.p1.y_),
+				//static_cast<int>(ray.p1.x_ + ray.v.x_), static_cast<int>(ray.p1.y_ + ray.v.y_), 0xff0000);
 
 			auto& colData = myself->tileMap_->GetCollitionData();
 

@@ -99,6 +99,11 @@ const InstanceMap& Pawn::GetInstanceFuncMap() const
 	return instanceMap_;
 }
 
+bool Pawn::Continue(void)
+{
+	return false;
+}
+
 void Pawn::Damage(int& value)
 {
 	hp_ -= value;
