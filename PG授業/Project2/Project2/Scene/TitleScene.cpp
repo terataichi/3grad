@@ -10,6 +10,7 @@
 #include "Transition/BrightRotationScene.h"
 #include "Transition/BlockDropScene.h"
 #include "../common/ImageManager.h"
+#include "../Object/Player.h"
 
 TitleScene::TitleScene()
 {
@@ -22,6 +23,7 @@ TitleScene::~TitleScene()
 
 bool TitleScene::Init(void)
 {
+	object_ = std::make_unique<Player>({ 100,100 }, { 100,100 }, , ControllType::GamePad);
 	DrawOwnScreen();
 	return true;
 }

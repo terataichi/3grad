@@ -1,8 +1,11 @@
 #pragma once
 #include <memory>
+#include <string>
 #include "BaseScene.h"
+#include "../common/Vector2.h"
 
 class TileMap;
+class Object;
 
 class TitleScene :
     public BaseScene
@@ -16,5 +19,7 @@ private:
     UniqueBase Update(UniqueBase scene)override;
     void DrawOwnScreen()override;
     SceneName MyName()override { return SceneName::Title; };
+
+    std::unique_ptr<Object> object_;
 };
 
