@@ -83,10 +83,8 @@ void Pawn::LoadCommandList(std::string&& fileName)
 			cmdData.input_.push_back({ static_cast<unsigned int>(atoi(num.c_str())), atof(time.c_str()) });
 		}
 		TRACE("\n");
-
 		commandList_.push_back(cmdData);
 	}
-
 }
 
 std::list<std::string>& Pawn::GetAttackList(void)

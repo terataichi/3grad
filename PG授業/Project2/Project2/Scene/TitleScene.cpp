@@ -30,7 +30,7 @@ UniqueBase TitleScene::Update(UniqueBase scene)
 {
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		return std::make_unique<BlockDropScene>(std::move(scene), std::make_unique<GameScene>(), 5.0);
+		return std::make_unique<BrightRotationScene>(std::move(scene), std::make_unique<GameScene>(), 5.0);
 	}
 	return scene;
 }
@@ -39,5 +39,5 @@ void TitleScene::DrawOwnScreen()
 {
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();
-	DrawGraph(0, 0, lpImageManager.GetImageHandle("BackGround/parallax-mountain-bg.png")[0], true);
+	DrawGraph(0, 0, lpImageManager.GetImageHandle("BackGround/bg04.png")[0], true);
 }

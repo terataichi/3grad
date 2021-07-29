@@ -18,5 +18,6 @@ private:
 	Size division_;
 	int size_;
 	float speed_;
+	float count_;
 };
 

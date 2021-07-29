@@ -151,7 +151,7 @@ void Player::Hit(std::shared_ptr<Object> target)
 
 bool Player::Continue(void)
 {
-	if (continueCount_ <= MAX_CONTINUE)
+	if (continueCount_ < MAX_CONTINUE)
 	{
 		hp_ = DEFAULT_HP;
 		animState_ = Anim_State::Normal;

@@ -37,6 +37,7 @@ void BlockDropScene::DrawOwnScreen()
 	SetDrawScreen(screenID_);
 	ClsDrawScreen();
 
+	float cy = 0;
 	for (float y = 0; y < division_.y_; y++)
 	{
 		for (float x = 0; x < division_.x_; x++)
@@ -44,12 +45,16 @@ void BlockDropScene::DrawOwnScreen()
 			Potision2f pos{ x * size_,y * size_ };
 			Potision2 imagePos = static_cast<Potision2>(pos);
 
-			speed_ += 0.1f;
-			pos.y_ += speed_;
+			cy += 10 * sinf((pos.x_ + count_) / 180.0f * DX_PI_F);
+			//speed_ += 1 * lpTimeManager.GetDeltaTime();
+			//pos.y_ += cy;
+
 			//SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(fadeCount_ < 255 ? 255 - fadeCount_ : 0));
-			DrawRectGraph(pos.x_, pos.y_, imagePos.x_, imagePos.y_, size_, size_, beforScene_->GetScreenID(), true);
+			DrawRectGraph(pos.x_, pos.y_ + cy, imagePos.x_, imagePos.y_, size_, size_, beforScene_->GetScreenID(), true);
+			count_+= 0.1f;
 		}
 	}
+
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(fadeCount_ > 255 ? fadeCount_ - 255 : 0));
 	afterScene_->Draw();

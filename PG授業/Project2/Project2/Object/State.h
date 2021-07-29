@@ -56,7 +56,13 @@ struct Move
 			std::string name = atr->name();
 			if (name == "x")
 			{
-				myself->pos_.x_ += static_cast<float>(atof(atr->value())) * lpTimeManager.GetDeltaTimeF();
+				auto vel = static_cast<float>(atof(atr->value())) * lpTimeManager.GetDeltaTimeF();
+				myself->pos_.x_ += vel;
+				myself->turn_ = false;
+				if (vel < 0.0f)
+				{
+					myself->turn_ = true;
+				}
 			}
 			if (name == "y")
 			{
