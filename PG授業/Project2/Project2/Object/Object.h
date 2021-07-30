@@ -60,6 +60,7 @@ public:
 	const Sizef& GetSize(void)const;
 	const ObjectType& GetObjectType(void)const;
 	const int& GetObjID(void)const;
+	void ResetObjID(void);
 	const TeamTag GetTeamTag(void)const;
 	const Anim_State GetAnimState(void)const;
 	virtual const bool IsActive(void);

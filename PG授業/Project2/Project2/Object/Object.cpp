@@ -38,6 +38,11 @@ const int& Object::GetObjID(void) const
     return objID_;
 }
 
+void Object::ResetObjID(void)
+{
+    instanceCount_ = 1;
+}
+
 const TeamTag Object::GetTeamTag(void) const
 {
     return teamTag_;
