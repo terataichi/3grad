@@ -35,7 +35,7 @@ void Collision::CheckCollision(std::shared_ptr<Object> myself, std::list<std::sh
         if (myself != obj)
         {
             // “¯‚¶ƒ`[ƒ€‚Æ‚Í“–‚½‚ç‚È‚¢
-            if (myself->GetTeamTag() == obj->GetTeamTag())
+            if (myself->GetTeamTag() != TeamTag::Non && myself->GetTeamTag() == obj->GetTeamTag())
             {
                 continue;
             }

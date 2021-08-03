@@ -57,3 +57,8 @@ const bool Object::IsActive(void)
 {
     return active_;
 }
+
+void Object::SetActive(bool flg)
+{
+    active_ = false;
+}

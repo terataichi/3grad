@@ -177,6 +177,7 @@
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Object\RotateFireBulled.cpp" />
+    <ClCompile Include="Object\StartObj.cpp" />
     <ClCompile Include="Scene\Transition\BlockDropScene.cpp" />
     <ClCompile Include="Scene\Transition\BrightRotationScene.cpp" />
     <ClCompile Include="Scene\Transition\Fade_InOutScene.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Object\Bulled.h" />
     <ClInclude Include="Object\Pawn.h" />
     <ClInclude Include="Object\RotateFireBulled.h" />
+    <ClInclude Include="Object\StartObj.h" />
     <ClInclude Include="Object\State.h" />
     <ClInclude Include="common\AnimationManager.h" />
     <ClInclude Include="common\Collision.h" />
